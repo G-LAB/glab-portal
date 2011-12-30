@@ -1,3 +1,15 @@
 [submodule "CodeIgniter"]
 	path = CodeIgniter
 	url = git://github.com/EllisLab/CodeIgniter.git
+[submodule "application/assets/bootstrap"]
+	path = application/assets/bootstrap
+	url = git://github.com/twitter/bootstrap.git
+[submodule "application/third_party/glab-api-kit"]
+	path = application/third_party/glab-api-kit
+	url = git@github.com:G-LAB/glab-api-kit.git
+[submodule "application/assets/global"]
+	path = application/assets/global
+	url = git@github.com:G-LAB/glab-assets-global.git
+[submodule "application/third_party/g-lib"]
+	path = application/third_party/g-lib
+	url = git@github.com:G-LAB/g-lib.git
