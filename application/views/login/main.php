@@ -1,0 +1,3 @@
+<p class="legal">
+	This system and all related information accessed thereby is the property of G LAB, and is for the sole use of those persons expressly authorized by G LAB. Continued use of this system implies consent to monitoring and an understanding that recording and/or disclosure of any data on the system may occur at G LAB's discretion. &nbsp;By logging into and using this website, I agree to the Terms of Use and Legal Terms and Conditions of this website and to any other terms and conditions that may be set forth on the individual pages of this website.
+</p>
