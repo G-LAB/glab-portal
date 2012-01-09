@@ -37,7 +37,14 @@
 |
 */
 
-$autoload['packages'] = array();
+$autoload['packages'] = array(
+	APPPATH.'third_party/curl',
+	APPPATH.'third_party/restclient',
+	APPPATH.'third_party/template',
+	APPPATH.'third_party/glab-api-kit', 
+	APPPATH.'third_party/glab-ci-ext', 
+	APPPATH.'third_party/g-lib'
+);
 
 
 /*
@@ -52,7 +59,12 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array();
+$autoload['libraries'] = array(
+	'Init',
+	'Session',
+	'ACL',
+	'User_Notice'
+);
 
 
 /*
@@ -64,8 +76,15 @@ $autoload['libraries'] = array();
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array();
-
+$autoload['helper'] = array(
+	'language',
+	'url', 'glab_url',
+	'typography', 'glab_typography',
+	'date', 'glab_date', 'glib_date',
+	'number', 'glab_number', 'glib_number',
+	'glab_snippet',
+	'array', 'glib_array'
+);
 
 /*
 | -------------------------------------------------------------------
@@ -109,7 +128,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array();
+$autoload['model'] = array('api', 'profile');
 
 
 /* End of file autoload.php */
