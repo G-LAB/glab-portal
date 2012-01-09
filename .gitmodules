@@ -19,3 +19,9 @@
 [submodule ".codeigniter"]
 	path = .codeigniter
 	url = git://github.com/EllisLab/CodeIgniter.git
+[submodule "application/third_party/restclient"]
+	path = application/third_party/restclient
+	url = git://github.com/philsturgeon/codeigniter-restclient.git
+[submodule "application/third_party/curl"]
+	path = application/third_party/curl
+	url = git://github.com/philsturgeon/codeigniter-curl.git
