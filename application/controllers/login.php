@@ -28,11 +28,9 @@ class Login extends CI_Controller
 			// Send to Dashboard
 			redirect('dashboard');
 		}
-		else
-		{
-			// Delete Any and All Session Data
-			$this->session->sess_destroy();
-		}
+
+		// Delete Any and All Session Data
+		$this->session->sess_destroy();
 
 		$this->template->title('Step One')->build('login/main');
 	}
@@ -138,9 +136,9 @@ class Login extends CI_Controller
 				{
 					$profile = $this->profile->get($r->pid);
 
-					if ($profile->exists() === true AND $profile->is_employee())
+					if ($profile->exists() === true AND $profile->is_employee()) // @todo Also Validate Prefix of Key
 					{
-						$this->acl->create_session($pid);
+						$this->acl->create_session($profile->pid);
 						redirect();
 					}
 					elseif ($profile->exists() === true)
@@ -149,7 +147,7 @@ class Login extends CI_Controller
 					}
 					else
 					{
-						User_Notice::error('Could not find profile. ('.$pid.')');
+						User_Notice::error('Could not find profile. ('.$profile->name.')');
 					}
 				}
 			}
