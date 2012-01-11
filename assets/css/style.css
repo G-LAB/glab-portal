@@ -106,6 +106,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', end
 	padding-top: 305px;
 	overflow: hidden;
 	background: white url(../img/masthead_default.jpg) no-repeat;
+	border: 1px solid #202320;
 }
 
 #masthead #main #heading {
@@ -150,6 +151,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', end
 /* @end */
 
 /* @group Controllers */
+
+/* @group Errors */
+
+#masthead.error_404  #main {
+	background-image: url(../img/masthead_error_404.png);
+}
+
+
+
+/* @end */
 
 /* @group Login */
 
