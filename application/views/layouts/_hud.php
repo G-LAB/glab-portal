@@ -1,1 +1,1 @@
-<a href="#" class="btn"><?=greeting()?>, Ryan! <b class="caret"></b></a>
+<a href="#" class="btn"><?=greeting()?>, <?=$this->profile->current()->name->first?>! <b class="caret"></b></a>
