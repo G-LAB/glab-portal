@@ -55,8 +55,6 @@
 
 				Modernizr.load({
 					load: [
-						'<?=site_url('asset/bootstrap/js/bootstrap-alert.js')?>',
-						'<?=site_url('asset/bootstrap/js/bootstrap-dropdown.js')?>',
 						'<?=site_url('asset/global/js/global.js')?>',
 						'<?=site_url('asset/js/script.js')?>'
 					]

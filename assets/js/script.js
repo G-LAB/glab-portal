@@ -26,40 +26,61 @@ glab.class.portal.prototype.loading = function (mode)
 /* Instanciate Portal Class */
 glab.portal = new glab.class.portal();
 
-/* Execute jQuery Scripts onLoad */
+// Load Dropdown Menus
+Modernizr.load([
+	{
+		load: '/asset/bootstrap/js/bootstrap-dropdown.js',
+		complete: function ()
+		{
+			$('.dropdown-toggle').dropdown();
+		}
+	}
+]);
+
+// Activate Alert Close Buttons
+Modernizr.load([
+	{
+		load: '/asset/bootstrap/js/bootstrap-alert.js',
+		complete: function ()
+		{
+			$('.alert-message').alert();
+		}
+	}
+]);
+
+/* Hide Page Loading Overlay */
+glab.portal.loading('hide');
+
+/* Trigger Prepended Radio Buttons */
+$('.input-prepend input').on('focus', function () {
+	$(this).parent().find('.add-on input[type="radio"]').click();
+});
+
+// LAYOUT: Masthead
+$('#btn-login').on('click', function () {
+
+	// Show Loading Overlay
+	glab.portal.loading('show');
+
+	// Get OID URL Via AJAX
+	$.getJSON('/login/oid_request')
+		.success(function(data) {
+			// Redirect to Provider
+			window.location = data.result.provider_url;
+
+		}).error(function() {
+			// Hide Loading Overlay
+			glab.portal.loading('hide');
+
+			// Show Error Dialog
+			alert('Could not access OpenID provider.');
+		});
+});
+
+/* Execute Scripts onLoad */
 $(document).ready(function()
 {
-	/* Hide Page Loading Overlay */
-	glab.portal.loading('hide');
 
-	/* Instanciate Bootstrap Methods */
-	$('.dropdown-toggle').dropdown();
-	$('.alert-message').alert();
 
-	/* Trigger Prepended Radio Buttons */
-	$('.input-prepend input').on('focus', function () {
-		$(this).parent().find('.add-on input[type="radio"]').click();
-	});
-
-	// LAYOUT: Masthead
-	$('#btn-login').on('click', function () {
-
-		// Show Loading Overlay
-		glab.portal.loading('show');
-
-		// Get OID URL Via AJAX
-		$.getJSON('/login/oid_request')
-			.success(function(data) {
-				// Redirect to Provider
-				window.location = data.result.provider_url;
-
-			}).error(function() {
-				// Hide Loading Overlay
-				glab.portal.loading('hide');
-
-				// Show Error Dialog
-				alert('Could not access OpenID provider.');
-			});
-	});
 
 });
