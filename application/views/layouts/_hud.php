@@ -1,1 +1,1 @@
-<a href="#" class="btn">Howdy, Ryan!</a>
+<a href="#" class="btn"><?=greeting()?>, Ryan! <b class="caret"></b></a>
