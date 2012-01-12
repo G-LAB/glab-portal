@@ -33,8 +33,8 @@ $(document).ready(function()
 	glab.portal.loading('hide');
 
 	/* Instanciate Bootstrap Methods */
-	$('#header').dropdown();
-	$(".alert-message").alert();
+	$('.dropdown-toggle').dropdown();
+	$('.alert-message').alert();
 
 	/* Trigger Prepended Radio Buttons */
 	$('.input-prepend input').on('focus', function () {

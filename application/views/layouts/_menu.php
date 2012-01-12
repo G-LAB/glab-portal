@@ -54,35 +54,32 @@
 		$menu['Sales'] = new Menu_Entry ('sales_tools');
 	}
 ?>
-<div class="topbar" data-dropdown="dropdown">
-	<div class="topbar-inner">
+
+<div class="navbar navbar-fixed">
+	<div class="navbar-inner">
 		<div class="container">
-			<h3><a href="<?=site_url()?>">G LAB</a></h3>
+			<a href="<?=site_url()?>" class="brand">G LAB</a>
 			<?php if ($this->acl->is_auth() === true) : ?>
-				<ul>
+			<ul class="nav">
 				<?php foreach ($menu as $label => &$primary) : ?>
-						<?php if (is_array($primary) === true && count($primary) === 0) : continue; ?>
-						<?php elseif (is_array($primary) === true) : ?>
-						<li class="menu">
-							<a class="menu"><?=htmlspecialchars($label)?></a>
-							<ul class="menu-dropdown">
-								<?php foreach ($primary as $label => &$secondary): ?>
-								<li><a href="<?=site_url($secondary->path)?>"><?=htmlspecialchars($label)?></a></li>
-								<?php endforeach; ?>
-							</ul>
-						</li>
-						<?php else : ?>
-						<li><a href="<?=site_url($primary->path)?>"><?=htmlspecialchars($label)?></a></li>
-						<?php endif; ?>
+				<?php if (is_array($primary) === true && count($primary) === 0) : continue; ?>
+				<?php elseif (is_array($primary) === true) : ?>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown"><?=htmlspecialchars($label)?> <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<?php foreach ($primary as $label => &$secondary): ?>
+						<li><a href="<?=site_url($secondary->path)?>"><?=htmlspecialchars($label)?></a></li>
+						<?php endforeach; ?>
+					</ul>
+				</li>
+				<?php else : ?>
+				<li><a href="<?=site_url($primary->path)?>"><?=htmlspecialchars($label)?></a></li>
+				<?php endif; ?>
 				<?php endforeach; ?>
-				</ul>
-				<ul class="nav secondary-nav">
-					<li>
-						<form action="">
-							<input type="text" placeholder="Search for anything...">
-						</form>
-					</li>
-				</ul>
+			</ul>
+			<form class="navbar-search floatr" action="">
+				<input type="text" class="search-query span2" placeholder="Search">
+			</form>
 			<?php endif; ?>
 		</div>
 	</div>

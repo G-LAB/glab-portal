@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="span11">
+	<div class="span6 offset1">
 		<form action="<?=current_url()?>"  method="post" class="form-stacked">
 			<fieldset>
 				<legend>Choose an Authentication Method</legend>
