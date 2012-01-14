@@ -33,7 +33,7 @@
 			</fieldset>
 			<fieldset class="form-actions">
 				<button type="submit" class="btn primary">Login</button>&nbsp;
-				<a href="<?=site_url()?>" class="btn">Cancel</a>
+				<a href="<?=site_url('login/destroy')?>" class="btn">Cancel</a>
 			</fieldset>
 		</form>
 	</div>
