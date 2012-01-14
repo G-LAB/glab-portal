@@ -35,6 +35,9 @@ class Login extends CI_Controller
 		$this->template->title('Step One')->build('login/main');
 	}
 
+	/**
+	 * Destroys the session and redirects to default controller.
+	 */
 	function destroy()
 	{
 		// Delete Any and All Session Data
