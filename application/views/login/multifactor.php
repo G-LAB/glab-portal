@@ -1,52 +1,43 @@
 <div class="row">
-	<div class="span6 offset1">
-		<form action="<?=current_url()?>"  method="post" class="form-stacked">
-			<fieldset>
-				<legend>Choose an Authentication Method</legend>
-				<div class="clearfix">
+	<div class="span7 offset1">
+		<form action="<?=current_url()?>"  method="post">
+			<legend>Choose an Authentication Method</legend>
+			<fieldset class="control-group">
+				<div class="controls">
 					<label for="otp">Yubikey One-Time Password</label>
 					<div class="input">
 						<div class="input-prepend">
-							<label class="add-on"><input type="radio" name="method" id="method" value="yubikey" checked></label>
+							<span class="add-on"><input type="radio" name="method" id="method" value="yubikey" checked></span>
 							<input class="x-large" id="otp" name="otp" size="32" type="text" autocomplete="off">
 						</div>
 					</div>
-				</div><!-- /clearfix -->
-				<div class="clearfix">
+				</div>
+				<div class="controls">
 					<label for="authcode">iPad Activation Code</label>
-					<div class="input">
-						<div class="input-prepend">
-							<label class="add-on"><input type="radio" name="method" id="method" value="authcode"></label>
-							<input class="x-large" id="authcode" name="authcode" size="32" type="text">
-						</div>
+					<div class="input-prepend">
+						<span class="add-on"><input type="radio" name="method" id="method" value="authcode"></span>
+						<input class="x-large" id="authcode" name="authcode" size="32" type="text">
 					</div>
-				</div><!-- /clearfix -->
-				<div class="clearfix">
-					<label id="optionsCheckboxes">Other Options</label>
-					<div class="input">
-						<ul class="inputs-list">
-							<li>
-								<label>
-									<input type="radio" name="method" value="sms" disabled>
-									<span>Send an authorization code via text message.</span>
-								</label>
-							</li>
-							<li>
-								<label>
-									<input type="radio" name="method" value="phone" disabled>
-									<span>Call me to verify my identity by phone.</span>
-								</label>
-							</li>
-						</ul>
-					</div>
-				</div><!-- /clearfix -->
+				</div>
+				<div class="controls">
+					<label>Other Options</label>
+					<label class="radio">
+						<input type="radio" name="method" value="sms" disabled>
+						<span>Send an authorization code via text message.</span>
+					</label>
+					<label class="radio">
+						<input type="radio" name="method" value="phone" disabled>
+						<span>Call me to verify my identity by phone.</span>
+					</label>
+				</div>
 			</fieldset>
-			<div class="actions">
-				<button type="submit" class="btn primary">Login</button>&nbsp;<a href="<?=site_url()?>" class="btn">Cancel</a>
-			</div>
+			<fieldset class="form-actions">
+				<button type="submit" class="btn primary">Login</button>&nbsp;
+				<a href="<?=site_url()?>" class="btn">Cancel</a>
+			</fieldset>
 		</form>
 	</div>
-	<div class="span4">
+	<div class="span3">
 		<h2>Multifactor Authentication</h2>
 		<p>The sensitive data stored in this system is kept secure by combining information that you know, such as your password, with something that you have, such as a Yubikey one-time password or mobile device.</p>
 	</div>
