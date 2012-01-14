@@ -35,6 +35,15 @@ class Login extends CI_Controller
 		$this->template->title('Step One')->build('login/main');
 	}
 
+	function destroy()
+	{
+		// Delete Any and All Session Data
+		$this->session->sess_destroy();
+
+		// Send to default controller
+		redirect();
+	}
+
 	/**
 	 * Displays JSON data containing OpenID request
 	 */

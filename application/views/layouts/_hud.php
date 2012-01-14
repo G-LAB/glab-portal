@@ -3,10 +3,10 @@
 		<?=greeting()?>, <?=$this->profile->current()->name->first?>! <b class="caret"></b>
 	</a>
 	<ul class="dropdown-menu">
-		<li><a href="#">Dashboard</a></li>
-		<li><a href="#">My Profile</a></li>
+		<li><a href="<?=site_url('dashboard')?>">Dashboard</a></li>
+		<li><a href="<?=site_url('profile/me')?>">My Profile</a></li>
 		<li class="divider"></li>
-		<li><a href="#">Logout</a></li>
+		<li><a href="<?=site_url('login/destroy')?>">Logout</a></li>
 	</ul>
 </div>
 <div class="clearfix"></div>
