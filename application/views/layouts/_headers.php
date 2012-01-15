@@ -35,6 +35,8 @@
 
 <!-- Async Loading -->
 <script>
+	var onready = [];
+
 	Modernizr.load([
 		{
 			load: [
@@ -57,7 +59,14 @@
 					load: [
 						'<?=site_url('asset/global/js/global.js')?>',
 						'<?=site_url('asset/js/script.js')?>'
-					]
+					],
+					complete: function () {
+						// Iterate onready array
+						jQuery.each(onready, function (index, value) {
+							// Execute Callback
+							value();
+						});
+					}
 				});
 			}
 		}

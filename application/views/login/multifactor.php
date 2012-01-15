@@ -44,8 +44,8 @@
 </div>
 
 <script>
-	$(document).ready(function()
+	onready.push( function()
 	{
-
+		$('#otp').focus();
 	});
 </script>
