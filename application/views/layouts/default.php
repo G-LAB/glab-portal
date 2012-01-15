@@ -16,17 +16,12 @@
 		<div id="main">
 			<section>
 				<div id="heading" class="row">
-					<div class="span-two-thirds">
+					<div class="span12">
 						<h2><?=htmlspecialchars($template['title'])?></h2>
 					</div>
-					<?php if ($this->acl->is_auth() !== true AND $this->router->fetch_method() !== 'multifactor') : ?>
-					<div id="login" class="span-one-third justr">
-						<button id="btn-login" class="btn primary">Login via Google</button>
-					</div>
-					<?php endif; ?>
 				</div>
 				<div class="row">
-					<div class="span16">
+					<div class="span12">
 						<?php foreach (User_Notice::fetch_array() as $notice) : ?>
 						<div class="alert-message <?=$notice->type?>">
 							<a class="close">×</a>
