@@ -56,27 +56,6 @@ $('.input-prepend input').on('focus', function () {
 	$(this).parent().find('.add-on input[type="radio"]').click();
 });
 
-// LAYOUT: Masthead
-$('#btn-login').on('click', function () {
-
-	// Show Loading Overlay
-	glab.portal.loading('show');
-
-	// Get OID URL Via AJAX
-	$.getJSON('/login/oid_request')
-		.success(function(data) {
-			// Redirect to Provider
-			window.location = data.result.provider_url;
-
-		}).error(function() {
-			// Hide Loading Overlay
-			glab.portal.loading('hide');
-
-			// Show Error Dialog
-			alert('Could not access OpenID provider.');
-		});
-});
-
 /* Execute Scripts onLoad */
 $(document).ready(function()
 {
