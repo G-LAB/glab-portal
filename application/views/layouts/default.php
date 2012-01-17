@@ -55,5 +55,18 @@
 			</div>
 		</div>
 	</div>
+	<div id="modal_timeout" class="modal fade ui-helper-hidden">
+		<div class="modal-header">
+			<a href="#" class="close" data-dismiss="modal">×</a>
+			<h3>Session Expiration Warning</h3>
+		</div>
+		<div class="modal-body">
+			<p>Your session is about to be terminated due to inactivity...</p>
+		</div>
+		<div class="modal-footer">
+			<a class="btn primary" data-dismiss="modal">Stay Signed In</a>
+			<a href="<?=site_url('login/destroy')?>" class="btn">Logout</a>
+		</div>
+	</div>
 </body>
 </html>

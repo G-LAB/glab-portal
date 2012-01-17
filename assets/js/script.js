@@ -26,7 +26,7 @@ glab.class.portal.prototype.loading = function (mode)
 /* Instanciate Portal Class */
 glab.portal = new glab.class.portal();
 
-// Load Dropdown Menus
+/* Load Dropdown Menus */
 Modernizr.load([
 	{
 		load: '/asset/bootstrap/js/bootstrap-dropdown.js',
@@ -37,7 +37,7 @@ Modernizr.load([
 	}
 ]);
 
-// Activate Alert Close Buttons
+/* Activate Alert Close Buttons */
 Modernizr.load([
 	{
 		load: '/asset/bootstrap/js/bootstrap-alert.js',
@@ -47,6 +47,39 @@ Modernizr.load([
 		}
 	}
 ]);
+
+/* LAYOUT: Default */
+if ($('body').attr('id') == 'default') {
+
+	/* Load Modal */
+	Modernizr.load([
+		{
+			load: '/asset/bootstrap/js/bootstrap-modal.js',
+			complete: function ()
+			{
+				/* Timeout Inactive Sessions After 6 Minutes */
+				// Display Message After 5 Minutes
+				setInterval(function () {
+					console.log('Display session timeout dialog.');
+					$('#modal_timeout').modal('show');
+				},300000);
+				// Redirect to Logout After 1 Minute
+				$('#modal_timeout').on('shown', function () {
+					console.log('Start forced logout timer.');
+					window.timeoutSession = setTimeout(function () {
+						window.location = '/login/destroy';
+					}, 60000);
+				});
+				// Cancel Forced Logout
+				$('#modal_timeout').on('hide', function () {
+					console.log('Cancel forced logout.');
+					clearTimeout(window.timeoutSession);
+				});
+			}
+		}
+	]);
+
+}
 
 /* Hide Page Loading Overlay */
 glab.portal.loading('hide');
@@ -59,7 +92,5 @@ $('.input-prepend input').on('focus', function () {
 /* Execute Scripts onLoad */
 $(document).ready(function()
 {
-
-
 
 });
