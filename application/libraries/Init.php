@@ -33,6 +33,8 @@ class Init
 		{
 			$CI->load->library('template',$template_config);
 		}
+		// Default Page Title
+		$CI->template->title(' ');
 		// HTML Headers
 		$CI->template->set_partial('headers','layouts/_headers');
 		// Layout Components

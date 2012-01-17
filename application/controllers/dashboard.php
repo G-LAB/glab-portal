@@ -16,9 +16,7 @@ class Dashboard extends CI_Controller
 	 */
 	function index()
 	{
-		$this->template
-			->title('Dashboard')
-			->build('dashboard/main');
+		$this->template->build('dashboard/main');
 	}
 
 }

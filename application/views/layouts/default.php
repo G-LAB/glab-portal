@@ -21,11 +21,11 @@
 							<?=htmlspecialchars(controller_name())?>
 							<small>
 							<?php
-								if (empty($template['title']) !== true AND $template['title'] !== 'index')
+								if ($template['title'] !== ' ')
 								{
 									echo htmlspecialchars($template['title']);
 								}
-								else
+								elseif (strtolower(method_name()) !== 'index')
 								{
 									echo htmlspecialchars(method_name());
 								}
