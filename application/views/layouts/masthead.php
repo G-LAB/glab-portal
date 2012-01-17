@@ -25,7 +25,7 @@
 				<div class="row">
 					<div class="span12">
 						<?php foreach (User_Notice::fetch_array() as $notice) : ?>
-						<div class="alert-message <?=$notice->type?>">
+						<div class="alert alert-<?=$notice->type?>">
 							<a class="close">×</a>
 							<strong><?=$notice->title?></strong> <?=$notice->msg?>
 						</div>
@@ -52,28 +52,5 @@
 			</div>
 		</div>
 	</div>
-	<script>
-		onready.push( function () {
-			$('#btn-login').on('click', function () {
-
-				// Show Loading Overlay
-				glab.portal.loading('show');
-
-				// Get OID URL Via AJAX
-				$.getJSON('/login/oid_request')
-					.success(function(data) {
-						// Redirect to Provider
-						window.location = data.result.provider_url;
-
-					}).error(function() {
-						// Hide Loading Overlay
-						glab.portal.loading('hide');
-
-						// Show Error Dialog
-						alert('Could not access OpenID provider.');
-					});
-			});
-		});
-	</script>
 </body>
 </html>

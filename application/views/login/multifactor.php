@@ -8,7 +8,7 @@
 					<div class="input">
 						<div class="input-prepend">
 							<span class="add-on"><input type="radio" name="method" id="method" value="yubikey" checked></span>
-							<input class="x-large" id="otp" name="otp" size="32" type="text" autocomplete="off">
+							<input class="x-large" id="otp" name="otp" size="32" type="text" autocomplete="off" autofocus>
 						</div>
 					</div>
 				</div>
@@ -42,10 +42,3 @@
 		<p>The sensitive data stored in this system is kept secure by combining information that you know, such as your password, with something that you have, such as a Yubikey one-time password or mobile device.</p>
 	</div>
 </div>
-
-<script>
-	onready.push( function()
-	{
-		$('#otp').focus();
-	});
-</script>

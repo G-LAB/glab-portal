@@ -30,45 +30,6 @@
 <!-- Favicon -->
 <link rel="shortcut icon" href="<?=site_url('asset/img/favicon.ico')?>">
 
-<!-- Modernizr -->
-<script src="<?=site_url('asset/js/modernizr.custom.js')?>"></script>
-
 <!-- Async Loading -->
-<script>
-	var onready = [];
-
-	Modernizr.load([
-		{
-			load: [
-				'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
-				'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'
-			],
-			complete: function ()
-			{
-				if (!window.jQuery)
-				{
-					Modernizr.load('https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js');
-				}
-
-				if (!window.jQuery.ui)
-				{
-					Modernizr.load('https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.16/jquery-ui.min.js');
-				}
-
-				Modernizr.load({
-					load: [
-						'<?=site_url('asset/global/js/global.js')?>',
-						'<?=site_url('asset/js/script.js')?>'
-					],
-					complete: function () {
-						// Iterate onready array
-						jQuery.each(onready, function (index, value) {
-							// Execute Callback
-							value();
-						});
-					}
-				});
-			}
-		}
-	]);
-</script>
+<script src="<?=site_url('asset/js/modernizr.custom.js')?>"></script>
+<script src="<?=site_url('asset/js/init.js')?>"></script>

@@ -17,6 +17,11 @@ class Init
 		$CI->load->library('ACL');
 		$CI->acl->require_ssl();
 
+		/* SET CONTENT SECURITY POLICY */
+		$csp = "default-src 'self'; font-src 'self' themes.googleusercontent.com; img-src 'self' data: ajax.googleapis.com ajax.aspnetcdn.com ssl.google-analytics.com; script-src 'self' ajax.googleapis.com ajax.aspnetcdn.com ssl.google-analytics.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com";
+		header("X-WebKit-CSP: $csp");
+		header("X-Content-Security-Policy: $csp");
+
 		/* LOAD TEMPLATE LIBRARY W/ LOCAL CONFIG */
 		$CI->load->config('template',true);
 		$template_config = $CI->config->item('template');
