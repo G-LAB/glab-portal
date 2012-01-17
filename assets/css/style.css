@@ -137,7 +137,8 @@ background-attachment: fixed;
 }
 
 
-#masthead #main #heading h2 {
+#masthead #main #heading h1 {
+	font-size: 24px;
 	color: #eaeaea;
 	margin-top: -5px;
 	text-shadow: black 1px 1px 1px;

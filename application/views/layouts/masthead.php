@@ -14,7 +14,7 @@
 			<section>
 				<div id="heading" class="row">
 					<div class="span8">
-						<h2><?=htmlspecialchars($template['title'])?></h2>
+						<h1><?=htmlspecialchars($template['title'])?></h1>
 					</div>
 					<?php if ($this->acl->is_auth() !== true AND $this->router->fetch_method() !== 'multifactor') : ?>
 					<div id="login" class="span4 justr">

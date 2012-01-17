@@ -17,7 +17,21 @@
 			<section>
 				<div id="heading" class="row">
 					<div class="span12">
-						<h2><?=htmlspecialchars($template['title'])?></h2>
+						<h1>
+							<?=htmlspecialchars(controller_name())?>
+							<small>
+							<?php
+								if (empty($template['title']) !== true AND $template['title'] !== 'index')
+								{
+									echo htmlspecialchars($template['title']);
+								}
+								else
+								{
+									echo htmlspecialchars(method_name());
+								}
+							?>
+							</small>
+						</h1>
 					</div>
 				</div>
 				<div class="row">
