@@ -35,9 +35,9 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="span12">
+					<div id="alerts" class="span12">
 						<?php foreach (User_Notice::fetch_array() as $notice) : ?>
-						<div class="alert-message <?=$notice->type?>">
+						<div class="alert alert-<?=$notice->type?>">
 							<a class="close">×</a>
 							<strong><?=$notice->title?></strong> <?=$notice->msg?>
 						</div>
