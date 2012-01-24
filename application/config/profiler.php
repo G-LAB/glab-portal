@@ -11,7 +11,8 @@
 |
 */
 
-
+$config['config']  = false;
+$config['queries'] = false;
 
 /* End of file profiler.php */
 /* Location: ./application/config/profiler.php */
