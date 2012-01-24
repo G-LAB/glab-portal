@@ -36,6 +36,7 @@ class Ajax extends CI_Controller
 	{
 		$result = $this->api->request(strtolower($method), $uri, $params);
 		echo json_encode($result);
+		exit; // Send Output Faster
 	}
 
 }
