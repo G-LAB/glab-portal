@@ -41,8 +41,8 @@ $autoload['packages'] = array(
 	APPPATH.'third_party/curl',
 	APPPATH.'third_party/restclient',
 	APPPATH.'third_party/template',
-	APPPATH.'third_party/glab-api-kit', 
-	APPPATH.'third_party/glab-ci-ext', 
+	APPPATH.'third_party/glab-api-kit',
+	APPPATH.'third_party/glab-ci-ext',
 	APPPATH.'third_party/g-lib'
 );
 
@@ -78,7 +78,7 @@ $autoload['libraries'] = array(
 
 $autoload['helper'] = array(
 	'language',
-	'url', 'glab_url',
+	'url', 'glab_url', 'glib_url',
 	'typography', 'glab_typography',
 	'date', 'glab_date', 'glib_date',
 	'number', 'glab_number', 'glib_number',
