@@ -12,15 +12,21 @@ class Init
 	{
 		$CI =& get_instance();
 
+		/* ENABLE PROFILER FOR DEVELOPERS */
+		if (ENVIRONMENT == 'development' AND $CI->input->get('profiler') !== false)
+		{
+			$CI->output->enable_profiler(true);
+		}
+
 		/* REQUIRE SSL AT ALL TIMES */
 		// Force ACL to load in time
 		$CI->load->library('ACL');
 		$CI->acl->require_ssl();
 
 		/* SET CONTENT SECURITY POLICY */
-		$csp = "default-src 'self'; font-src 'self' themes.googleusercontent.com; img-src 'self' data: ajax.googleapis.com ajax.aspnetcdn.com ssl.google-analytics.com; script-src 'self' ajax.googleapis.com ajax.aspnetcdn.com ssl.google-analytics.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com";
-		header("X-WebKit-CSP: $csp");
-		header("X-Content-Security-Policy: $csp");
+		$csp = "default-src 'self'; font-src 'self' themes.googleusercontent.com; img-src 'self' data: ajax.googleapis.com ajax.aspnetcdn.com ssl.google-analytics.com secure.gravatar.com; script-src 'self' ajax.googleapis.com ajax.aspnetcdn.com https://ssl.google-analytics.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com;";
+		header("X-WebKit-CSP-Report-Only: $csp");
+		header("X-Content-Security-Policy-Report-Only: $csp");
 
 		/* LOAD TEMPLATE LIBRARY W/ LOCAL CONFIG */
 		$CI->load->config('template',true);
