@@ -37,6 +37,8 @@ glab.class.portal.prototype.loading = function (mode)
 /* Instanciate Portal Class */
 glab.portal = new glab.class.portal();
 
+Modernizr.load('/asset/bootstrap/js/bootstrap-transition.js');
+
 /* Load Dropdown Menus */
 Modernizr.load([
 	{
@@ -73,19 +75,39 @@ if ($('body').attr('id') == 'default') {
 				setInterval(function () {
 					console.log('Display session timeout dialog.');
 					$('#modal_timeout').modal('show');
-				},300000);
+				},100000);
+
 				// Redirect to Logout After 1 Minute
 				$('#modal_timeout').on('shown', function () {
+
 					console.log('Start forced logout timer.');
+
+					// Set Timeout Initial Value
+					var timeoutRemainder = 60;
+					$('#modal_timeout .counter').text(timeoutRemainder);
+
+					// Adjust Value in Countdown
+					window.timeoutCounter = setInterval(function () {
+						$('#modal_timeout .counter').text(timeoutRemainder);
+						if (timeoutRemainder > 0) {
+							timeoutRemainder = (timeoutRemainder - 1);
+						}
+					},1000);
+
+					// Force Logout After 60 Seconds
 					window.timeoutSession = setTimeout(function () {
 						window.location = '/login/destroy';
 					}, 60000);
 				});
+
 				// Cancel Forced Logout
 				$('#modal_timeout').on('hide', function () {
 					console.log('Cancel forced logout.');
 					clearTimeout(window.timeoutSession);
+					clearInterval(window.timeoutCounter);
 				});
+
+				$('#modal_timeout').modal('show');
 			}
 		}
 	]);
