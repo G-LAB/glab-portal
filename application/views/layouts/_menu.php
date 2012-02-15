@@ -25,31 +25,31 @@
 	$menu = array();
 	$menu['Dashboard'] = new Menu_Entry ('dashboard',false);
 
-	if ($this->acl->is_permitted('module_communication') === true) 
+	if ($this->acl->is_permitted('module_communication') === true)
 	{
 		$menu['Communication'] = new Menu_Entry ('communication');
 	}
-	if ($this->acl->is_permitted('module_documents') === true) 
+	if ($this->acl->is_permitted('module_documents') === true)
 	{
 		$menu['Documents'] = new Menu_Entry ('documents');
 	}
-	if ($this->acl->is_permitted('module_documents') === true) 
+	if ($this->acl->is_permitted('module_documents') === true)
 	{
 		$menu['Documents'] = new Menu_Entry ('documents');
 	}
-	if ($this->acl->is_permitted('module_accounting') === true) 
+	if ($this->acl->is_permitted('module_accounting') === true)
 	{
 		$menu['Accounting'] = new Menu_Entry ('accounting');
 	}
-	if ($this->acl->is_permitted('module_product_domains') === true) 
+	if ($this->acl->is_permitted('module_product_domains') === true)
 	{
 		$menu['Products']['Domain Names'] = new Menu_Entry ('products/domain_names');
 	}
-	if ($this->acl->is_permitted('module_product_hosting') === true) 
+	if ($this->acl->is_permitted('module_product_hosting') === true)
 	{
 		$menu['Products']['Web Hosting'] = new Menu_Entry ('products/web_hosting');
 	}
-	if ($this->acl->is_permitted('module_sales') === true) 
+	if ($this->acl->is_permitted('module_sales') === true)
 	{
 		$menu['Sales'] = new Menu_Entry ('sales_tools');
 	}
