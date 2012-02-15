@@ -41,6 +41,7 @@ class Client_profile extends CI_Controller
 	function index($profile)
 	{
 		$this->template
+			->set('profile', $profile)
 			->title($profile->name->full)
 			->build('client_profile/summary');
 	}
