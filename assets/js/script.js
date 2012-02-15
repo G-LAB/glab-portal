@@ -75,7 +75,7 @@ if ($('body').attr('id') == 'default') {
 				setInterval(function () {
 					console.log('Display session timeout dialog.');
 					$('#modal_timeout').modal('show');
-				},100000);
+				},300000);
 
 				// Redirect to Logout After 1 Minute
 				$('#modal_timeout').on('shown', function () {
@@ -106,8 +106,6 @@ if ($('body').attr('id') == 'default') {
 					clearTimeout(window.timeoutSession);
 					clearInterval(window.timeoutCounter);
 				});
-
-				$('#modal_timeout').modal('show');
 			}
 		}
 	]);
