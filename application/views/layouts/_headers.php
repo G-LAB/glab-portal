@@ -31,7 +31,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400">
 
 <!-- Twitter Bootstrap CSS -->
-<link rel="stylesheet" href="<?=site_url('asset/bootstrap/bootstrap.css')?>">
+<link rel="stylesheet" href="<?=site_url('asset/bootstrap/docs/assets/css/bootstrap.css')?>">
 
 <!-- jQuery UI CSS -->
 <link rel="stylesheet" href="<?=site_url('asset/jquery-ui/jquery-ui-1.8.16.custom.css')?>">

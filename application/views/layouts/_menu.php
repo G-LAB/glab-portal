@@ -55,7 +55,7 @@
 	}
 ?>
 
-<div class="navbar navbar-fixed">
+<div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container">
 			<a href="<?=site_url()?>" class="brand">G LAB</a>
