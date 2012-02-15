@@ -146,7 +146,17 @@ background-attachment: fixed;
 }
 
 #masthead #main #heading #login .btn {
+	font-size: 11px;
 	margin-right: 10px;
+	text-transform: uppercase;
+}
+
+#masthead #main #heading #login .btn img {
+	vertical-align: bottom;
+	width: 53px;
+	height: 18px;
+	padding-top: 1px;
+	padding-left: 2px;
 }
 
 #masthead #footer {
@@ -168,6 +178,22 @@ background-attachment: fixed;
 /* @end */
 
 /* @group Controllers */
+
+/* @group Client Profile */
+
+.client_profile h1 {
+	padding-top: 90px;
+	background-color: maroon;
+}
+
+.client_profile #profile_picture {
+	margin-top: -100px;
+	margin-bottom: 10px;
+}
+
+
+
+/* @end */
 
 /* @group Errors */
 

@@ -18,7 +18,7 @@
 					</div>
 					<?php if ($this->acl->is_auth() !== true AND $this->router->fetch_method() !== 'multifactor') : ?>
 					<div id="login" class="span4 justr">
-						<button id="btn-login" class="btn primary">Login via Google</button>
+						<button id="btn-login" class="btn primary">Login via <img src="<?=site_url('asset/img/google_logo_18.png')?>"></button>
 					</div>
 					<?php endif; ?>
 				</div>
