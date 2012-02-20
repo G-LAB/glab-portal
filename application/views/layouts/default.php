@@ -70,10 +70,10 @@
 			<h3>Session Expiration Warning</h3>
 		</div>
 		<div class="modal-body">
-			<p>Your session is about to be terminated due to inactivity...</p>
+			<p>Your session will be terminated in <span class="counter"></span> seconds due to inactivity...</p>
 		</div>
 		<div class="modal-footer">
-			<a class="btn primary" data-dismiss="modal">Stay Signed In</a>
+			<a class="btn btn-primary" data-dismiss="modal">Stay Signed In</a>
 			<a href="<?=site_url('login/destroy')?>" class="btn">Logout</a>
 		</div>
 	</div>
