@@ -46,3 +46,6 @@
 <!-- Async Loading -->
 <script src="<?=site_url('asset/js/modernizr.custom.js')?>"></script>
 <script src="<?=site_url('asset/js/init.js')?>"></script>
+
+<!-- Microformats -->
+<link rel="profile" href="http://microformats.org/profile/hcard">
