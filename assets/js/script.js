@@ -62,7 +62,7 @@ Modernizr.load([
 /* LAYOUT: Default */
 if ($('body').attr('id') == 'default') {
 
-	/* Load Modal */
+	/* Load Bootstrap Modal */
 	Modernizr.load([
 		{
 			load: '/asset/bootstrap/js/bootstrap-modal.js',
@@ -86,6 +86,17 @@ if ($('body').attr('id') == 'default') {
 					console.log('Cancel forced logout.');
 					clearTimeout(window.timeoutSession);
 				});
+			}
+		}
+	]);
+
+	/* Load Bootstrap Tabs */
+	Modernizr.load([
+		{
+			load: '/asset/bootstrap/js/bootstrap-tab.js',
+			complete: function ()
+			{
+				$('.tabbable').tab();
 			}
 		}
 	]);
@@ -124,10 +135,4 @@ glab.portal.loading('hide');
 /* Trigger Prepended Radio Buttons */
 $('.input-prepend input').on('focus', function () {
 	$(this).parent().find('.add-on input[type="radio"]').click();
-});
-
-/* Execute Scripts onLoad */
-$(document).ready(function()
-{
-
 });
