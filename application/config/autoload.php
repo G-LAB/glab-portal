@@ -77,6 +77,7 @@ $autoload['libraries'] = array(
 */
 
 $autoload['helper'] = array(
+	'profile',
 	'language',
 	'url', 'glab_url', 'glib_url',
 	'typography', 'glab_typography',
