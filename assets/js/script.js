@@ -156,3 +156,31 @@ glab.portal.loading('hide');
 $('.input-prepend input').on('focus', function () {
 	$(this).parent().find('.add-on input[type="radio"]').click();
 });
+
+/**
+ * CONTROLLERS AND VIEWS
+ */
+
+/* Preferences */
+if ($('body').hasClass('preferences')) {
+
+	$('#device_request a.btn').on('click', function () {
+
+		button = $(this);
+
+		button.addClass('disabled');
+		$('#device_loading').fadeIn();
+
+		// Request Auth Code via AJAX
+		$.getJSON('/ajax/brand/identities').success(function(data) {
+			button.fadeOut().hide();
+			$('#device_loading').fadeOut().hide();
+			$('#device_response').slideDown();
+		}).error(function() {
+			alert('Could not retrieve authorization code due to an unknown error.  Please try again later.');
+			button.removeClass('disabled');
+			$('#device_loading').fadeOut();
+		});
+
+	})
+}

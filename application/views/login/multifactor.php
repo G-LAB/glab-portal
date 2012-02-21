@@ -13,7 +13,7 @@
 					</div>
 				</div>
 				<div class="controls">
-					<label for="authcode">iPad Activation Code</label>
+					<label for="authcode">Device Activation Code</label>
 					<div class="input-prepend">
 						<span class="add-on"><input type="radio" name="method" id="method" value="authcode"></span>
 						<input class="x-large" id="authcode" name="authcode" size="32" type="text">

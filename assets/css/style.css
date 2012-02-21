@@ -211,4 +211,20 @@ background-attachment: fixed;
 	font-size: 11px;
 }
 
+.preferences #device_loading {
+	display: none;
+	padding-top: 7px;
+}
+
+.preferences #device_response {
+	display: none;
+}
+
+.preferences #device_response #authcode {
+	font-size: 18px;
+	font-family:Consolas,'Lucida Console','DejaVu Sans Mono',monospace;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
 /* @end */

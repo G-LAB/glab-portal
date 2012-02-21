@@ -63,7 +63,8 @@ $autoload['libraries'] = array(
 	'Init',
 	'Session',
 	'ACL',
-	'User_Notice'
+	'User_Notice',
+	'form_validation'
 );
 
 
