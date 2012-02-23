@@ -60,12 +60,22 @@
 					<div class="tab-pane" id="address_<?=$key?>">
 						<div class="span4">
 							<a class="thumbnail">
-								<img src="http://maps.googleapis.com/maps/api/streetview?size=500x230&amp;location=<?=urlencode(preg_replace("/\n/", ' ', $address))?>&amp;fov=90&amp;heading=235&amp;pitch=10&amp;sensor=false" alt="Street View">
+								<img src="http://maps.googleapis.com/maps/api/staticmap?size=500x230&amp;markers=size:normal|<?=urlencode(preg_replace("/\n/", ' ', $address))?>&amp;center=<?=urlencode(preg_replace("/\n/", ' ', $address))?>&amp;zoom=18&amp;sensor=false" alt="Street View">
 							</a>
-							<address class="adr">
-								<span class="hide type"><?=$address->type?></span>
-								<span class="street-address"><?=$address->street_address_1?></span><?php if (empty($address->street_address_2) !== true): ?> <span class="street-address"><?=$address->street_address_2?></span><?php endif; ?>, <span class="locality"><?=$address->locality?></span>, <span class="region"><?=$address->region?></span>, <span class="postal-code"><?=$address->postal_code?></span> <span class="country-name"><?=$address->country_id?></span>
-							</address>
+							<div class="row address">
+								<div class="span3">
+									<address class="adr">
+										<span class="hide type"><?=$address->type?></span>
+										<span class="street-address"><?=$address->street_address_1?></span><br>
+										<?php if (empty($address->street_address_2) !== true): ?> <span class="street-address"><?=$address->street_address_2?></span><br><?php endif; ?>
+										<span class="locality"><?=$address->locality?></span>, <span class="region"><?=$address->region?></span>, <span class="postal-code"><?=$address->postal_code?></span> <span class="country-name"><?=$address->country_id?></span>
+									</address>
+								</div>
+								<div class="span1 justc">
+									<a href="#" data-placement="bottom" title="View Map"><i class="icon-map-marker"></i></a>
+									<a href="#" data-placement="bottom" title="Directions"><i class="icon-road"></i></a>
+								</div>
+							</div>
 						</div>
 					</div>
 					<?php endforeach; ?>

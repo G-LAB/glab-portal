@@ -64,6 +64,17 @@ Modernizr.load([
 /* LAYOUT: Default */
 if ($('body').attr('id') == 'default') {
 
+	/* Load Bootstrap Tabs */
+	Modernizr.load([
+		{
+			load: '/asset/bootstrap/js/bootstrap-tab.js',
+			complete: function ()
+			{
+				$('.tabbable').tab();
+			}
+		}
+	]);
+
 	/* Load Bootstrap Modal */
 	Modernizr.load([
 		{
@@ -118,10 +129,10 @@ if ($('body').attr('id') == 'default') {
 	/* Load Bootstrap Tabs */
 	Modernizr.load([
 		{
-			load: '/asset/bootstrap/js/bootstrap-tab.js',
+			load: '/asset/bootstrap/js/bootstrap-tooltip.js',
 			complete: function ()
 			{
-				$('.tabbable').tab();
+				$('a[title]').tooltip();
 			}
 		}
 	]);
