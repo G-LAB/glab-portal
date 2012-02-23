@@ -29,6 +29,17 @@ class Login extends CI_Controller
 			redirect('dashboard');
 		}
 
+		if ($this->input->get('timeout') !== false)
+		{
+			$this->load->helper('date');
+
+			// Set logout mode
+			$this->template->set('timeout', $this->input->get('timeout'));
+
+			// Set session duration
+			$this->template->set('sess_expiration', strtolower(timespan(0,$this->config->item('sess_expiration'))));
+		}
+
 		// Delete Any and All Session Data
 		$this->session->sess_destroy();
 
@@ -40,19 +51,12 @@ class Login extends CI_Controller
 	 */
 	function destroy()
 	{
-		$this->load->helper('date');
-
 		// Delete Any and All Session Data
 		$this->session->sess_destroy();
 
-		// Set logout mode
-		$this->template->set('timeout', $this->input->get('timeout'));
-
-		// Set session duration
-		$this->template->set('sess_expiration', strtolower(timespan(0,$this->config->item('sess_expiration'))));
-
-		// Send to default controller
-		$this->index();
+		// Redirect to Login
+		$timeout = (int) $this->input->get('timeout');
+		redirect(site_url('login').'?timeout='.$timeout);
 	}
 
 	/**

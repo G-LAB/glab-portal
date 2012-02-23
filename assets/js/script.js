@@ -100,7 +100,7 @@ if ($('body').attr('id') == 'default') {
 
 						// Force Logout After 60 Seconds
 						window.timeoutSession = setTimeout(function () {
-							window.location = '/login/destroy?timeout=1';
+							window.location = '/login/destroy?timeout=1&location=';
 						}, 60000);
 					});
 
