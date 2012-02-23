@@ -23,29 +23,29 @@
 <!-- Apple iOS and Android -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="apple-touch-icon-precomposed" href="<?=site_url('asset/theme/img/icon.png')?>">
-<link rel="apple-touch-startup-image" href="<?=site_url('asset/theme/img/startup.png')?>">
+<link rel="apple-touch-icon-precomposed" href="/assets/theme/img/icon.png">
+<link rel="apple-touch-startup-image" href="/assets/theme/img/startup.png')?>">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1">
 
 <!-- Google Fonts -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400">
 
 <!-- Twitter Bootstrap CSS -->
-<link rel="stylesheet" href="<?=site_url('asset/bootstrap/docs/assets/css/bootstrap.css')?>">
+<link rel="stylesheet" href="/assets/bootstrap/docs/assets/css/bootstrap.css">
 
 <!-- jQuery UI CSS -->
-<link rel="stylesheet" href="<?=site_url('asset/jquery-ui/jquery-ui-1.8.16.custom.css')?>">
+<link rel="stylesheet" href="/assets/jquery-ui/jquery-ui-1.8.16.custom.css">
 
 <!-- G LAB CSS -->
-<link rel="stylesheet" href="<?=site_url('asset/global/css/global.css')?>">
-<link rel="stylesheet" href="<?=site_url('asset/css/style.css')?>">
+<link rel="stylesheet" href="/assets/global/css/global.css">
+<link rel="stylesheet" href="/assets/css/style.css">
 
 <!-- Favicon -->
-<link rel="shortcut icon" href="<?=site_url('asset/img/favicon.ico')?>">
+<link rel="shortcut icon" href="/assets/img/favicon.ico')?>">
 
 <!-- Async Loading -->
-<script src="<?=site_url('asset/js/modernizr.custom.js')?>"></script>
-<script src="<?=site_url('asset/js/init.js')?>"></script>
+<script src="/assets/js/modernizr.custom.js"></script>
+<script src="/assets/js/init.js"></script>
 
 <!-- Microformats -->
-<link rel="profile" href="http://microformats.org/profile/hcard">
+<link rel="profile" href="//microformats.org/profile/hcard">

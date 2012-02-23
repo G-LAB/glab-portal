@@ -37,12 +37,12 @@ glab.class.portal.prototype.loading = function (mode)
 /* Instanciate Portal Class */
 glab.portal = new glab.class.portal();
 
-Modernizr.load('/asset/bootstrap/js/bootstrap-transition.js');
+Modernizr.load('/assets/bootstrap/js/bootstrap-transition.js');
 
 /* Load Dropdown Menus */
 Modernizr.load([
 	{
-		load: '/asset/bootstrap/js/bootstrap-dropdown.js',
+		load: '/assets/bootstrap/js/bootstrap-dropdown.js',
 		complete: function ()
 		{
 			$('.dropdown-toggle').dropdown();
@@ -53,7 +53,7 @@ Modernizr.load([
 /* Activate Alert Close Buttons */
 Modernizr.load([
 	{
-		load: '/asset/bootstrap/js/bootstrap-alert.js',
+		load: '/assets/bootstrap/js/bootstrap-alert.js',
 		complete: function ()
 		{
 			$('.alert-message').alert();
@@ -64,23 +64,21 @@ Modernizr.load([
 /* LAYOUT: Default */
 if ($('body').attr('id') == 'default') {
 
-	/* Load Bootstrap Tabs */
+	/* Load Bootstrap */
 	Modernizr.load([
 		{
-			load: '/asset/bootstrap/js/bootstrap-tab.js',
+			load: [
+				'/assets/bootstrap/js/bootstrap-tab.js',
+				'/assets/bootstrap/js/bootstrap-modal.js',
+				'/assets/bootstrap/js/bootstrap-tooltip.js'
+			],
 			complete: function ()
 			{
-				$('.tabbable').tab();
-			}
-		}
-	]);
+				/* Hide Page Loading Overlay */
+				glab.portal.loading('hide');
 
-	/* Load Bootstrap Modal */
-	Modernizr.load([
-		{
-			load: '/asset/bootstrap/js/bootstrap-modal.js',
-			complete: function ()
-			{
+				$('.tabbable').tab();
+
 				/* Timeout Inactive Sessions */
 				// Determine Session Expiration in Codeigniter
 				ciSessionexpire = glab.cookie.get('ci_sessionexpire')*1000;
@@ -122,21 +120,16 @@ if ($('body').attr('id') == 'default') {
 						clearInterval(window.timeoutCounter);
 					});
 				}
-			}
-		}
-	]);
 
-	/* Load Bootstrap Tabs */
-	Modernizr.load([
-		{
-			load: '/asset/bootstrap/js/bootstrap-tooltip.js',
-			complete: function ()
-			{
 				$('a[title]').tooltip();
 			}
 		}
 	]);
 
+}
+else {
+	/* Hide Page Loading Overlay */
+	glab.portal.loading('hide');
 }
 
 /* LAYOUT: Masthead */
@@ -164,9 +157,6 @@ if ($('body').attr('id') == 'masthead') {
 	});
 
 }
-
-/* Hide Page Loading Overlay */
-glab.portal.loading('hide');
 
 /* Trigger Prepended Radio Buttons */
 $('.input-prepend input').on('focus', function () {

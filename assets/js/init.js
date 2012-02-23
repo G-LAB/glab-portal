@@ -29,8 +29,8 @@ Modernizr.load([
 	{
 		test: window.jQuery && window.jQuery.ui,
 		both: [
-			'/asset/global/js/global.js',
-			'/asset/js/script.js'
+			'/assets/global/js/global.js',
+			'/assets/js/script.js'
 		],
 		nope: function ()
 		{

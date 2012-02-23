@@ -52,18 +52,6 @@
 			<?=$template['partials']['footer']?>
 		</footer>
 	</div>
-	<div id="overlay-loading">
-		<div class="ui-overlay">
-		    <div class="ui-widget-overlay"></div>
-		    <div class="overlay-container">
-			    <div class="ui-widget-shadow ui-corner-all"></div>
-			    <div class="ui-widget ui-widget-content ui-corner-all">
-					<img src="<?=site_url('asset/img/loading_bar.gif')?>">
-					<p>Loading</p>
-				</div>
-			</div>
-		</div>
-	</div>
 	<div id="modal_timeout" class="modal fade ui-helper-hidden">
 		<div class="modal-header">
 			<a href="#" class="close" data-dismiss="modal">×</a>
