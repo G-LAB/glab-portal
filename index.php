@@ -1,0 +1,1 @@
+.codeigniter/index.php
