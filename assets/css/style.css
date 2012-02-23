@@ -26,6 +26,25 @@ body {
 	margin-bottom: -10px;
 }
 
+#header .brand {
+	background: url(../img/navbar_logo.png) no-repeat center center;
+	width: 70px;
+	min-height: 20px;
+	opacity: 0.8;
+	transition: opacity 0.5s;
+	-moz-transition: opacity 0.5s;
+	-webkit-transition: opacity 0.5s;
+	-o-transition: opacity 0.5s;
+}
+
+#header .brand:hover {
+	opacity: 1;
+}
+
+#header .brand span {
+	display: none;
+}
+
 #main .legal {
 	font-size: 10px;
 	line-height: 1.3;

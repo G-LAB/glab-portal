@@ -58,7 +58,7 @@
 <div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container">
-			<a href="<?=site_url()?>" class="brand">G LAB</a>
+			<a href="<?=site_url()?>" class="brand"><span>G LAB</span></a>
 			<?php if ($this->acl->is_auth() === true) : ?>
 			<ul class="nav">
 				<?php foreach ($menu as $label => &$primary) : ?>
