@@ -16,7 +16,7 @@
 				</small>
 			</h2>
 			<ul class="nav nav-tabs nav-stacked">
-				<?php foreach ($profile->email->fetch_array() as $email): ?>
+				<?php foreach ($profile->email->fetch_array(5) as $email): ?>
 				<li class="email"><a><?=$email?></a></li>
 				<?php endforeach; ?>
 			</ul>
@@ -29,7 +29,7 @@
 				</small>
 			</h2>
 			<ul class="nav nav-tabs nav-stacked">
-				<?php foreach ($profile->tel->fetch_array() as $tel): ?>
+				<?php foreach ($profile->tel->fetch_array(5) as $tel): ?>
 				<li class="tel">
 					<span class="hide type"><?=$tel->type?></span>
 					<a><?=tel_format($tel)?></a>
@@ -101,7 +101,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ($profile->manager->fetch_array() as $manager) : ?>
+					<?php foreach ($profile->manager->fetch_array(4) as $manager) : ?>
 					<tr>
 						<td>
 							<?=profile_link($manager->profile->pid)?>
