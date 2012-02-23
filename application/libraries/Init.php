@@ -28,6 +28,27 @@ class Init
 		header("X-WebKit-CSP-Report-Only: $csp");
 		header("X-Content-Security-Policy-Report-Only: $csp");
 
+		/* PASS KEY SYSTEM VARIABLES TO JAVASCRIPT VIA COOKIES */
+		$CI->load->helper('cookie');
+		set_cookie(array(
+			'name'=>'ci_environment',
+			'value'=>ENVIRONMENT,
+			'expire'=>60*10,
+			'secure'=>true
+		));
+		set_cookie(array(
+			'name'=>'ci_baseurl',
+			'value'=>base_url(),
+			'expire'=>60*10,
+			'secure'=>true
+		));
+		set_cookie(array(
+			'name'=>'ci_sessionexpire',
+			'value'=>$CI->config->item('sess_expiration'),
+			'expire'=>60*10,
+			'secure'=>true
+		));
+
 		/* LOAD TEMPLATE LIBRARY W/ LOCAL CONFIG */
 		$CI->load->config('template',true);
 		$template_config = $CI->config->item('template');

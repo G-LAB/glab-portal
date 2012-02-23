@@ -48,6 +48,14 @@ class Login extends CI_Controller
 	}
 
 	/**
+	 * Empty method for AJAX keep alive requests.
+	 */
+	function heartbeat()
+	{
+		$this->session->all_userdata();
+	}
+
+	/**
 	 * Displays JSON data containing OpenID request
 	 */
 	function oid_request()

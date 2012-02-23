@@ -70,42 +70,47 @@ if ($('body').attr('id') == 'default') {
 			load: '/asset/bootstrap/js/bootstrap-modal.js',
 			complete: function ()
 			{
-				/* Timeout Inactive Sessions After 6 Minutes */
-				// Display Message After 5 Minutes
-				setInterval(function () {
-					console.log('Display session timeout dialog.');
-					$('#modal_timeout').modal('show');
-				},300000);
+				/* Timeout Inactive Sessions */
+				// Determine Session Expiration in Codeigniter
+				ciSessionexpire = glab.cookie.get('ci_sessionexpire')*1000;
+				timeoutTrigger = ciSessionexpire-90000;
 
-				// Redirect to Logout After 1 Minute
-				$('#modal_timeout').on('shown', function () {
+				// Prepare Modal if Session Expiration Enabled
+				if (timeoutTrigger > 0) {
 
-					console.log('Start forced logout timer.');
+					// Display Modal One Minute Before Expiration
+					setInterval(function () {
+						$('#modal_timeout').modal('show');
+					},timeoutTrigger);
 
-					// Set Timeout Initial Value
-					var timeoutRemainder = 60;
-					$('#modal_timeout .counter').text(timeoutRemainder);
+					// Start 1 Minute Countdown
+					$('#modal_timeout').on('shown', function () {
 
-					// Adjust Value in Countdown
-					window.timeoutCounter = setInterval(function () {
+						// Set Timeout Initial Value
+						var timeoutRemainder = 60;
 						$('#modal_timeout .counter').text(timeoutRemainder);
-						if (timeoutRemainder > 0) {
-							timeoutRemainder = (timeoutRemainder - 1);
-						}
-					},1000);
 
-					// Force Logout After 60 Seconds
-					window.timeoutSession = setTimeout(function () {
-						window.location = '/login/destroy';
-					}, 60000);
-				});
+						// Adjust Value in Countdown
+						window.timeoutCounter = setInterval(function () {
+							$('#modal_timeout .counter').text(timeoutRemainder);
+							if (timeoutRemainder > 0) {
+								timeoutRemainder = (timeoutRemainder - 1);
+							}
+						},1000);
 
-				// Cancel Forced Logout
-				$('#modal_timeout').on('hide', function () {
-					console.log('Cancel forced logout.');
-					clearTimeout(window.timeoutSession);
-					clearInterval(window.timeoutCounter);
-				});
+						// Force Logout After 60 Seconds
+						window.timeoutSession = setTimeout(function () {
+							window.location = '/login/destroy';
+						}, 60000);
+					});
+
+					// Cancel Forced Logout
+					$('#modal_timeout').on('hide', function () {
+						$.ajax('login/heartbeat');
+						clearTimeout(window.timeoutSession);
+						clearInterval(window.timeoutCounter);
+					});
+				}
 			}
 		}
 	]);
