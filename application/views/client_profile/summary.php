@@ -48,12 +48,16 @@
 				<?php $addresses = $profile->address->fetch_array() ?>
 				<ul class="nav nav-tabs">
 					<?php foreach ($addresses as $key=>$address): ?>
-					<li class="<?=($key==0)?'active':''?>"><a href="#address_<?=$key?>" data-toggle="tab"><i class="icon-home"></i> <?=strtolower($address->locality)?></a></li>
+					<li><a href="#address_<?=$key?>" data-toggle="tab"><i class="icon-home"></i> <?=strtolower($address->locality)?></a></li>
 					<?php endforeach; ?>
 				</ul>
 				<div class="tab-content">
+					<div class="tab-pane active help-block">
+						<i class="icon-arrow-left"></i>
+						<em>Select a city to see the address.</em>
+					</div>
 					<?php foreach ($addresses as $key=>$address): ?>
-					<div class="tab-pane <?=($key==0)?'active':''?>" id="address_<?=$key?>">
+					<div class="tab-pane" id="address_<?=$key?>">
 						<div class="span4">
 							<a class="thumbnail">
 								<img src="http://maps.googleapis.com/maps/api/streetview?size=500x230&amp;location=<?=urlencode(preg_replace("/\n/", ' ', $address))?>&amp;fov=90&amp;heading=235&amp;pitch=10&amp;sensor=false" alt="Street View">
