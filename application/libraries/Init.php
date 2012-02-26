@@ -37,8 +37,8 @@ class Init
 			'secure'=>true
 		));
 		set_cookie(array(
-			'name'=>'ci_baseurl',
-			'value'=>base_url(),
+			'name'=>'ci_siteurl',
+			'value'=>site_url(),
 			'expire'=>60*10,
 			'secure'=>true
 		));
