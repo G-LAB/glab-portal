@@ -29,9 +29,17 @@ Modernizr.load([
 	{
 		test: window.jQuery && window.jQuery.ui,
 		both: [
+			'/assets/bootstrap/js/bootstrap-transition.js',
+			'/assets/bootstrap/js/bootstrap-dropdown.js',
+			'/assets/bootstrap/js/bootstrap-alert.js',
 			'/assets/global/js/global.js',
 			'/assets/js/script.js'
 		],
+		complete: function ()
+		{
+			$('.dropdown-toggle').dropdown();
+			$('.alert-message').alert();
+		},
 		nope: function ()
 		{
 			alert('Failed to load required system components.');

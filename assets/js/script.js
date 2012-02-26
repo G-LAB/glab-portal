@@ -1,3 +1,6 @@
+/* Global Variables */
+siteURL = unescape(glab.cookie.get('ci_siteurl')) + '/';
+console.log(siteURL);
 /* Google Analytics Tracking */
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-18252433-3']);
@@ -36,30 +39,6 @@ glab.class.portal.prototype.loading = function (mode)
 
 /* Instanciate Portal Class */
 glab.portal = new glab.class.portal();
-
-Modernizr.load('/assets/bootstrap/js/bootstrap-transition.js');
-
-/* Load Dropdown Menus */
-Modernizr.load([
-	{
-		load: '/assets/bootstrap/js/bootstrap-dropdown.js',
-		complete: function ()
-		{
-			$('.dropdown-toggle').dropdown();
-		}
-	}
-]);
-
-/* Activate Alert Close Buttons */
-Modernizr.load([
-	{
-		load: '/assets/bootstrap/js/bootstrap-alert.js',
-		complete: function ()
-		{
-			$('.alert-message').alert();
-		}
-	}
-]);
 
 /* LAYOUT: Default */
 if ($('body').attr('id') == 'default') {
@@ -142,7 +121,7 @@ if ($('body').attr('id') == 'masthead') {
 		glab.portal.loading('show');
 
 		// Get OID URL Via AJAX
-		$.getJSON('/login/oid_request')
+		$.getJSON(siteURL + '/login/oid_request')
 			.success(function(data) {
 				// Redirect to Provider
 				window.location = data.result.provider_url;
@@ -178,7 +157,7 @@ if ($('body').hasClass('preferences')) {
 		$('#device_loading').fadeIn();
 
 		// Request Auth Code via AJAX
-		$.getJSON('/ajax/brand/identities').success(function(data) {
+		$.getJSON(siteURL + '/ajax/brand/identities').success(function(data) {
 			button.fadeOut().hide();
 			$('#device_loading').fadeOut().hide();
 			$('#device_response').slideDown();
