@@ -154,6 +154,7 @@ class Login extends CI_Controller
 			$yubikey = new Auth_Yubico(config_item('auth_yubico_id'),config_item('auth_yubico_key'),true);
 
 			$response = $yubikey->verify($otp);
+			log_message('debug', 'Yubico API Response: '.$response);
 
 			// Verify Yubikey OTP
 			if ($response === true)
@@ -186,7 +187,6 @@ class Login extends CI_Controller
 			else
 			{
 				User_Notice::error('Yubico declined key ('.$response->message.').');
-				$this->event->log('auth_failure_mf_yubikey',false,array('error'=>$response->message));
 			}
 
 		}
