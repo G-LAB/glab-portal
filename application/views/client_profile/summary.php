@@ -1,3 +1,4 @@
+<!-- BEGIN Contact Info -->
 <div class="vcard">
 	<span class="fn hide"><?=$profile->name->full?></span>
 	<div class="row">
@@ -83,43 +84,46 @@
 			</div>
 		</section>
 	</div>
-	<div class="row">
-		<section id="managers" class="span12">
-			<h2>
-				Account Managers
-				<small>
-					<a href="#"><i class="icon-plus"></i></a>
-				</small>
-			</h2>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Job Title</th>
-						<th>Permissions</th>
-						<th class="justr">Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php foreach ($profile->manager->fetch_array(4) as $manager) : ?>
-					<tr>
-						<td>
-							<?=profile_link($manager->profile->pid)?>
-						</td>
-						<td>
-							<?=$manager->title?>
-						</td>
-						<td>
-							Full Access
-						</td>
-						<td class="justr">
-							<a href="<?=profile_url($manager->profile->pid)?>" class="btn btn-mini"><i class="icon-user"></i> View Profile</a>
-							<button class="btn btn-mini btn-danger"><i class="icon-remove icon-white"></i> Remove Access</button>
-						</td>
-					</tr>
-					<?php endforeach; ?>
-				</tbody>
-			</table>
-		</section>
-	</div>
 </div>
+<!-- END Contact Info -->
+<!-- BEGIN Managers -->
+<div class="row">
+	<section id="managers" class="span12">
+		<h2>
+			Account Managers
+			<small>
+				<a href="#"><i class="icon-plus"></i></a>
+			</small>
+		</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Job Title</th>
+					<th>Permissions</th>
+					<th class="justr">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($profile->manager->fetch_array(4) as $manager) : ?>
+				<tr>
+					<td>
+						<?=profile_link($manager->profile->pid)?>
+					</td>
+					<td>
+						<?=$manager->title?>
+					</td>
+					<td>
+						Full Access
+					</td>
+					<td class="justr">
+						<a href="<?=profile_url($manager->profile->pid)?>" class="btn btn-mini"><i class="icon-user"></i> View Profile</a>
+						<button class="btn btn-mini btn-danger" data-action="revoke"><i class="icon-remove icon-white"></i> Revoke Access</button>
+					</td>
+				</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+	</section>
+</div>
+<!-- END Managers -->

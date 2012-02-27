@@ -49,7 +49,8 @@ if ($('body').attr('id') == 'default') {
 			load: [
 				'/assets/bootstrap/js/bootstrap-tab.js',
 				'/assets/bootstrap/js/bootstrap-modal.js',
-				'/assets/bootstrap/js/bootstrap-tooltip.js'
+				'/assets/bootstrap/js/bootstrap-tooltip.js',
+				'/assets/bootbox/bootbox.js'
 			],
 			complete: function ()
 			{
@@ -146,9 +147,33 @@ $('.input-prepend input').on('focus', function () {
  * CONTROLLERS AND VIEWS
  */
 
-/* Preferences */
-if ($('body').hasClass('preferences')) {
+/* Client Profile */
+if ($('body').hasClass('client_profile')) {
 
+	// Revoke Manager
+	$('#managers button[data-action="revoke"]').on('click', function () {
+		var trigger = $(this);
+		bootbox.dialog(
+			"Are you sure that you want to revoke access?",
+			[{
+				"label" : "Cancel"
+			},
+			{
+				"label" : "Revoke",
+				"class" : "btn-danger",
+				"callback" : function() {
+					console.log(trigger);
+				}
+			}]
+		);
+	})
+
+}
+
+/* Preferences */
+else if ($('body').hasClass('preferences')) {
+
+	// Request and Display Authorization Code
 	$('#device_request a.btn').on('click', function () {
 
 		button = $(this);
@@ -166,6 +191,6 @@ if ($('body').hasClass('preferences')) {
 			button.removeClass('disabled');
 			$('#device_loading').fadeOut();
 		});
+	});
 
-	})
 }
