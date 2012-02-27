@@ -25,3 +25,6 @@
 [submodule "application/third_party/curl"]
 	path = application/third_party/curl
 	url = git://github.com/philsturgeon/codeigniter-curl.git
+[submodule "assets/bootbox"]
+	path = assets/bootbox
+	url = git://github.com/makeusabrew/bootbox.git
