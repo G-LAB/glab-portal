@@ -88,13 +88,13 @@ if ($('body').attr('id') == 'default') {
 
 						// Force Logout After 60 Seconds
 						window.timeoutSession = setTimeout(function () {
-							window.location = '/login/destroy?timeout=1&location=';
+							window.location = siteURL + '/login/destroy?timeout=1&location=';
 						}, 60000);
 					});
 
 					// Cancel Forced Logout
 					$('#modal_timeout').on('hide', function () {
-						$.ajax('login/heartbeat');
+						$.ajax(siteURL + '/login/heartbeat');
 						clearTimeout(window.timeoutSession);
 						clearInterval(window.timeoutCounter);
 					});
