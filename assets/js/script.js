@@ -1,6 +1,6 @@
 /* Global Variables */
 siteURL = unescape(glab.cookie.get('ci_siteurl')) + '/';
-console.log(siteURL);
+
 /* Google Analytics Tracking */
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-18252433-3']);
@@ -162,7 +162,7 @@ if ($('body').hasClass('client_profile')) {
 				"label" : "Revoke",
 				"class" : "btn-danger",
 				"callback" : function() {
-					console.log(trigger);
+					trigger.closest('tr').remove();
 				}
 			}]
 		);

@@ -13,7 +13,7 @@
 			<h2>
 				Email
 				<small>
-					<a href="#"><i class="icon-plus"></i></a>
+					<a class="action-email-add" title="Add an Email Address"><i class="icon-plus"></i></a>
 				</small>
 			</h2>
 			<ul class="nav nav-tabs nav-stacked">
@@ -26,7 +26,7 @@
 			<h2>
 				Telephone
 				<small>
-					<a href="#"><i class="icon-plus"></i></a>
+					<a class="action-tel-add" title="Add a Telephone Number"><i class="icon-plus"></i></a>
 				</small>
 			</h2>
 			<ul class="nav nav-tabs nav-stacked">
@@ -42,7 +42,7 @@
 			<h2>
 				Address
 				<small>
-					<a href="#"><i class="icon-plus"></i></a>
+					<a class="action-address-add" title="Add an Address"><i class="icon-plus"></i></a>
 				</small>
 			</h2>
 			<div class="tabbable tabs-left">
@@ -92,7 +92,7 @@
 		<h2>
 			Account Managers
 			<small>
-				<a href="#"><i class="icon-plus"></i></a>
+				<a class="action-manager-add" title="Add an Account Manager"><i class="icon-plus"></i></a>
 			</small>
 		</h2>
 		<table class="table">
@@ -122,6 +122,9 @@
 					</td>
 				</tr>
 				<?php endforeach; ?>
+				<tr class="message-empty">
+					<td colspan="4">This profile has no managers. <a class="action-manager-add">Add one?</a></td>
+				</tr>
 			</tbody>
 		</table>
 	</section>
