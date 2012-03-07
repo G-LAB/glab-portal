@@ -6,8 +6,8 @@
  * Copyright 2011 G LAB
  */
 
-class Init 
-{	
+class Init
+{
 	public function __construct ()
 	{
 		$CI =& get_instance();
@@ -18,10 +18,34 @@ class Init
 			$CI->output->enable_profiler(true);
 		}
 
-		/* REQUIRE SSL AT ALL TIMES */
-		// Force ACL to load in time
+		/* LOAD ACL LIBRARY */
+		// Required before autoloads processed
 		$CI->load->library('ACL');
+
+		/* REQUIRE SSL AT ALL TIMES */
 		$CI->acl->require_ssl();
+
+		/* BUILD PERMISSIONS FOR CURRENT USER */
+		$profile = $CI->profile->current();
+		if ($profile->is_employee())
+		{
+			$CI->acl->allow($profile->pid, ':employee');
+		}
+
+		/* CHECK FOR PERMISSIONS */
+		// Check if permissions pass
+		if ($CI->acl->is_allowed('portal_'.$CI->router->fetch_class()) !== true)
+		{
+			// Error if authenticated, redirect if not
+			if ($CI->acl->is_auth() === true)
+			{
+				show_error('Permission denied.',401);
+			}
+			else
+			{
+				redirect('login');
+			}
+		}
 
 		/* SET CONTENT SECURITY POLICY */
 		$csp = "default-src 'self'; font-src 'self' themes.googleusercontent.com; img-src 'self' data: ajax.googleapis.com ajax.aspnetcdn.com ssl.google-analytics.com secure.gravatar.com; script-src 'self' ajax.googleapis.com ajax.aspnetcdn.com https://ssl.google-analytics.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com;";
