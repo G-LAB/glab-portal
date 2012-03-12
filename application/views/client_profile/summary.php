@@ -58,23 +58,23 @@
 						<em>Select a city to see the address.</em>
 					</div>
 					<?php foreach ($addresses as $key=>$address): ?>
-					<div class="tab-pane" id="address_<?=$key?>">
+					<div class="tab-pane" id="address_<?=$key?>" data-address="<?=htmlspecialchars($address->string())?>">
 						<div class="span4">
-							<a class="thumbnail">
-								<img src="http://maps.googleapis.com/maps/api/staticmap?size=500x230&amp;markers=size:normal|<?=urlencode(preg_replace("/\n/", ' ', $address))?>&amp;center=<?=urlencode(preg_replace("/\n/", ' ', $address))?>&amp;zoom=18&amp;sensor=false" alt="Street View">
+							<a href="#" class="thumbnail action-map" data-address="#address_<?=$key?>">
+								<img src="http://maps.googleapis.com/maps/api/staticmap?size=500x230&amp;markers=size:normal|<?=htmlspecialchars($address->string())?>&amp;zoom=16&amp;sensor=false" alt="Map">
 							</a>
 							<div class="row address">
-								<div class="span3">
-									<address class="adr">
-										<span class="hide type"><?=$address->type?></span>
+								<div class="span3 adr">
+									<span class="hide type"><?=$address->type?></span>
+									<address>
 										<span class="street-address"><?=$address->street_address_1?></span><br>
 										<?php if (empty($address->street_address_2) !== true): ?> <span class="street-address"><?=$address->street_address_2?></span><br><?php endif; ?>
 										<span class="locality"><?=$address->locality?></span>, <span class="region"><?=$address->region?></span>, <span class="postal-code"><?=$address->postal_code?></span> <span class="country-name"><?=$address->country_id?></span>
 									</address>
 								</div>
 								<div class="span1 justc">
-									<a href="#" data-placement="bottom" title="View Map"><i class="icon-map-marker"></i></a>
-									<a href="#" data-placement="bottom" title="Directions"><i class="icon-road"></i></a>
+									<a href="#" data-address="#address_<?=$key?>" data-placement="bottom" title="View Map" class="action-map"><i class="icon-map-marker"></i></a>
+									<a href="#" data-address="#address_<?=$key?>" data-placement="bottom" title="Directions" class="action-directions"><i class="icon-road"></i></a>
 								</div>
 							</div>
 						</div>

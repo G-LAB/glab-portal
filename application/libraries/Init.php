@@ -48,7 +48,7 @@ class Init
 		}
 
 		/* SET CONTENT SECURITY POLICY */
-		$csp = "default-src 'self'; font-src 'self' themes.googleusercontent.com; img-src 'self' data: ajax.googleapis.com ajax.aspnetcdn.com ssl.google-analytics.com secure.gravatar.com; script-src 'self' ajax.googleapis.com ajax.aspnetcdn.com https://ssl.google-analytics.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com;";
+		$csp = "default-src 'self'; font-src 'self' themes.googleusercontent.com; img-src 'self' data: *.gstatic.com *.googleapis.com ajax.aspnetcdn.com ssl.google-analytics.com secure.gravatar.com; script-src 'self' *.gstatic.com *.googleapis.com ajax.aspnetcdn.com ssl.google-analytics.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com;";
 		header("X-WebKit-CSP-Report-Only: $csp");
 		header("X-Content-Security-Policy-Report-Only: $csp");
 

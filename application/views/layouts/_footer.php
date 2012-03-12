@@ -23,3 +23,53 @@
 		</div>
 	</div>
 </div>
+
+<!-- Google Map -->
+<div class="modal fade" id="modal_map">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>Google Map</h3>
+	</div>
+	<div class="modal-body">
+		<div id="modal_map_gmap" class="gmap"></div>
+	</div>
+</div>
+
+<!-- Google Directions -->
+<div class="modal fade" id="modal_directions">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>Driving Directions</h3>
+		<div class="row">
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<div class="span5">
+				<div id="modal_directions_form">
+					<form class="form-vertical">
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label" for="origin">Origin</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="origin">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="destination">Destination</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge" id="destination">
+								</div>
+							</div>
+							<div class="form-actions">
+							<button class="btn btn-primary action-directions-submit">Get Directions</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+				<div id="modal_directions_list"></div>
+			</div>
+			<div id="modal_directions_gmap" class="span7 gmap"></div>
+		</div>
+		<div class="modal-footer"></div>
+	</div>
+</div>
