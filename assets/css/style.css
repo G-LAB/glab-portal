@@ -253,7 +253,7 @@ background-attachment: fixed;
 /* @end */
 
 
-.error_404  #main {
+#masthead.error_404 #main {
 	background-image: url(../img/masthead_error_404.png);
 }
 
