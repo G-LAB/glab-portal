@@ -308,8 +308,63 @@ $('.input-prepend input').on('focus', function () {
 /* Client Profile */
 if ($('body').hasClass('client_profile')) {
 
+	// Remove Email Dialog
+	$('#email [data-action="email-remove"]').on('click', function () {
+		var trigger = $(this);
+		bootbox.dialog(
+			"Are you sure that you want to remove this email address?",
+			[{
+				"label" : "Cancel"
+			},
+			{
+				"label" : "Remove",
+				"class" : "btn-danger",
+				"callback" : function() {
+					trigger.closest('li').remove();
+				}
+			}]
+		);
+	});
+
+	// Remove Telephone Number Dialog
+	$('#telephone [data-action="tel-remove"]').on('click', function () {
+		var trigger = $(this);
+		bootbox.dialog(
+			"Are you sure that you want to remove this telephone number?",
+			[{
+				"label" : "Cancel"
+			},
+			{
+				"label" : "Remove",
+				"class" : "btn-danger",
+				"callback" : function() {
+					trigger.closest('li').remove();
+				}
+			}]
+		);
+	});
+
+	// Remove Address Dialog
+	$('#address [data-action="address-remove"]').on('click', function () {
+		var trigger = $(this);
+		bootbox.dialog(
+			"Are you sure that you want to remove this address?",
+			[{
+				"label" : "Cancel"
+			},
+			{
+				"label" : "Remove",
+				"class" : "btn-danger",
+				"callback" : function() {
+					$('#address .active').remove();
+					$('#address .help-block').addClass('active');
+				}
+			}]
+		);
+	});
+
 	// Revoke Manager Dialog
-	$('#managers button[data-action="revoke"]').on('click', function () {
+	$('#managers button[data-action="manager-revoke"]').on('click', function () {
 		var trigger = $(this);
 		bootbox.dialog(
 			"Are you sure that you want to revoke access?",
@@ -324,7 +379,7 @@ if ($('body').hasClass('client_profile')) {
 				}
 			}]
 		);
-	})
+	});
 
 }
 
