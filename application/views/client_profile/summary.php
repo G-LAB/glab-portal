@@ -103,7 +103,7 @@
 <!-- END Contact Info -->
 <!-- BEGIN Managers -->
 <div class="row">
-	<section id="managers" class="span12">
+	<section id="manager" class="span12">
 		<h2>
 			Account Managers
 			<small>

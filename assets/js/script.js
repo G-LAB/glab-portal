@@ -364,7 +364,7 @@ if ($('body').hasClass('client_profile')) {
 	});
 
 	// Revoke Manager Dialog
-	$('#managers button[data-action="manager-revoke"]').on('click', function () {
+	$('#manager button[data-action="manager-revoke"]').on('click', function () {
 		var trigger = $(this);
 		bootbox.dialog(
 			"Are you sure that you want to revoke access?",
