@@ -61,7 +61,7 @@
 								</div>
 							</div>
 							<div class="form-actions">
-							<button class="btn btn-primary action-directions-submit">Get Directions</button>
+							<button id="modal_directions_submit" class="btn btn-primary">Get Directions</button>
 							</div>
 						</fieldset>
 					</form>
@@ -70,6 +70,5 @@
 			</div>
 			<div id="modal_directions_gmap" class="span7 gmap"></div>
 		</div>
-		<div class="modal-footer"></div>
 	</div>
 </div>

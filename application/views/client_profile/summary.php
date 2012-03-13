@@ -13,12 +13,20 @@
 			<h2>
 				Email
 				<small>
-					<a class="action-email-add" title="Add an Email Address"><i class="icon-plus"></i></a>
+					<i data-action="email-add" title="Add an Email Address" class="icon-plus"></i>
 				</small>
 			</h2>
 			<ul class="nav nav-tabs nav-stacked">
 				<?php foreach ($profile->email->fetch_array(5) as $email): ?>
-				<li class="email"><a><?=$email?></a></li>
+				<li class="email">
+					<a>
+						<?=$email?>
+						<div class="actions pull-right">
+							<i data-action="email-send" class="icon-envelope" title="Send Message"></i>
+							<i data-action="email-remove" class="icon-remove" title="Remove Email Address"></i>
+						</div>
+					</a>
+				</li>
 				<?php endforeach; ?>
 			</ul>
 		</section>
@@ -26,14 +34,20 @@
 			<h2>
 				Telephone
 				<small>
-					<a class="action-tel-add" title="Add a Telephone Number"><i class="icon-plus"></i></a>
+					<i data-action="tel-add" title="Add a Telephone Number" class="icon-plus"></i>
 				</small>
 			</h2>
 			<ul class="nav nav-tabs nav-stacked">
 				<?php foreach ($profile->tel->fetch_array(5) as $tel): ?>
 				<li class="tel">
 					<span class="hide type"><?=$tel->type?></span>
-					<a><?=tel_format($tel)?></a>
+					<a>
+						<?=tel_format($tel)?>
+						<div class="actions pull-right">
+							<i data-action="tel-call" class="icon-share" title="Click to Call"></i>
+							<i data-action="tel-remove" class="icon-remove" title="Remove Telephone Number"></i>
+						</div>
+					</a>
 				</li>
 				<?php endforeach; ?>
 			</ul>
@@ -42,7 +56,7 @@
 			<h2>
 				Address
 				<small>
-					<a class="action-address-add" title="Add an Address"><i class="icon-plus"></i></a>
+					<i data-action="address-add" title="Add an Address" class="icon-plus"></i>
 				</small>
 			</h2>
 			<div class="tabbable tabs-left">
@@ -73,8 +87,9 @@
 									</address>
 								</div>
 								<div class="span1 justc">
-									<a href="#" data-address="#address_<?=$key?>" data-placement="bottom" title="View Map" class="action-map"><i class="icon-map-marker"></i></a>
-									<a href="#" data-address="#address_<?=$key?>" data-placement="bottom" title="Directions" class="action-directions"><i class="icon-road"></i></a>
+									<i data-action="modal-map" data-address="#address_<?=$key?>" data-placement="bottom" title="View Map" class="icon-map-marker"></i>
+									<i data-action="modal-directions" data-address="#address_<?=$key?>" data-placement="bottom" title="Directions" class="icon-road"></i>
+									<i data-action="address-remove" data-placement="bottom" title="Remove Address" class="icon-remove"></i>
 								</div>
 							</div>
 						</div>
@@ -92,7 +107,7 @@
 		<h2>
 			Account Managers
 			<small>
-				<a class="action-manager-add" title="Add an Account Manager"><i class="icon-plus"></i></a>
+				<i data-action="manager-add" title="Add an Account Manager" class="icon-plus"></i>
 			</small>
 		</h2>
 		<table class="table">

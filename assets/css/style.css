@@ -20,7 +20,7 @@ body {
 	width: 100%;
 }
 
-a[class^=action], a.dropdown-toggle {
+[data-action], a.dropdown-toggle {
 	cursor: pointer;
 }
 
@@ -268,6 +268,23 @@ background-attachment: fixed;
 	font-size: 11px;
 	padding-top: 5px;
 	line-height: normal;
+}
+
+.client_profile .nav-tabs a {
+	-moz-transition: opacity 0.5s;
+	-webkit-transition: opacity 0.2s;
+	-o-transition: opacity 0.5s;
+}
+
+.client_profile .nav-tabs a .actions  {
+	opacity: 0;
+	-moz-transition: opacity 0.5s;
+	-webkit-transition: opacity 0.2s;
+	-o-transition: opacity 0.5s;
+}
+
+.client_profile .nav-tabs a:hover .actions  {
+	opacity: 1;
 }
 
 .preferences #device_loading {

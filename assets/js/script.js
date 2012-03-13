@@ -118,6 +118,7 @@ if ($('body').attr('id') == 'default') {
 				/* Hide Page Loading Overlay */
 				glab.portal.loading('hide');
 
+				/* Tabs */
 				$('.tabbable').tab();
 
 				/* Timeout Inactive Sessions */
@@ -163,10 +164,10 @@ if ($('body').attr('id') == 'default') {
 				}
 
 				/* Enable Tooltips */
-				$('a[title]').tooltip();
+				$('a[title], i[data-action]').tooltip();
 
 				/* Listen for Google Map Actions */
-				$('.action-map').on('click', function (event) {
+				$('[data-action="modal-map"]').on('click', function (event) {
 					event.preventDefault();
 
 					var trigger = $(this);
@@ -202,7 +203,7 @@ if ($('body').attr('id') == 'default') {
 
 				/* Listen for Google Directions Actions */
 				// Modal Show Event
-				$('.action-directions').on('click', function (event) {
+				$('[data-action="modal-directions"]').on('click', function (event) {
 					event.preventDefault();
 
 					var trigger = $(this);
@@ -234,7 +235,7 @@ if ($('body').attr('id') == 'default') {
 				});
 
 				// Modal Submit Event
-				$('.action-directions-submit').on('click', function (event) {
+				$('#modal_directions_submit').on('click', function (event) {
 					event.preventDefault();
 
 					var modal = $('#modal_directions');
