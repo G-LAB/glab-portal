@@ -1,20 +1,18 @@
 <div class="row">
 	<div class="span7 offset1">
-		<form action="<?=current_url()?>"  method="post">
+		<form action="<?=current_url()?>"  method="post" class="form-vertical">
 			<legend>Choose an Authentication Method</legend>
 			<fieldset class="control-group">
 				<div class="controls">
 					<label for="otp">Yubikey One-Time Password</label>
-					<div class="input">
-						<div class="input-prepend">
-							<span class="add-on"><input type="radio" name="method" id="method" value="yubikey" checked></span><input class="x-large" id="otp" name="otp" size="32" type="text" autocomplete="off" autofocus>
-						</div>
+					<div class="input-prepend">
+						<span class="add-on"><input type="radio" name="method" id="method" value="yubikey" checked></span><input class="span4" id="otp" name="otp" size="32" type="text" autocomplete="off" autofocus>
 					</div>
 				</div>
 				<div class="controls">
 					<label for="authcode">Device Activation Code</label>
 					<div class="input-prepend">
-						<span class="add-on"><input type="radio" name="method" id="method" value="authcode"></span><input class="x-large" id="authcode" name="authcode" size="32" type="text">
+						<span class="add-on"><input type="radio" name="method" id="method" value="authcode"></span><input class="span4" id="authcode" name="authcode" size="32" type="text">
 					</div>
 				</div>
 				<div class="controls">
