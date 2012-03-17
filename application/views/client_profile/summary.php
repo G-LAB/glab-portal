@@ -74,7 +74,7 @@
 					<?php foreach ($addresses as $key=>$address): ?>
 					<div class="tab-pane" id="address_<?=$key?>" data-address="<?=htmlspecialchars($address->string())?>">
 						<div class="span4">
-							<a href="#" class="thumbnail action-map" data-address="#address_<?=$key?>">
+							<a data-action="modal-map" data-address="#address_<?=$key?>" class="thumbnail">
 								<img src="http://maps.googleapis.com/maps/api/staticmap?size=500x230&amp;markers=size:normal|<?=htmlspecialchars($address->string())?>&amp;zoom=16&amp;sensor=false" alt="Map">
 							</a>
 							<div class="row address">
