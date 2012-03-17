@@ -14,35 +14,16 @@ Modernizr.load([
 			}
 		}
 	},
-	/* jQuery UI */
-	{
-		load: '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js',
-		complete: function ()
-		{
-			if (!window.jQuery.ui)
-			{
-				Modernizr.load('//ajax.aspnetcdn.com/ajax/jquery.ui/1.8.16/jquery-ui.min.js');
-			}
-		}
-	},
 	/* Portal Assets */
 	{
-		test: window.jQuery && window.jQuery.ui,
+		test: window.jQuery,
 		both: [
-			'/assets/bootstrap/js/bootstrap-transition.js',
-			'/assets/bootstrap/js/bootstrap-dropdown.js',
-			'/assets/bootstrap/js/bootstrap-alert.js',
 			'/assets/global/js/global.js',
 			'/assets/js/script.js'
 		],
-		complete: function ()
-		{
-			$('.dropdown-toggle').dropdown();
-			$('.alert-message').alert();
-		},
 		nope: function ()
 		{
-			alert('Failed to load required system components.');
+			alert('Failed to load required system components (jQuery).');
 		}
 	}
 ]);

@@ -25,10 +25,12 @@ glab.class.portal = function () {};
  */
 glab.class.portal.prototype.loading = function (mode)
 {
-	var overlayLoading = $('#overlay-loading');
+	var overlayLoading = $('#overlay_loading');
 
 	if (mode == 'show' || mode == true)
 	{
+		$('#loading_bar').css({width: '100%'});
+		$('#loading_file').text('  ');
 		overlayLoading.fadeIn('slow');
 	}
 	else if (mode == 'hide' || mode == false)
@@ -100,183 +102,204 @@ glab.class.portal.prototype.gmapBind = function ()
 /* Instanciate Portal Class */
 glab.portal = new glab.class.portal();
 
+/* Trigger Prepended Radio Buttons */
+$('.input-prepend input').on('focus', function () {
+	$(this).parent().find('.add-on input[type="radio"]').click();
+});
+
+/* Trigger Overlay on Unload */
+$(window).unload(function() {
+	glab.portal.loading('show');
+});
+
+/* Load Assets */
+var assets = [
+	'/assets/bootstrap/js/bootstrap-transition.js',
+	'/assets/bootstrap/js/bootstrap-dropdown.js',
+	'/assets/bootstrap/js/bootstrap-alert.js',
+	'/assets/bootstrap/js/bootstrap-tab.js',
+	'/assets/bootstrap/js/bootstrap-modal.js',
+	'/assets/bootstrap/js/bootstrap-tooltip.js',
+	'//maps.googleapis.com/maps/api/js?key=AIzaSyDX7KuCoJpi0h8r-9yiBBkePoyYQvLL4F0&callback=glab.portal.gmapInit&sensor=false',
+	'/assets/bootbox/bootbox.js'
+]
+
+/* Load Bootstrap */
+Modernizr.load([
+	{
+		load: assets,
+		callback: function (url, result, key) {
+			$('#loading_bar').css({width: (key/assets.length*100) + '%'});
+			$('#loading_file').text('Initialized ' + url);
+		},
+		complete: function ()
+		{
+			/* Hide Page Loading Overlay */
+			glab.portal.loading('hide');
+
+			/* Dropdown Menus */
+			$('.dropdown-toggle').dropdown();
+
+			/* Alert Message Close Buttons */
+			$('.alert-message').alert();
+
+			/* Tabs */
+			$('.tabbable').tab();
+
+			/* Enable Tooltips */
+			$('a[title], i[data-action]').tooltip();
+
+			/* Listen for Google Map Actions */
+			$('[data-action="modal-map"]').on('click', function (event) {
+				event.preventDefault();
+
+				var trigger = $(this);
+				var modal = $('#modal_map');
+				var geocoder = new google.maps.Geocoder();
+				var address;
+
+				if (trigger.data('address') != undefined && trigger.data('address').substring(0,1) == '#') {
+					if ($(trigger.data('address')).data('address') != undefined) {
+						address = $(trigger.data('address')).data('address');
+					} else {
+						address = $(trigger.data('address')).text();
+					}
+				} else {
+					address = trigger.data('address');
+				}
+
+				geocoder.geocode( { 'address': address}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						mapModalMap.setCenter(results[0].geometry.location);
+						var marker = new google.maps.Marker({
+								map: mapModalMap,
+								position: results[0].geometry.location
+						});
+					} else {
+						alert("Geocode was not successful for the following reason: " + status);
+					}
+				});
+
+				modal.find('h3').text(address);
+				modal.modal('show');
+			});
+
+			/* Listen for Google Directions Actions */
+			// Modal Show Event
+			$('[data-action="modal-directions"]').on('click', function (event) {
+				event.preventDefault();
+
+				var trigger = $(this);
+				var modal = $('#modal_directions');
+
+				if (trigger.data('address') != undefined && trigger.data('address').substring(0,1) == '#') {
+					if ($(trigger.data('address')).data('address') != undefined) {
+						address = $(trigger.data('address')).data('address');
+					} else {
+						address = $(trigger.data('address')).text();
+					}
+				} else {
+					address = trigger.data('address');
+				}
+
+				// Reset Modal to Original State
+				modal.find('#modal_directions_form').show();
+				modal.find('#modal_directions_list').hide().empty();
+				mapDirectionsMap.setZoom(9);
+
+				// Set Destination Address
+				modal.find('#destination').val(address);
+
+				// Show Modal
+				modal.modal('show').css({
+					width: 'auto',
+					'margin-left': function () { return -($(this).width() / 2); }
+				});
+			});
+
+			// Modal Submit Event
+			$('#modal_directions_submit').on('click', function (event) {
+				event.preventDefault();
+
+				var modal = $('#modal_directions');
+
+				var origin = modal.find('#origin').val();
+				var destination = modal.find('#destination').val();
+
+				mapDirectionsService.route({
+					origin:origin,
+					destination:destination,
+					travelMode: google.maps.TravelMode.DRIVING
+				},
+				function(response, status) {
+					if (status == google.maps.DirectionsStatus.OK) {
+
+						// Toggle Form
+						modal.find('#modal_directions_form').fadeOut('fast', function () {
+							// Render and Show
+							mapDirectionsRenderer.setDirections(response);
+							modal.find('#modal_directions_list').empty().fadeIn('slow');
+						});
+					}
+				});
+			});
+		}
+	}
+]);
+
 /* LAYOUT: Default */
 if ($('body').attr('id') == 'default') {
 
-	/* Load Bootstrap */
-	Modernizr.load([
-		{
-			load: [
-				'/assets/bootstrap/js/bootstrap-tab.js',
-				'/assets/bootstrap/js/bootstrap-modal.js',
-				'/assets/bootstrap/js/bootstrap-tooltip.js',
-				'//maps.googleapis.com/maps/api/js?key=AIzaSyDX7KuCoJpi0h8r-9yiBBkePoyYQvLL4F0&callback=glab.portal.gmapInit&sensor=false',
-				'/assets/bootbox/bootbox.js'
-			],
-			complete: function ()
-			{
-				/* Hide Page Loading Overlay */
-				glab.portal.loading('hide');
+	/* Timeout Inactive Sessions */
+	// Determine Session Expiration in Codeigniter
+	ciSessionexpire = glab.cookie.get('ci_sessionexpire')*1000;
+	timeoutTrigger = ciSessionexpire-90000;
 
-				/* Tabs */
-				$('.tabbable').tab();
+	// Prepare Modal if Session Expiration Enabled
+	if (timeoutTrigger > 0) {
 
-				/* Timeout Inactive Sessions */
-				// Determine Session Expiration in Codeigniter
-				ciSessionexpire = glab.cookie.get('ci_sessionexpire')*1000;
-				timeoutTrigger = ciSessionexpire-90000;
+		// Display Modal One Minute Before Expiration
+		setInterval(function () {
+			$('#modal_timeout').modal('show');
+		},timeoutTrigger);
 
-				// Prepare Modal if Session Expiration Enabled
-				if (timeoutTrigger > 0) {
+		// Start 1 Minute Countdown
+		$('#modal_timeout').on('shown', function () {
 
-					// Display Modal One Minute Before Expiration
-					setInterval(function () {
-						$('#modal_timeout').modal('show');
-					},timeoutTrigger);
+			// Set Timeout Initial Value
+			var timeoutRemainder = 60;
+			$('#modal_timeout .counter').text(timeoutRemainder);
 
-					// Start 1 Minute Countdown
-					$('#modal_timeout').on('shown', function () {
-
-						// Set Timeout Initial Value
-						var timeoutRemainder = 60;
-						$('#modal_timeout .counter').text(timeoutRemainder);
-
-						// Adjust Value in Countdown
-						window.timeoutCounter = setInterval(function () {
-							$('#modal_timeout .counter').text(timeoutRemainder);
-							if (timeoutRemainder > 0) {
-								timeoutRemainder = (timeoutRemainder - 1);
-							}
-						},1000);
-
-						// Force Logout After 60 Seconds
-						window.timeoutSession = setTimeout(function () {
-							window.location = siteURL + '/login/destroy?timeout=1&location=';
-						}, 60000);
-					});
-
-					// Cancel Forced Logout
-					$('#modal_timeout').on('hide', function () {
-						$.ajax(siteURL + '/login/heartbeat');
-						clearTimeout(window.timeoutSession);
-						clearInterval(window.timeoutCounter);
-					});
+			// Adjust Value in Countdown
+			window.timeoutCounter = setInterval(function () {
+				$('#modal_timeout .counter').text(timeoutRemainder);
+				if (timeoutRemainder > 0) {
+					timeoutRemainder = (timeoutRemainder - 1);
 				}
+			},1000);
 
-				/* Enable Tooltips */
-				$('a[title], i[data-action]').tooltip();
+			// Force Logout After 60 Seconds
+			window.timeoutSession = setTimeout(function () {
+				window.location = siteURL + '/login/destroy?timeout=1&location=';
+			}, 60000);
+		});
 
-				/* Listen for Google Map Actions */
-				$('[data-action="modal-map"]').on('click', function (event) {
-					event.preventDefault();
-
-					var trigger = $(this);
-					var modal = $('#modal_map');
-					var geocoder = new google.maps.Geocoder();
-					var address;
-
-					if (trigger.data('address') != undefined && trigger.data('address').substring(0,1) == '#') {
-						if ($(trigger.data('address')).data('address') != undefined) {
-							address = $(trigger.data('address')).data('address');
-						} else {
-							address = $(trigger.data('address')).text();
-						}
-					} else {
-						address = trigger.data('address');
-					}
-
-					geocoder.geocode( { 'address': address}, function(results, status) {
-						if (status == google.maps.GeocoderStatus.OK) {
-							mapModalMap.setCenter(results[0].geometry.location);
-							var marker = new google.maps.Marker({
-									map: mapModalMap,
-									position: results[0].geometry.location
-							});
-						} else {
-							alert("Geocode was not successful for the following reason: " + status);
-						}
-					});
-
-					modal.find('h3').text(address);
-					modal.modal('show');
-				});
-
-				/* Listen for Google Directions Actions */
-				// Modal Show Event
-				$('[data-action="modal-directions"]').on('click', function (event) {
-					event.preventDefault();
-
-					var trigger = $(this);
-					var modal = $('#modal_directions');
-
-					if (trigger.data('address') != undefined && trigger.data('address').substring(0,1) == '#') {
-						if ($(trigger.data('address')).data('address') != undefined) {
-							address = $(trigger.data('address')).data('address');
-						} else {
-							address = $(trigger.data('address')).text();
-						}
-					} else {
-						address = trigger.data('address');
-					}
-
-					// Reset Modal to Original State
-					modal.find('#modal_directions_form').show();
-					modal.find('#modal_directions_list').hide().empty();
-					mapDirectionsMap.setZoom(9);
-
-					// Set Destination Address
-					modal.find('#destination').val(address);
-
-					// Show Modal
-					modal.modal('show').css({
-						width: 'auto',
-						'margin-left': function () { return -($(this).width() / 2); }
-					});
-				});
-
-				// Modal Submit Event
-				$('#modal_directions_submit').on('click', function (event) {
-					event.preventDefault();
-
-					var modal = $('#modal_directions');
-
-					var origin = modal.find('#origin').val();
-					var destination = modal.find('#destination').val();
-
-					mapDirectionsService.route({
-						origin:origin,
-						destination:destination,
-						travelMode: google.maps.TravelMode.DRIVING
-					},
-					function(response, status) {
-						if (status == google.maps.DirectionsStatus.OK) {
-
-							// Toggle Form
-							modal.find('#modal_directions_form').fadeOut('fast', function () {
-								// Render and Show
-								mapDirectionsRenderer.setDirections(response);
-								modal.find('#modal_directions_list').empty().fadeIn('slow');
-							});
-						}
-					});
-				});
-			}
-		}
-	]);
-
-}
-else {
-	/* Hide Page Loading Overlay */
-	glab.portal.loading('hide');
+		// Cancel Forced Logout
+		$('#modal_timeout').on('hide', function () {
+			$.ajax(siteURL + '/login/heartbeat');
+			clearTimeout(window.timeoutSession);
+			clearInterval(window.timeoutCounter);
+		});
+	}
 }
 
 /* LAYOUT: Masthead */
 if ($('body').attr('id') == 'masthead') {
 
 	/* Login Button */
-	$('#btn-login').on('click', function () {
+	$('#btn_login').on('click', function () {
 
-		// Show Loading Overlay
+		// Show Overlay
 		glab.portal.loading('show');
 
 		// Get OID URL Via AJAX
@@ -295,11 +318,6 @@ if ($('body').attr('id') == 'masthead') {
 	});
 
 }
-
-/* Trigger Prepended Radio Buttons */
-$('.input-prepend input').on('focus', function () {
-	$(this).parent().find('.add-on input[type="radio"]').click();
-});
 
 /**
  * CONTROLLERS AND VIEWS

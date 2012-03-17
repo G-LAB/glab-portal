@@ -90,6 +90,7 @@ class Init
 		$CI->template->set_partial('headers','layouts/_headers');
 		// Layout Components
 		$CI->template->set_partial('menu','layouts/_menu');
+		$CI->template->set_partial('global','layouts/_global');
 		$CI->template->set_partial('hud','layouts/_hud');
 		$CI->template->set_partial('side','layouts/_side');
 		$CI->template->set_partial('footer','layouts/_footer');

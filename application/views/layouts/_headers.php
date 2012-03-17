@@ -33,9 +33,6 @@
 <!-- Twitter Bootstrap CSS -->
 <link rel="stylesheet" href="/assets/bootstrap/docs/assets/css/bootstrap.css">
 
-<!-- jQuery UI CSS -->
-<link rel="stylesheet" href="/assets/jquery-ui/jquery-ui-1.8.16.custom.css">
-
 <!-- G LAB CSS -->
 <link rel="stylesheet" href="/assets/global/css/global.css">
 <link rel="stylesheet" href="/assets/css/style.css">

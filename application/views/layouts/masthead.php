@@ -18,7 +18,7 @@
 					</div>
 					<?php if ($this->acl->is_auth() !== true AND $this->router->fetch_method() !== 'multifactor') : ?>
 					<div id="login" class="span4 justr">
-						<button id="btn-login" class="btn primary">Login via <img src="/assets/img/google_logo_18.png" alt="Google Logo"></button>
+						<button id="btn_login" class="btn primary">Login via <img src="/assets/img/google_logo_18.png" alt="Google Logo"></button>
 					</div>
 					<?php endif; ?>
 				</div>
@@ -40,5 +40,6 @@
 			<?=$template['partials']['footer']?>
 		</footer>
 	</div>
+	<?=$template['partials']['global']?>
 </body>
 </html>

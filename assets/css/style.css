@@ -98,49 +98,24 @@ table tr + tr.message-empty {
 	text-transform: uppercase;
 }
 
-#overlay-loading {
-	
+#overlay_loading .modal .progress {
+	height: 20px;
 }
 
-#overlay-loading .ui-widget-overlay {
-	z-index: 1001;
-}
-
-#overlay-loading .overlay-container {
-	z-index: 1002;
-}
-
-#overlay-loading .overlay-container .ui-widget-shadow {
-	width: 302px; 
-	height: 152px; 
-	position: absolute;
-}
-
-#overlay-loading .overlay-container .ui-widget-content {
-	position: absolute; 
-	width: 280px; 
-	height: 130px; 
-	padding: 10px;
-	text-align: center;
-}
-
-#overlay-loading .overlay-container .ui-widget-content img {
-	margin-top: 30px;
-}
-
-#overlay-loading .overlay-container .ui-widget-content p {
+#overlay_loading .modal h1 {
 	text-transform: uppercase;
-	font: 300 19px "Open Sans", "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
-	color: #bab7ba;
+	font: 300 22px "Open Sans", "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	color: #5e5e5e;
 	margin-top: 5px;
+	text-align: center;
+	letter-spacing: 2px;
 }
 
-#overlay-loading .overlay-container {
-    position:fixed;
-    top:50%;
-    left:50%;
-    margin-top:-150px; /* negative half the size of height */
-    margin-left:-150px; /* negative half the size of width */
+#overlay_loading .modal p {
+	text-align: center;
+	margin-top: 5px;
+	text-transform: uppercase;
+	font-size: 11px;
 }
 
 /* @group Layouts */
@@ -220,11 +195,6 @@ background-attachment: fixed;
 #masthead #footer {
 	color: #c0c0c0;
 	text-shadow: black 1px 1px 1px;
-}
-
-#masthead #overlay-loading .ui-widget-overlay  {
-	background-color: black;
-	background-image: none;
 }
 
 
