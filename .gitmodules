@@ -28,3 +28,6 @@
 [submodule "assets/bootbox"]
 	path = assets/bootbox
 	url = git://github.com/makeusabrew/bootbox.git
+[submodule "assets/icanhaz"]
+	path = assets/icanhaz
+	url = git://github.com/andyet/ICanHaz.js
