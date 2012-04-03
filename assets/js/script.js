@@ -19,49 +19,8 @@ _gaq.push(['_trackPageview']);
 glab.class.portal = function () {};
 
 /**
- * Hide or Show Loading Overlay
- * @param  string|bool mode
- * @return null
+ * Convert map classes to Google Maps
  */
-glab.class.portal.prototype.loading = function (mode)
-{
-	var overlayLoading = $('#overlay_loading');
-
-	if (mode == 'show' || mode == true)
-	{
-		$('#loading_bar').css({width: '100%'});
-		$('#loading_file').text('  ');
-		overlayLoading.fadeIn('slow');
-	}
-	else if (mode == 'hide' || mode == false)
-	{
-		overlayLoading.fadeOut('fast');
-	}
-}
-
-glab.class.portal.prototype.gmapInit = function ()
-{
-	/* Basic Map in Modal */
-	mapModalMap = new google.maps.Map(document.getElementById("modal_map_gmap"), {
-		zoom: 14,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
-	});
-
-	/* Directions in Modal */
-	mapDirectionsService = new google.maps.DirectionsService();
-	mapDirectionsRenderer = new google.maps.DirectionsRenderer();
-	mapDirectionsMap = new google.maps.Map(document.getElementById("modal_directions_gmap"), {
-		zoom: 9,
-		center: new google.maps.LatLng(34.05, -118.24),
-		mapTypeId: google.maps.MapTypeId.ROADMAP
-	});
-	mapDirectionsRenderer.setMap(mapDirectionsMap);
-	mapDirectionsRenderer.setPanel(document.getElementById("modal_directions_list"));
-
-	/* Bind Map Elements */
-	this.gmapBind();
-}
-
 glab.class.portal.prototype.gmapBind = function ()
 {
 	$('.map').each(function () {
@@ -99,6 +58,53 @@ glab.class.portal.prototype.gmapBind = function ()
 	});
 }
 
+/**
+ * Google Maps API Callback
+ */
+glab.class.portal.prototype.gmapInit = function ()
+{
+	/* Basic Map in Modal */
+	mapModalMap = new google.maps.Map(document.getElementById("modal_map_gmap"), {
+		zoom: 14,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	});
+
+	/* Directions in Modal */
+	mapDirectionsService = new google.maps.DirectionsService();
+	mapDirectionsRenderer = new google.maps.DirectionsRenderer();
+	mapDirectionsMap = new google.maps.Map(document.getElementById("modal_directions_gmap"), {
+		zoom: 9,
+		center: new google.maps.LatLng(34.05, -118.24),
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	});
+	mapDirectionsRenderer.setMap(mapDirectionsMap);
+	mapDirectionsRenderer.setPanel(document.getElementById("modal_directions_list"));
+
+	/* Bind Map Elements */
+	this.gmapBind();
+}
+
+/**
+ * Hide or Show Loading Overlay
+ * @param  string|bool mode
+ * @return null
+ */
+glab.class.portal.prototype.loading = function (mode)
+{
+	var overlayLoading = $('#overlay_loading');
+
+	if (mode == 'show' || mode == true)
+	{
+		$('#loading_bar').css({width: '100%'});
+		$('#loading_file').text('  ');
+		overlayLoading.fadeIn('slow');
+	}
+	else if (mode == 'hide' || mode == false)
+	{
+		overlayLoading.fadeOut('fast');
+	}
+}
+
 /* Instanciate Portal Class */
 glab.portal = new glab.class.portal();
 
@@ -121,7 +127,8 @@ var assets = [
 	'/assets/bootstrap/js/bootstrap-modal.js',
 	'/assets/bootstrap/js/bootstrap-tooltip.js',
 	'//maps.googleapis.com/maps/api/js?key=AIzaSyDX7KuCoJpi0h8r-9yiBBkePoyYQvLL4F0&callback=glab.portal.gmapInit&sensor=false',
-	'/assets/bootbox/bootbox.js'
+	'/assets/bootbox/bootbox.js',
+	'/assets/icanhaz/ICanHaz.min.js'
 ]
 
 /* Load Bootstrap */
@@ -134,6 +141,9 @@ Modernizr.load([
 		},
 		complete: function ()
 		{
+			/* Release Hold */
+			$.holdReady(false);
+
 			/* Hide Page Loading Overlay */
 			glab.portal.loading('hide');
 
@@ -147,7 +157,11 @@ Modernizr.load([
 			$('.tabbable').tab();
 
 			/* Enable Tooltips */
-			$('a[title], i[data-action]').tooltip();
+			$('a[title], i[title], span[title]').tooltip();
+
+			/* Replace Default System Dialogs */
+			window.alert = bootbox.alert;
+			window.confirm = bootbox.confirm;
 
 			/* Listen for Google Map Actions */
 			$('[data-action="modal-map"]').on('click', function (event) {
@@ -293,32 +307,6 @@ if ($('body').attr('id') == 'default') {
 	}
 }
 
-/* LAYOUT: Masthead */
-if ($('body').attr('id') == 'masthead') {
-
-	/* Login Button */
-	$('#btn_login').on('click', function () {
-
-		// Show Overlay
-		glab.portal.loading('show');
-
-		// Get OID URL Via AJAX
-		$.getJSON(siteURL + '/login/oid_request')
-			.success(function(data) {
-				// Redirect to Provider
-				window.location = data.result.provider_url;
-
-			}).error(function() {
-				// Hide Loading Overlay
-				glab.portal.loading('hide');
-
-				// Show Error Dialog
-				alert('Could not access OpenID provider.');
-			});
-	});
-
-}
-
 /**
  * CONTROLLERS AND VIEWS
  */
@@ -402,8 +390,108 @@ if ($('body').hasClass('client_profile')) {
 }
 
 /* Dashboard */
-if ($('body').hasClass('dashboard')) {
+else if ($('body').hasClass('dashboard')) {
 
+	// Animate Refresh Icon
+	var inboxLoadCount = 0;
+	function inboxLoading(loading) {
+		if (loading == true) {
+			inboxLoadCount++;
+			$('#btn_inbox_refresh').addClass('active');
+		} else if (--inboxLoadCount <= 0) {
+			$('#btn_inbox_refresh').removeClass('active');
+			inboxLoadCount = 0;
+		}
+	}
+
+	// Retrieve Inbox Feed
+	function inboxRefresh() {
+
+		var limit = 5;
+
+		var uniqueid = $('#inbox .message').first().data('unique-id');
+		if (uniqueid == undefined) uniqueid = '';
+
+		inboxLoading(true);
+
+		$.getJSON(siteURL + '/dashboard/inbox_feed/' + limit + '/' + uniqueid, function(data) {
+
+			// Append New Messages to Table
+			jQuery.each(data.messages.reverse(), function(index, message) {
+				row = ich.inbox_row(message);
+				$('#inbox tbody').prepend(row);
+			});
+
+			// Remove Excess Messages
+			$('#inbox .message').each(function(key, value) {
+				if (key+1 > limit) {
+					$(this).remove();
+				}
+			});
+
+			// Update Counts
+			var count = $('#message_count');
+			count.find('.shown').text($('#inbox tbody tr input').size());
+			count.find('.total').text(data.count_total);
+
+		}).complete(function() {
+			inboxLoading(false);
+		});
+	}
+
+	// Process Message Actions
+	function inboxMessagesAction(action) {
+		var inputs = $('#inbox tbody tr input:checked');
+
+		if (inputs.size() > 0) {
+
+			inboxLoading(true);
+
+			inputs.each(function(index, element) {
+
+				var row = $(element).closest('tr');
+				var uniqueid = row.data('unique-id');
+
+				$.get(siteURL + '/dashboard/inbox_action/' + uniqueid + '/' + action).success(function () {
+					row.remove();
+					inboxRefresh();
+				}).error(function () {
+					alert('Could not remove message' + uniqueid);
+				}).complete(function () {
+					inboxLoading(false);
+				});
+
+			});
+		}
+		else {
+			alert("You must select at least one message to continue.");
+		}
+	}
+
+	// Gmail Inbox Actions
+	$('#inbox a[data-action="inbox-archive"]').on('click', function () {
+		inboxMessagesAction('archive');
+	});
+	$('#inbox a[data-action="inbox-spam"]').on('click', function () {
+		bootbox.confirm('Are you sure that these messages are spam?', function(confirmed) {
+			if (confirmed) inboxMessagesAction('spam');
+		});
+	});
+	$('#inbox a[data-action="inbox-trash"]').on('click', function () {
+		bootbox.confirm('Are you sure that you want to permanently remove these messages?', function(confirmed) {
+			if (confirmed) inboxMessagesAction('trash');
+		});
+	});
+	$('#inbox i[data-action="inbox-refresh"]').on('click', function () {
+		inboxRefresh();
+	});
+
+	$(document).ready(function() {
+		inboxRefresh();
+		setInterval(function () {
+			inboxRefresh();
+		}, 1000*60*2);
+	});
 }
 
 /* Preferences */

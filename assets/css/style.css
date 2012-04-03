@@ -37,6 +37,10 @@ table tr + tr.message-empty {
 	max-width: none;
 }
 
+.color-text, .color-text a {
+	color: #333 !important;
+}
+
 #modal_map #modal_map_gmap {
 	height: 350px;
 }
@@ -207,7 +211,55 @@ background-attachment: fixed;
 
 /* @group Controllers */
 
-/* @group Client Profile */
+
+#masthead.error_404 #main {
+	background-image: url(../img/masthead_error_404.png);
+}
+
+.dashboard #inbox #message_count {
+	padding-top: 18px;
+}
+
+.dashboard #inbox #btn_inbox_refresh.active {
+	-webkit-animation: spin 1.5s infinite linear;
+	-moz-animation: spin 1.5s infinite linear;
+	-o-animation: spin 1.5s infinite linear;
+	-ms-animation: spin 1.5s infinite linear;
+}
+
+.dashboard #inbox .message .icon-star {
+	display: none;
+}
+
+.dashboard #inbox .message .icon-star-empty {
+	opacity: 0.7;
+}
+
+.dashboard #inbox .message .icon-share-alt {
+	display: none;
+}
+
+.dashboard #inbox .message.inbox-flag-starred .icon-star {
+	display: inline-block;
+}
+
+.dashboard #inbox .message.inbox-flag-starred .icon-star-empty {
+	display: none;
+}
+
+.dashboard #inbox .message.inbox-flag-replied .icon-share-alt {
+	display: inline-block;
+}
+
+.dashboard #inbox .message.inbox-flag-unread .inbox-subject {
+	font-weight: bold;
+}
+
+.login #main .legal {
+	padding: 5px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
 
 .client_profile h1 {
 	padding-top: 90px;
@@ -215,21 +267,6 @@ background-attachment: fixed;
 
 .client_profile #profile_picture {
 	margin-top: -100px;
-	margin-bottom: 10px;
-}
-
-
-
-/* @end */
-
-
-#masthead.error_404 #main {
-	background-image: url(../img/masthead_error_404.png);
-}
-
-.login #main .legal {
-	padding: 5px;
-	margin-top: 20px;
 	margin-bottom: 10px;
 }
 

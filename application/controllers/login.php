@@ -12,23 +12,26 @@
 class Login extends CI_Controller
 {
 
-	function __construct () {
+	function __construct ()
+	{
 		parent::__construct();
 
 		$this->template->set_layout('masthead');
 	}
 
 	/**
-	 * Displays welcome page
+	 * Displays and validates multifactor authentication options
 	 */
 	function index()
 	{
+		/* Authenticated Users Redirect to Dashboard */
 		if ($this->acl->is_auth() === true)
 		{
 			// Send to Dashboard
 			redirect('dashboard');
 		}
 
+		/* Determine Session Timeout */
 		if ($this->input->get('timeout') !== false)
 		{
 			$this->load->helper('date');
@@ -40,10 +43,65 @@ class Login extends CI_Controller
 			$this->template->set('sess_expiration', strtolower(timespan(0,$this->config->item('sess_expiration'))));
 		}
 
+		/* AUTHENTICATION METHODS */
+		// Yubikey
+		if ($this->input->post('method') == 'yubikey')
+		{
+			$otp = $this->input->post('otp');
+
+			$this->load->library('Auth_Yubico',array());
+			$this->load->config('auth');
+
+			$yubikey = new Auth_Yubico(config_item('auth_yubico_id'),config_item('auth_yubico_key'),true);
+
+			$response = $yubikey->verify($otp);
+			log_message('debug', 'Yubico API Response: '.$response);
+
+			// Verify Yubikey OTP
+			if ($response === true)
+			{
+				// Break OTP Into Parts
+				$parts = $yubikey->parsePasswordOTP($otp);
+
+				// Check Database for Yubikey Prefix
+				$r = $this->api->request('get','multifactor/yubikey',array('prefix'=>element('prefix',$parts)));
+
+				if (isset($r->pid) === true)
+				{
+					$profile = $this->profile->get($r->pid);
+
+					if ($profile->exists() === true AND $profile->is_employee() === true) // @todo Also Validate Prefix of Key
+					{
+						$this->input->set_cookie(array(
+							'name'=>'mf_pid',
+							'value'=>$profile->pid,
+							'expire'=>120,
+							'secure'=>true
+						));
+						redirect('login/oid_request');
+					}
+					elseif ($profile->exists() === true AND $profile->is_employee() !== true)
+					{
+						User_Notice::error($profile->name->full.' is not an employee.');
+					}
+					else
+					{
+						User_Notice::error('Could not find profile. ('.$profile->name.')');
+					}
+				}
+			}
+			else
+			{
+				User_Notice::error('Yubico declined key ('.$response->message.').');
+			}
+
+		}
+
 		// Delete Any and All Session Data
 		$this->session->sess_destroy();
 
-		$this->template->title('Step One')->build('login/main');
+		// Show Multifactor Authentication
+		$this->template->title('Authentication: Step One')->build('login/main');
 	}
 
 	/**
@@ -72,20 +130,40 @@ class Login extends CI_Controller
 	 */
 	function oid_request()
 	{
-		$this->load->library('openid');
-		$this->load->config('openid');
+		if ($this->input->cookie('mf_pid') != false)
+		{
+			$this->load->library('openid');
+			$this->load->config('openid');
 
-		$request_to = site_url($this->config->item('openid_request_to'));
+			$request_to = site_url($this->config->item('openid_request_to'));
 
-		$this->openid->set_request_to($request_to);
-		$this->openid->set_trust_root(base_url());
-		$this->openid->set_args(null);
+			$this->openid->set_request_to($request_to);
+			$this->openid->set_trust_root(base_url());
 
-		$provider_url = $this->openid->get_provider_url('glabstudios.com');
+			// PAPE
+			$this->openid->set_pape(true, array(PAPE_AUTH_PHISHING_RESISTANT,PAPE_AUTH_MULTI_FACTOR), $this->config->item('sess_expiration'));
 
-		$data['result']['provider_url'] = $provider_url;
+			// OAuth
+			$google_apis = array(
+				'https://www.googleapis.com/auth/userinfo.profile',
+				'https://www.google.com/calendar/feeds/',
+				'https://www.google.com/m8/feeds/',
+				'https://docs.google.com/feeds/',
+				'https://mail.google.com/mail/feed/atom/',
+				'http://www-opensocial.googleusercontent.com/api/people',
+				'https://spreadsheets.google.com/feeds/'
+			);
+			//$this->openid->set_args('http://specs.openid.net/extensions/oauth/1.0','consumer','glab-portal.ryan.glabdev.net');
+			//$this->openid->set_args('http://specs.openid.net/extensions/oauth/1.0','scope', implode(' ', $google_apis));
 
-		echo json_encode($data);
+			$provider_url = $this->openid->get_provider_url('glabstudios.com');
+
+			redirect($provider_url);
+		}
+		else
+		{
+			redirect('login/destroy');
+		}
 	}
 
 	/**
@@ -95,6 +173,7 @@ class Login extends CI_Controller
 	{
 		$this->load->library('openid');
 		$this->load->config('openid');
+		$this->load->language('openid');
 
 		$request_to = site_url($this->config->item('openid_request_to'));
 
@@ -113,85 +192,40 @@ class Login extends CI_Controller
 				break;
 			case Auth_OpenID_SUCCESS:
 
+				// Multifactor PID
+				$mf_pid = (int) $this->input->cookie('mf_pid');
+
+				// OAuth Access Token
+				//$oauth_data = $response->getSignedNS('http://specs.openid.net/extensions/oauth/1.0');
+				//$oauth_token = element('request_token', $oauth_data);
+
 				// Identity
 				$openid = $response->getDisplayIdentifier();
 
 				// AX
 				$ax_resp = Auth_OpenID_AX_FetchResponse::fromSuccessResponse($response);
-				if ($ax_resp)
+				$email = array_shift(element('http://axschema.org/contact/email', $ax_resp->data));
+
+				// Profile
+				$profile = $this->profile->get($email);
+
+				// Check if Multifactor Matches Google User
+				if ($profile->exists() && $profile->pid == $mf_pid)
 				{
-					$first_name = $ax_resp->data['http://axschema.org/namePerson/first'];
+					// Create Session
+					$this->acl->create_session($profile->pid);
+
+					// Redirect to Default Controller
+					redirect();
+				}
+				// Not Authorized
+				else
+				{
+					show_error('Google authorization does not match multifactor credentials.',403);
 				}
 
-				// Temporarily Store Data to Session
-				$this->session->set_userdata('openid', $openid);
-				$this->session->set_userdata('first_name', $first_name);
-
-				// Redirect to Yubikey Auth
-				redirect('login/multifactor');
-
-				break;
+				break; //Auth_OpenID_SUCCESS
 		}
-	}
-
-	/**
-	 * Displays and validates multifactor authentication options
-	 */
-	function multifactor()
-	{
-		if (is_string($this->session->userdata('openid')) !== true)
-		{
-				User_Notice::error('OpenID Session Error: ','Could not retrieve ID from session.  Cannot continue with login process.');
-		}
-
-		if ($this->input->post('method') == 'yubikey')
-		{
-			$otp = $this->input->post('otp');
-
-			$this->load->library('Auth_Yubico',array());
-			$this->load->config('auth');
-
-			$yubikey = new Auth_Yubico(config_item('auth_yubico_id'),config_item('auth_yubico_key'),true);
-
-			$response = $yubikey->verify($otp);
-			log_message('debug', 'Yubico API Response: '.$response);
-
-			// Verify Yubikey OTP
-			if ($response === true)
-			{
-				// Break OTP Into Parts
-				$parts = $yubikey->parsePasswordOTP($otp);
-
-				// Check Database for Yubikey Prefix
-				$r = $this->api->request('get','multifactor/yubikey',array('prefix'=>element('prefix',$parts)));
-
-				if (isset($r->pid) === true)
-				{
-					$profile = $this->profile->get($r->pid);
-
-					if ($profile->exists() === true AND $profile->is_employee()) // @todo Also Validate Prefix of Key
-					{
-						$this->acl->create_session($profile->pid);
-						redirect();
-					}
-					elseif ($profile->exists() === true)
-					{
-						User_Notice::error($profile->name->full.' is not an employee.');
-					}
-					else
-					{
-						User_Notice::error('Could not find profile. ('.$profile->name.')');
-					}
-				}
-			}
-			else
-			{
-				User_Notice::error('Yubico declined key ('.$response->message.').');
-			}
-
-		}
-
-		$this->template->title('Step Two')->build('login/multifactor');
 	}
 
 	/**
