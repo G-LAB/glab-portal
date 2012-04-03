@@ -28,3 +28,6 @@
 [submodule "assets/icanhaz"]
 	path = assets/icanhaz
 	url = git://github.com/andyet/ICanHaz.js
+[submodule "assets/bootstrap"]
+	path = assets/bootstrap
+	url = git://github.com/twitter/bootstrap.git
