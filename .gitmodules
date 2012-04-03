@@ -1,6 +1,3 @@
-[submodule "application/assets/global"]
-	path = application/assets/global
-	url = git@github.com:G-LAB/glab-assets-global.git
 [submodule "application/third_party/g-lib"]
 	path = application/third_party/g-lib
 	url = git@github.com:G-LAB/g-lib.git
