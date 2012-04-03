@@ -16,14 +16,14 @@
 	<div class="span7 offset1">
 		<form action="<?=current_url()?>"  method="post" class="form-vertical">
 			<legend>Choose an Authentication Method</legend>
-			<fieldset class="control-group">
-				<div class="controls">
+			<fieldset class="control-group visible-desktop">
+				<div class="controls ">
 					<label for="otp">Yubikey One-Time Password</label>
 					<div class="input-prepend">
 						<span class="add-on"><input type="radio" name="method" id="method" value="yubikey" checked></span><input class="span4" id="otp" name="otp" size="32" type="text" autocomplete="off" autofocus>
 					</div>
 				</div>
-				<div class="controls">
+				<div class="controls hidden-desktop">
 					<label for="authcode">Device Activation Code</label>
 					<div class="input-prepend">
 						<span class="add-on"><input type="radio" name="method" id="method" value="authcode"></span><input class="span4" id="authcode" name="authcode" size="32" type="text">
