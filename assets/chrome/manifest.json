@@ -1,0 +1,28 @@
+{
+	"name": "G LAB Portal",
+	"description": "Read mail, bill clients, track sales leads, and more.",
+	"version": "1.0",
+	"app": {
+		"urls": [
+			"*://portal.glabstudios.com/",
+			"*://glab-portal.ryan.glabdev.net/",
+			"*://glab-portal.glabtest.net/"
+		],
+		"launch": {
+			"web_url": "https://portal.glabstudios.com/"
+		}
+	},
+	"icons": {
+		"128": "128.png"
+	},
+	"permissions": [
+		"background",
+		"clipboardRead",
+		"clipboardWrite",
+		"geolocation",
+		"notifications",
+		"unlimitedStorage"
+	],
+	"update_url": "https://portal.glabstudios.com/assets/chrome/updates.xml",
+	"background_page": "https://portal.glabstudios.com/chrome_app/background#0"
+}
