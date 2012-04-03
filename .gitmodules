@@ -28,3 +28,6 @@
 [submodule "assets/bootstrap"]
 	path = assets/bootstrap
 	url = git://github.com/twitter/bootstrap.git
+[submodule "assets/global"]
+	path = assets/global
+	url = git@github.com:G-LAB/glab-assets-global.git
