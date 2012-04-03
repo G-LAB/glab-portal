@@ -74,8 +74,11 @@ class Init
 		));
 
 		/* LOAD TEMPLATE LIBRARY W/ LOCAL CONFIG */
-		$CI->load->config('template',true);
-		$template_config = $CI->config->item('template');
+		$template_config = array(
+			'parser_enabled'=>false,
+			'title_separator'=>' : ',
+			'layout'=>'default'
+		);
 		if (isset($CI->template) === true)
 		{
 			$CI->template->initialize($template_config);
