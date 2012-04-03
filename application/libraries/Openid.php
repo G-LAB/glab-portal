@@ -20,6 +20,7 @@ class Openid
 
 	private $pape_enable = false;
 	private $pape_policy_uris = null;
+	private $pape_max_age = null;
 
 	private $request_to;
 	private $trust_root;
@@ -27,14 +28,14 @@ class Openid
 
 	function __construct()
 	{
-	$CI =& get_instance();
+		$CI =& get_instance();
 		$CI->config->load('openid');
 		$this->storePath = $CI->config->item('openid_storepath');
 
 		session_start();
 		$this->_doIncludes();
 
-	log_message('debug', "OpenID Class Initialized");
+		log_message('debug', "OpenID Class Initialized");
 	}
 
 	function _doIncludes()
@@ -46,7 +47,6 @@ class Openid
 		require_once "Auth/OpenID/SReg.php";
 		require_once "Auth/OpenID/PAPE.php";
 		require_once "Auth/OpenID/AX.php";
-		//require_once "Auth/OpenID/OAuth.php";
 		require_once 'Auth/OpenID/google_discovery.php';
 	}
 
@@ -58,10 +58,11 @@ class Openid
 		$this->sreg_policy = $policy;
 	}
 
-	function set_pape($enable, $policy_uris = null)
+	function set_pape($enable, $policy_uris = null, $max_age = null)
 	{
 		$this->pape_enable = $enable;
 		$this->pape_policy_uris = $policy_uris;
+		$this->pape_max_age = $max_age;
 	}
 
 	function set_request_to($uri)
@@ -74,9 +75,9 @@ class Openid
 		$this->trust_root = $trust_root;
 	}
 
-	function set_args($args)
+	function set_args($namespace, $key, $value)
 	{
-		$this->ext_args = $args;
+			$this->ext_args[] = array($namespace, $key, $value);
 	}
 
 	function _set_message($error, $msg, $val = '', $sub = '%s')
@@ -104,9 +105,25 @@ class Openid
 
 		// AX Request
 		$ax = new Auth_OpenID_AX_FetchRequest;
-		$ax->add(Auth_OpenID_AX_AttrInfo::make('http://axschema.org/namePerson/first',1,1));
+		$ax->add(Auth_OpenID_AX_AttrInfo::make('http://axschema.org/contact/email',1,1));
 		$authRequest->addExtension($ax);
 
+		// PAPE
+		if ($this->pape_enable)
+		{
+			$pape_request = new Auth_OpenID_PAPE_Request($this->pape_policy_uris, $this->pape_max_age);
+
+			if ($pape_request)
+			{
+				$authRequest->addExtension($pape_request);
+			}
+			else
+			{
+				$this->_set_message(true,'openid_pape_failed');
+			}
+		}
+
+		// SREG
 		if ($this->sreg_enable)
 		{
 			$sreg_request = Auth_OpenID_SRegRequest::build($this->sreg_required, $this->sreg_optional, $this->sreg_policy);
@@ -121,12 +138,14 @@ class Openid
 			}
 		}
 
-		if ($this->ext_args != null)
+		// Extension Arguments
+		if (is_array($this->ext_args))
 		{
 			foreach ($this->ext_args as $extensionArgument)
 			{
 				if (count($extensionArgument) == 3)
 				{
+					 // Namespace, Key, Value
 					 $authRequest->addExtensionArg($extensionArgument[0], $extensionArgument[1], $extensionArgument[2]);
 				}
 			}
@@ -134,8 +153,7 @@ class Openid
 
 		$redirect_url = $authRequest->redirectURL($this->trust_root, $this->request_to);
 
-		// If the redirect URL can't be built, display an error
-		// message.
+		// If the redirect URL can't be built, display an error message.
 		if (Auth_OpenID::isFailure($redirect_url))
 		{
 			$this->_set_message(true,'openid_redirect_failed', $redirect_url->message);
