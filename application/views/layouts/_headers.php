@@ -32,6 +32,7 @@
 
 <!-- Twitter Bootstrap CSS -->
 <link rel="stylesheet" href="/assets/bootstrap/docs/assets/css/bootstrap.css">
+<link rel="stylesheet" href="/assets/bootstrap/docs/assets/css/bootstrap-responsive.css">
 
 <!-- G LAB CSS -->
 <link rel="stylesheet" href="/assets/global/css/global.css">

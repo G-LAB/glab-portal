@@ -6,7 +6,7 @@
 	<?=$template['metadata']?>
 </head>
 <body id="default" class="<?=strtolower($this->router->fetch_class().' '.$this->router->fetch_method())?>">
-	<div class="container">
+	<div class="container-fluid">
 		<header id="header">
 			<?=$template['partials']['menu']?>
 		</header>
