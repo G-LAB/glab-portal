@@ -141,7 +141,7 @@ class Login extends CI_Controller
 			$this->openid->set_trust_root(base_url());
 
 			// PAPE
-			$this->openid->set_pape(true, array(PAPE_AUTH_PHISHING_RESISTANT,PAPE_AUTH_MULTI_FACTOR), $this->config->item('sess_expiration'));
+			$this->openid->set_pape(true, array(PAPE_AUTH_PHISHING_RESISTANT,PAPE_AUTH_MULTI_FACTOR), $this->config->item('sess_expiration')*4);
 
 			// OAuth
 			$google_apis = array(
