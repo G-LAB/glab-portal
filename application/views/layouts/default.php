@@ -10,8 +10,8 @@
 		<header id="header">
 			<?=$template['partials']['menu']?>
 		</header>
-		<header id="hud">
-			<?=$template['partials']['hud']?>
+		<header id="user">
+			<?=$template['partials']['user']?>
 		</header>
 		<div id="main">
 			<section>
