@@ -1,14 +1,21 @@
 <br>
 <div class="row-fluid">
 	<div class="span12">
-		<div class="hero-unit">
+		<div id="welcome" class="hero-unit">
 			<h1>Welcome!</h1>
 			<p>This is the portal, your virtual desk at G LAB.</p>
 			<p>
-				<a class="btn btn-primary btn-large">
-					Get Started
-				</a>
+				<a href="<?=site_url('welcome')?>" class="btn btn-large">Take Tour</a>
+				<a id="btn_welcome_hide" class="btn btn-primary btn-large">Get Started</a>
 			</p>
+			<div>
+				<input type="checkbox" id="welcome_hide"> Don't show this message again.
+			</div>
+		</div>
+		<div id="hud" class="hero-unit">
+			<div id="slider">
+				Other content shows up here
+			</div>
 		</div>
 	</div>
 </div>

@@ -65,7 +65,7 @@ table tr + tr.message-empty {
 	margin-bottom: 10px;
 }
 
-#hud {
+#user {
 	margin-bottom: -10px;
 }
 
@@ -218,6 +218,13 @@ background-attachment: fixed;
 
 .dashboard #inbox #message_count {
 	padding-top: 18px;
+}
+
+.dashboard #welcome {
+	display: none;
+	background-image: url(../img/dashboard/welcome_bg.png);
+	background-position: right center;
+	background-repeat: no-repeat;
 }
 
 .dashboard #inbox #btn_inbox_refresh.active {

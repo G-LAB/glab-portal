@@ -392,6 +392,27 @@ if ($('body').hasClass('client_profile')) {
 /* Dashboard */
 else if ($('body').hasClass('dashboard')) {
 
+	// Show Welcome Message
+	if (Boolean(glab.cookie.get('dashboard_welcome_hide')) != true) {
+		var welcome = $('#welcome');
+		var hud = $('#hud');
+		welcome.show();
+		hud.hide();
+
+		// Event Handlers
+		$(welcome).on('click','a.btn',function () {
+			if ($('#welcome_hide').is(':checked')) {
+				glab.cookie.set('dashboard_welcome_hide','1');
+			}
+		});
+
+		$('#btn_welcome_hide').on('click', function () {
+			welcome.fadeOut('slow',function() {
+				hud.fadeIn('slow');
+			});
+		})
+	}
+
 	// Animate Refresh Icon
 	var inboxLoadCount = 0;
 	function inboxLoading(loading) {
