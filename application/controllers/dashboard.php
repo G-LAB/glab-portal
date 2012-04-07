@@ -67,7 +67,7 @@ class Dashboard extends CI_Controller
 
 			$m['uniqueid'] = $this->gmail->get_unique_id($key);
 			$m['thread_id'] = $this->gmail->get_thread_id($key);
-			$m['thread_url'] = 'https://mail.google.com/mail/a/glabstudios.com/#inbox/'.dechex($m['thread_id']);
+			$m['thread_url'] = 'http://webmail.glabstudios.com/#inbox/'.dechex($m['thread_id']);
 			$m['flag_replied'] = $message->hasFlag(Zend_Mail_Storage::FLAG_ANSWERED);
 			$m['flag_starred'] = $message->hasFlag(Zend_Mail_Storage::FLAG_FLAGGED);
 			$m['flag_unread'] = $message->hasFlag(Zend_Mail_Storage::FLAG_SEEN);
