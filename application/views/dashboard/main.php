@@ -44,7 +44,7 @@
 					<a class="btn" data-action="inbox-archive" title="Delete Messages Permanently"><i class="icon-trash"></i> Trash</a>
 				</div>
 			</div>
-			<a href="https://mail.google.com/a/glabstudios.com" target="_blank" class="btn pull-right">
+			<a href="http://webmail.glabstudios.com/" target="_blank" class="btn pull-right">
 				<i class="icon-envelope"></i>
 				Open Gmail
 			</a>
