@@ -27,9 +27,6 @@ class Dashboard extends CI_Controller
 	function index()
 	{
 		$this->template->build('dashboard/main');
-
-		//$this->load->library('GoogleAPI');
-		//var_dump(  $this->googleapi->request('ryan@glabstudios.com', 'get', 'https://mail.google.com/mail/b/ryan@glabstudios.com/imap/')  );
 	}
 
 	function inbox_action($uniqueid, $action)
