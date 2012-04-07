@@ -117,6 +117,9 @@ $('.input-prepend input').on('focus', function () {
 $(window).unload(function() {
 	glab.portal.loading('show');
 });
+window.onbeforeunload = function() {
+	glab.portal.loading('show');
+}
 
 /* Load Assets */
 var assets = [
