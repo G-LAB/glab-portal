@@ -123,12 +123,13 @@ window.onbeforeunload = function() {
 
 /* Load Assets */
 var assets = [
-	'/assets/bootstrap/js/bootstrap-transition.js',
-	'/assets/bootstrap/js/bootstrap-dropdown.js',
 	'/assets/bootstrap/js/bootstrap-alert.js',
-	'/assets/bootstrap/js/bootstrap-tab.js',
+	'/assets/bootstrap/js/bootstrap-collapse.js',
+	'/assets/bootstrap/js/bootstrap-dropdown.js',
 	'/assets/bootstrap/js/bootstrap-modal.js',
+	'/assets/bootstrap/js/bootstrap-tab.js',
 	'/assets/bootstrap/js/bootstrap-tooltip.js',
+	'/assets/bootstrap/js/bootstrap-transition.js',
 	'//maps.googleapis.com/maps/api/js?key=AIzaSyDX7KuCoJpi0h8r-9yiBBkePoyYQvLL4F0&callback=glab.portal.gmapInit&sensor=false',
 	'/assets/bootbox/bootbox.js',
 	'/assets/icanhaz/ICanHaz.min.js'
