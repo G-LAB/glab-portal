@@ -10,13 +10,10 @@
 		<header id="header">
 			<?=$template['partials']['menu']?>
 		</header>
-		<header id="user">
-			<?=$template['partials']['user']?>
-		</header>
 		<div id="main">
 			<section>
-				<div id="heading" class="row">
-					<div class="span12">
+				<header class="row">
+					<div class="span9">
 						<h1>
 							<?=htmlspecialchars(controller_name())?>
 							<small>
@@ -33,7 +30,10 @@
 							</small>
 						</h1>
 					</div>
-				</div>
+					<div id="user" class="span3">
+						<?=$template['partials']['user']?>
+					</div>
+				</header>
 				<div class="row">
 					<div id="alerts" class="span12">
 						<?php foreach (User_Notice::fetch_array() as $notice) : ?>
