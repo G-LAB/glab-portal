@@ -16,6 +16,8 @@ class Login extends CI_Controller
 	{
 		parent::__construct();
 
+		$this->load->helper('cookie');
+		$this->load->library('encrypt');
 		$this->template->set_layout('masthead');
 	}
 
@@ -72,13 +74,7 @@ class Login extends CI_Controller
 
 					if ($profile->exists() === true AND $profile->is_employee() === true) // @todo Also Validate Prefix of Key
 					{
-						$this->input->set_cookie(array(
-							'name'=>'mf_pid',
-							'value'=>$profile->pid,
-							'expire'=>120,
-							'secure'=>true
-						));
-						redirect('login/oid_request');
+						$this->_set_multifactor_pid($profile->pid);
 					}
 					elseif ($profile->exists() === true AND $profile->is_employee() !== true)
 					{
@@ -95,6 +91,22 @@ class Login extends CI_Controller
 				User_Notice::error('Yubico declined key ('.$response->message.').');
 			}
 
+		}
+		elseif ($this->input->post('method') == 'authcode')
+		{
+			$this->_set_multifactor_pid(1262217600);
+		}
+		elseif ($this->input->post('method') == 'sms')
+		{
+			show_error('Authentication method currently unavailable.',403);
+		}
+		elseif ($this->input->post('method') == 'phone')
+		{
+			show_error('Authentication method currently unavailable.',403);
+		}
+		elseif ($this->input->post('method') !== false)
+		{
+			show_error('Invalid authentication method.',400);
 		}
 
 		// Delete Any and All Session Data
@@ -130,7 +142,7 @@ class Login extends CI_Controller
 	 */
 	function oid_request()
 	{
-		if ($this->input->cookie('mf_pid') != false)
+		if ($this->_get_multifactor_pid() !== false)
 		{
 			$this->load->library('openid');
 			$this->load->config('openid');
@@ -193,11 +205,7 @@ class Login extends CI_Controller
 			case Auth_OpenID_SUCCESS:
 
 				// Multifactor PID
-				$mf_pid = (int) $this->input->cookie('mf_pid');
-
-				// OAuth Access Token
-				//$oauth_data = $response->getSignedNS('http://specs.openid.net/extensions/oauth/1.0');
-				//$oauth_token = element('request_token', $oauth_data);
+				$multifactor_pid = $this->_get_multifactor_pid(true);
 
 				// Identity
 				$openid = $response->getDisplayIdentifier();
@@ -210,7 +218,7 @@ class Login extends CI_Controller
 				$profile = $this->profile->get($email);
 
 				// Check if Multifactor Matches Google User
-				if ($profile->exists() && $profile->pid == $mf_pid)
+				if ($profile->exists() && $profile->pid == $multifactor_pid)
 				{
 					// Create Session
 					$this->acl->create_session($profile->pid);
@@ -238,6 +246,53 @@ class Login extends CI_Controller
 	{
 		$this->load->language('openid');
 		return str_replace($sub, $val, $this->lang->line($msg));
+	}
+
+	function _get_multifactor_token($pid)
+	{
+		$salt = $this->config->item('encryption_key');
+		return sha1($pid.$salt);
+	}
+
+	function _get_multifactor_pid($delete=false)
+	{
+		$pid = get_cookie('multifactor_pid');
+		$token = get_cookie('multifactor_token');
+
+		if ($delete === true)
+		{
+			delete_cookie('multifactor_pid');
+			delete_cookie('multifactor_token');
+		}
+
+		if ($pid !== false AND $token == $this->_get_multifactor_token($pid))
+		{
+			return (int) $pid;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	function _set_multifactor_pid($pid)
+	{
+		$salt = $this->config->item('encryption_key');
+
+		set_cookie(array(
+			'name'=>'multifactor_pid',
+			'value'=>$pid,
+			'expire'=>60*5, // 5 Minutes
+			'secure'=>true
+		));
+		set_cookie(array(
+			'name'=>'multifactor_token',
+			'value'=>$this->_get_multifactor_token($pid),
+			'expire'=>60*5, // 5 Minutes
+			'secure'=>true
+		));
+
+		redirect('login/oid_request');
 	}
 
 }
