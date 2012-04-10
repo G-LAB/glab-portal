@@ -229,7 +229,11 @@ Modernizr.load([
 				modal.find('#destination').val(address);
 
 				// Show Modal
-				modal.modal('show');
+				modal.modal('show').css({
+					'width': '100%',
+					'max-width': '650px',
+					'margin-left': function () { return -($(this).width() / 2); }
+				});
 			});
 
 			// Modal Submit Event

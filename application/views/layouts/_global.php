@@ -47,10 +47,9 @@
 		<div class="modal-header">
 			<a class="close" data-dismiss="modal">×</a>
 			<h3>Driving Directions</h3>
-			<div class="row">
 		</div>
 		<div class="modal-body">
-			<div class="row">
+			<div class="row-fluid">
 				<div class="span5">
 					<div id="modal_directions_form">
 						<form class="form-vertical">
@@ -58,13 +57,13 @@
 								<div class="control-group">
 									<label class="control-label" for="origin">Origin</label>
 									<div class="controls">
-										<input type="text" class="input-xlarge" id="origin">
+										<input type="text" id="origin">
 									</div>
 								</div>
 								<div class="control-group">
 									<label class="control-label" for="destination">Destination</label>
 									<div class="controls">
-										<input type="text" class="input-xlarge" id="destination">
+										<input type="text" id="destination">
 									</div>
 								</div>
 								<div class="form-actions">
