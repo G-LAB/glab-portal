@@ -21,11 +21,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
 <!-- Apple iOS and Android -->
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1">
+<meta name="format-detection" content="telephone=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="apple-touch-icon-precomposed" href="/assets/theme/img/icon.png">
 <link rel="apple-touch-startup-image" href="/assets/theme/img/startup.png')?>">
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,maximum-scale=1">
 
 <!-- Google Fonts -->
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400">
