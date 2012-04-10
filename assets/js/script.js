@@ -229,10 +229,7 @@ Modernizr.load([
 				modal.find('#destination').val(address);
 
 				// Show Modal
-				modal.modal('show').css({
-					width: 'auto',
-					'margin-left': function () { return -($(this).width() / 2); }
-				});
+				modal.modal('show');
 			});
 
 			// Modal Submit Event
@@ -260,6 +257,16 @@ Modernizr.load([
 						});
 					}
 				});
+			});
+
+			// Resize Map When Shown
+			$('#modal_map').on('shown', function () {
+				google.maps.event.trigger(mapModalMap, 'resize');
+			});
+
+			// Resize Map When Shown
+			$('#modal_directions').on('shown', function () {
+				google.maps.event.trigger(mapDirectionsMap, 'resize');
 			});
 		}
 	}
