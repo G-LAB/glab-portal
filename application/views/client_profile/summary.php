@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="span2 offset6">
 			<a class="thumbnail" id="profile_picture">
-				<img src="<?=gravatar_url($profile->email,130,'mm')?>" alt="Profile Photo">
+				<img src="<?=gravatar_url($profile->email,160,'mm')?>" alt="Profile Photo">
 			</a>
 		</div>
 	</div>
