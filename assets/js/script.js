@@ -130,7 +130,8 @@ var assets = [
 	'/assets/bootstrap/js/bootstrap-tab.js',
 	'/assets/bootstrap/js/bootstrap-tooltip.js',
 	'/assets/bootstrap/js/bootstrap-transition.js',
-	'//maps.googleapis.com/maps/api/js?key=AIzaSyDX7KuCoJpi0h8r-9yiBBkePoyYQvLL4F0&callback=glab.portal.gmapInit&sensor=false',
+	//'//maps.googleapis.com/maps/api/js?key=AIzaSyDX7KuCoJpi0h8r-9yiBBkePoyYQvLL4F0',
+	'//maps.googleapis.com/maps/api/js?key=AIzaSyAgsnPACf66og7cXNk48Toh6ijmogR3H7E&callback=glab.portal.gmapInit&sensor=false&v=3.7',
 	'/assets/bootbox/bootbox.js',
 	'/assets/icanhaz/ICanHaz.min.js'
 ]
