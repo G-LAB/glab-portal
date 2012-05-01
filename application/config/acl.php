@@ -4,10 +4,13 @@
 $config[':guest']['portal_errors'] = array();
 $config[':guest']['portal_login'] = array();
 $config[':guest']['portal_main'] = array();
+$config[':guest']['portal_test'] = array();
 
 /* Employees */
 $config[':employee'][':guest'] = null;
+
 $config[':employee']['portal_ajax'] = array();
+$config[':employee']['portal_chrome'] = array();
 $config[':employee']['portal_dashboard'] = array();
 $config[':employee']['portal_client_profile'] = array();
 $config[':employee']['portal_preferences'] = array();
