@@ -27,9 +27,25 @@ class Init
 
 		/* BUILD PERMISSIONS FOR CURRENT USER */
 		$profile = $CI->profile->current();
+
+		// Check if Employee
 		if ($profile->is_employee())
 		{
 			$CI->acl->allow($profile->pid, ':employee');
+		}
+
+		// Get memeber groups
+		$groups = $profile->meta->portal_acl_groups;
+		if (isset($groups) === true)
+		{
+			$groups = unserialize($groups);
+			if (is_array($groups) === true)
+			{
+				foreach ($groups as $group)
+				{
+					$CI->acl->allow($profile->pid, ':'.$group);
+				}
+			}
 		}
 
 		/* CHECK FOR PERMISSIONS */
