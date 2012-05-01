@@ -1,8 +1,8 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $config['api_url'] = 'http://glab-api.ryan.glabdev.net/index.php/';
-$config['api_user'] = 'glab_frontend';
-$config['api_pass'] = 'TDyM8zYVtEwfqJTsL5qEt8XLoinvVHLrao9WkK48gT3mmRqIcPcEOo6A42OXoSR';
+$config['api_user'] = 'glab_portal';
+$config['api_pass'] = 'tj0CjZks2vCbI7jZfOwRLVVr5wqsXYld24khApeYLunUGMS33g6qxUIff13wef3';
 
 /* End of file api.php */
 /* Location: ./application/config/api.php */
