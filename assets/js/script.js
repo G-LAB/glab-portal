@@ -14,16 +14,15 @@ _gaq.push(['_trackPageview']);
 
 /**
  * Class for G LAB Portal
- * @return null
+ * @return null.
  */
-glab.class.portal = function () {};
+glab.class.portal = function() {};
 
 /**
  * Convert map classes to Google Maps
  */
-glab.class.portal.prototype.gmapBind = function ()
-{
-	$('.map').each(function () {
+glab.class.portal.prototype.gmapBind = function() {
+	$('.map').each(function() {
 		var lat, lng;
 		var element = $(this);
 		var geocoder = new google.maps.Geocoder();
@@ -36,16 +35,16 @@ glab.class.portal.prototype.gmapBind = function ()
 
 		// Declared Latitude and Longitude
 		if (element.data('latlng') != undefined) {
-			var latlng = element.data('latlng').split(',',2);
+			var latlng = element.data('latlng').split(',', 2);
 			lat = latlng[0];
 			lng = latlng[1];
-			map.setCenter(new google.maps.LatLng(lat,lng));
+			map.setCenter(new google.maps.LatLng(lat, lng));
 		}
 
 		// Declared Address
 		else if (element.data('address') != undefined)
 		{
-			geocoder.geocode( { 'address': element.data('address')}, function(results, status) {
+			geocoder.geocode({ 'address': element.data('address')}, function(results, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
 					map.setCenter(results[0].geometry.location);
 					var marker = new google.maps.Marker({
@@ -56,15 +55,14 @@ glab.class.portal.prototype.gmapBind = function ()
 			});
 		}
 	});
-}
+};
 
 /**
  * Google Maps API Callback
  */
-glab.class.portal.prototype.gmapInit = function ()
-{
+glab.class.portal.prototype.gmapInit = function() {
 	/* Basic Map in Modal */
-	mapModalMap = new google.maps.Map(document.getElementById("modal_map_gmap"), {
+	mapModalMap = new google.maps.Map(document.getElementById('modal_map_gmap'), {
 		zoom: 14,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
@@ -72,25 +70,24 @@ glab.class.portal.prototype.gmapInit = function ()
 	/* Directions in Modal */
 	mapDirectionsService = new google.maps.DirectionsService();
 	mapDirectionsRenderer = new google.maps.DirectionsRenderer();
-	mapDirectionsMap = new google.maps.Map(document.getElementById("modal_directions_gmap"), {
+	mapDirectionsMap = new google.maps.Map(document.getElementById('modal_directions_gmap'), {
 		zoom: 9,
 		center: new google.maps.LatLng(34.05, -118.24),
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
 	mapDirectionsRenderer.setMap(mapDirectionsMap);
-	mapDirectionsRenderer.setPanel(document.getElementById("modal_directions_list"));
+	mapDirectionsRenderer.setPanel(document.getElementById('modal_directions_list'));
 
 	/* Bind Map Elements */
 	this.gmapBind();
-}
+};
 
 /**
  * Hide or Show Loading Overlay
  * @param  string|bool mode
- * @return null
+ * @return null.
  */
-glab.class.portal.prototype.loading = function (mode)
-{
+glab.class.portal.prototype.loading = function(mode) {
 	var overlayLoading = $('#overlay_loading');
 
 	if (mode == 'show' || mode == true)
@@ -103,13 +100,13 @@ glab.class.portal.prototype.loading = function (mode)
 	{
 		overlayLoading.fadeOut('fast');
 	}
-}
+};
 
 /* Instanciate Portal Class */
 glab.portal = new glab.class.portal();
 
 /* Trigger Prepended Radio Buttons */
-$('.input-prepend input').on('focus', function () {
+$('.input-prepend input').on('focus', function() {
 	$(this).parent().find('.add-on input[type="radio"]').click();
 });
 
@@ -119,7 +116,7 @@ $(window).unload(function() {
 });
 window.onbeforeunload = function() {
 	glab.portal.loading('show');
-}
+};
 
 /* Load Assets */
 var assets = [
@@ -130,22 +127,20 @@ var assets = [
 	'/assets/bootstrap/js/bootstrap-tab.js',
 	'/assets/bootstrap/js/bootstrap-tooltip.js',
 	'/assets/bootstrap/js/bootstrap-transition.js',
-	//'//maps.googleapis.com/maps/api/js?key=AIzaSyDX7KuCoJpi0h8r-9yiBBkePoyYQvLL4F0',
 	'//maps.googleapis.com/maps/api/js?key=AIzaSyAgsnPACf66og7cXNk48Toh6ijmogR3H7E&callback=glab.portal.gmapInit&sensor=false&v=3.7',
 	'/assets/bootbox/bootbox.js',
 	'/assets/icanhaz/ICanHaz.min.js'
-]
+];
 
 /* Load Bootstrap */
 Modernizr.load([
 	{
 		load: assets,
-		callback: function (url, result, key) {
-			$('#loading_bar').css({width: (key/assets.length*100) + '%'});
+		callback: function(url, result, key) {
+			$('#loading_bar').css({width: (key / assets.length * 100) + '%'});
 			$('#loading_file').text('Initialized ' + url);
 		},
-		complete: function ()
-		{
+		complete: function() {
 			/* Release Hold */
 			$.holdReady(false);
 
@@ -169,7 +164,7 @@ Modernizr.load([
 			window.confirm = bootbox.confirm;
 
 			/* Listen for Google Map Actions */
-			$('[data-action="modal-map"]').on('click', function (event) {
+			$('[data-action="modal-map"]').on('click', function(event) {
 				event.preventDefault();
 
 				var trigger = $(this);
@@ -177,7 +172,7 @@ Modernizr.load([
 				var geocoder = new google.maps.Geocoder();
 				var address;
 
-				if (trigger.data('address') != undefined && trigger.data('address').substring(0,1) == '#') {
+				if (trigger.data('address') != undefined && trigger.data('address').substring(0, 1) == '#') {
 					if ($(trigger.data('address')).data('address') != undefined) {
 						address = $(trigger.data('address')).data('address');
 					} else {
@@ -187,7 +182,7 @@ Modernizr.load([
 					address = trigger.data('address');
 				}
 
-				geocoder.geocode( { 'address': address}, function(results, status) {
+				geocoder.geocode({ 'address': address}, function(results, status) {
 					if (status == google.maps.GeocoderStatus.OK) {
 						mapModalMap.setCenter(results[0].geometry.location);
 						var marker = new google.maps.Marker({
@@ -195,7 +190,7 @@ Modernizr.load([
 								position: results[0].geometry.location
 						});
 					} else {
-						alert("Geocode was not successful for the following reason: " + status);
+						alert('Geocode was not successful for the following reason: ' + status);
 					}
 				});
 
@@ -205,13 +200,13 @@ Modernizr.load([
 
 			/* Listen for Google Directions Actions */
 			// Modal Show Event
-			$('[data-action="modal-directions"]').on('click', function (event) {
+			$('[data-action="modal-directions"]').on('click', function(event) {
 				event.preventDefault();
 
 				var trigger = $(this);
 				var modal = $('#modal_directions');
 
-				if (trigger.data('address') != undefined && trigger.data('address').substring(0,1) == '#') {
+				if (trigger.data('address') != undefined && trigger.data('address').substring(0, 1) == '#') {
 					if ($(trigger.data('address')).data('address') != undefined) {
 						address = $(trigger.data('address')).data('address');
 					} else {
@@ -233,12 +228,12 @@ Modernizr.load([
 				modal.modal('show').css({
 					'width': '100%',
 					'max-width': '650px',
-					'margin-left': function () { return -($(this).width() / 2); }
+					'margin-left': function() { return -($(this).width() / 2); }
 				});
 			});
 
 			// Modal Submit Event
-			$('#modal_directions_submit').on('click', function (event) {
+			$('#modal_directions_submit').on('click', function(event) {
 				event.preventDefault();
 
 				var modal = $('#modal_directions');
@@ -247,15 +242,15 @@ Modernizr.load([
 				var destination = modal.find('#destination').val();
 
 				mapDirectionsService.route({
-					origin:origin,
-					destination:destination,
+					origin: origin,
+					destination: destination,
 					travelMode: google.maps.TravelMode.DRIVING
 				},
 				function(response, status) {
 					if (status == google.maps.DirectionsStatus.OK) {
 
 						// Toggle Form
-						modal.find('#modal_directions_form').fadeOut('fast', function () {
+						modal.find('#modal_directions_form').fadeOut('fast', function() {
 							// Render and Show
 							mapDirectionsRenderer.setDirections(response);
 							modal.find('#modal_directions_list').empty().fadeIn('slow');
@@ -265,12 +260,12 @@ Modernizr.load([
 			});
 
 			// Resize Map When Shown
-			$('#modal_map').on('shown', function () {
+			$('#modal_map').on('shown', function() {
 				google.maps.event.trigger(mapModalMap, 'resize');
 			});
 
 			// Resize Map When Shown
-			$('#modal_directions').on('shown', function () {
+			$('#modal_directions').on('shown', function() {
 				google.maps.event.trigger(mapDirectionsMap, 'resize');
 			});
 		}
@@ -282,26 +277,26 @@ if ($('body').attr('id') == 'default') {
 
 	/* Timeout Inactive Sessions */
 	// Determine Session Expiration in Codeigniter
-	ciSessionexpire = glab.cookie.get('ci_sessionexpire')*1000;
-	timeoutTrigger = ciSessionexpire-90000;
+	ciSessionexpire = glab.cookie.get('ci_sessionexpire') * 1000;
+	timeoutTrigger = ciSessionexpire - 90000;
 
 	// Prepare Modal if Session Expiration Enabled
 	if (timeoutTrigger > 0) {
 
 		// Display Modal One Minute Before Expiration
-		setInterval(function () {
+		setInterval(function() {
 			$('#modal_timeout').modal('show');
 		},timeoutTrigger);
 
 		// Start 1 Minute Countdown
-		$('#modal_timeout').on('shown', function () {
+		$('#modal_timeout').on('shown', function() {
 
 			// Set Timeout Initial Value
 			var timeoutRemainder = 60;
 			$('#modal_timeout .counter').text(timeoutRemainder);
 
 			// Adjust Value in Countdown
-			window.timeoutCounter = setInterval(function () {
+			window.timeoutCounter = setInterval(function() {
 				$('#modal_timeout .counter').text(timeoutRemainder);
 				if (timeoutRemainder > 0) {
 					timeoutRemainder = (timeoutRemainder - 1);
@@ -309,13 +304,13 @@ if ($('body').attr('id') == 'default') {
 			},1000);
 
 			// Force Logout After 60 Seconds
-			window.timeoutSession = setTimeout(function () {
+			window.timeoutSession = setTimeout(function() {
 				window.location = siteURL + '/login/destroy?timeout=1&location=';
 			}, 60000);
 		});
 
 		// Cancel Forced Logout
-		$('#modal_timeout').on('hide', function () {
+		$('#modal_timeout').on('hide', function() {
 			$.ajax(siteURL + '/login/heartbeat');
 			clearTimeout(window.timeoutSession);
 			clearInterval(window.timeoutCounter);
@@ -323,14 +318,14 @@ if ($('body').attr('id') == 'default') {
 	}
 
 	// Chrome Application Installation Prompt
-	$('#btn_app_install').on('click', function (event) {
+	$('#btn_app_install').on('click', function(event) {
 		event.preventDefault();
-		window.chrome.webstore.install('',function () {},
-		function (str) {
+		window.chrome.webstore.install('', function() {},
+		function(str) {
 			// Error
 			alert(str);
 		});
-	})
+	});
 }
 
 /**
@@ -349,17 +344,17 @@ if ($('body').hasClass('chrome')) {
 if ($('body').hasClass('client_profile')) {
 
 	// Remove Email Dialog
-	$('#email [data-action="email-remove"]').on('click', function () {
+	$('#email [data-action="email-remove"]').on('click', function() {
 		var trigger = $(this);
 		bootbox.dialog(
-			"Are you sure that you want to remove this email address?",
+			'Are you sure that you want to remove this email address?',
 			[{
-				"label" : "Cancel"
+				'label' : 'Cancel'
 			},
 			{
-				"label" : "Remove",
-				"class" : "btn-danger",
-				"callback" : function() {
+				'label' : 'Remove',
+				'class' : 'btn-danger',
+				'callback' : function() {
 					trigger.closest('li').remove();
 				}
 			}]
@@ -367,17 +362,17 @@ if ($('body').hasClass('client_profile')) {
 	});
 
 	// Remove Telephone Number Dialog
-	$('#telephone [data-action="tel-remove"]').on('click', function () {
+	$('#telephone [data-action="tel-remove"]').on('click', function() {
 		var trigger = $(this);
 		bootbox.dialog(
-			"Are you sure that you want to remove this telephone number?",
+			'Are you sure that you want to remove this telephone number?',
 			[{
-				"label" : "Cancel"
+				'label' : 'Cancel'
 			},
 			{
-				"label" : "Remove",
-				"class" : "btn-danger",
-				"callback" : function() {
+				'label' : 'Remove',
+				'class' : 'btn-danger',
+				'callback' : function() {
 					trigger.closest('li').remove();
 				}
 			}]
@@ -385,17 +380,17 @@ if ($('body').hasClass('client_profile')) {
 	});
 
 	// Remove Address Dialog
-	$('#address [data-action="address-remove"]').on('click', function () {
+	$('#address [data-action="address-remove"]').on('click', function() {
 		var trigger = $(this);
 		bootbox.dialog(
-			"Are you sure that you want to remove this address?",
+			'Are you sure that you want to remove this address?',
 			[{
-				"label" : "Cancel"
+				'label' : 'Cancel'
 			},
 			{
-				"label" : "Remove",
-				"class" : "btn-danger",
-				"callback" : function() {
+				'label' : 'Remove',
+				'class' : 'btn-danger',
+				'callback' : function() {
 					$('#address .active').remove();
 					$('#address .help-block').addClass('active');
 				}
@@ -404,17 +399,17 @@ if ($('body').hasClass('client_profile')) {
 	});
 
 	// Revoke Manager Dialog
-	$('#manager button[data-action="manager-revoke"]').on('click', function () {
+	$('#manager button[data-action="manager-revoke"]').on('click', function() {
 		var trigger = $(this);
 		bootbox.dialog(
-			"Are you sure that you want to revoke access?",
+			'Are you sure that you want to revoke access?',
 			[{
-				"label" : "Cancel"
+				'label' : 'Cancel'
 			},
 			{
-				"label" : "Revoke",
-				"class" : "btn-danger",
-				"callback" : function() {
+				'label' : 'Revoke',
+				'class' : 'btn-danger',
+				'callback' : function() {
 					trigger.closest('tr').remove();
 				}
 			}]
@@ -434,17 +429,17 @@ else if ($('body').hasClass('dashboard')) {
 		hud.hide();
 
 		// Event Handlers
-		$(welcome).on('click','a.btn',function () {
+		$(welcome).on('click', 'a.btn', function() {
 			if ($('#welcome_hide').is(':checked')) {
-				glab.cookie.set('dashboard_welcome_hide','1');
+				glab.cookie.set('dashboard_welcome_hide', '1');
 			}
 		});
 
-		$('#btn_welcome_hide').on('click', function () {
-			welcome.fadeOut('slow',function() {
+		$('#btn_welcome_hide').on('click', function() {
+			welcome.fadeOut('slow', function() {
 				hud.fadeIn('slow');
 			});
-		})
+		});
 	}
 
 	// Show Chrome Application Alert
@@ -484,7 +479,7 @@ else if ($('body').hasClass('dashboard')) {
 
 			// Remove Excess Messages
 			$('#inbox .message').each(function(key, value) {
-				if (key+1 > limit) {
+				if (key + 1 > limit) {
 					$(this).remove();
 				}
 			});
@@ -512,45 +507,45 @@ else if ($('body').hasClass('dashboard')) {
 				var row = $(element).closest('tr');
 				var uniqueid = row.data('unique-id');
 
-				$.get(siteURL + '/dashboard/inbox_action/' + uniqueid + '/' + action).success(function () {
+				$.get(siteURL + '/dashboard/inbox_action/' + uniqueid + '/' + action).success(function() {
 					row.remove();
 					inboxRefresh();
-				}).error(function () {
+				}).error(function() {
 					alert('Could not remove message' + uniqueid);
-				}).complete(function () {
+				}).complete(function() {
 					inboxLoading(false);
 				});
 
 			});
 		}
 		else {
-			alert("You must select at least one message to continue.");
+			alert('You must select at least one message to continue.');
 		}
 	}
 
 	// Gmail Inbox Actions
-	$('#inbox a[data-action="inbox-archive"]').on('click', function () {
+	$('#inbox a[data-action="inbox-archive"]').on('click', function() {
 		inboxMessagesAction('archive');
 	});
-	$('#inbox a[data-action="inbox-spam"]').on('click', function () {
+	$('#inbox a[data-action="inbox-spam"]').on('click', function() {
 		bootbox.confirm('Are you sure that these messages are spam?', function(confirmed) {
 			if (confirmed) inboxMessagesAction('spam');
 		});
 	});
-	$('#inbox a[data-action="inbox-trash"]').on('click', function () {
+	$('#inbox a[data-action="inbox-trash"]').on('click', function() {
 		bootbox.confirm('Are you sure that you want to permanently remove these messages?', function(confirmed) {
 			if (confirmed) inboxMessagesAction('trash');
 		});
 	});
-	$('#inbox i[data-action="inbox-refresh"]').on('click', function () {
+	$('#inbox i[data-action="inbox-refresh"]').on('click', function() {
 		inboxRefresh();
 	});
 
 	$(document).ready(function() {
 		inboxRefresh();
-		setInterval(function () {
+		setInterval(function() {
 			inboxRefresh();
-		}, 1000*60*2);
+		}, 1000 * 60 * 2);
 	});
 }
 
@@ -558,7 +553,7 @@ else if ($('body').hasClass('dashboard')) {
 else if ($('body').hasClass('preferences')) {
 
 	// Request and Display Authorization Code
-	$('#device_request a.btn').on('click', function () {
+	$('#device_request a.btn').on('click', function() {
 
 		button = $(this);
 

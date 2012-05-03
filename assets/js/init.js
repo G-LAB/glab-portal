@@ -6,7 +6,7 @@ Modernizr.load([
 	/* jQuery */
 	{
 		load: '//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
-		complete: function ()
+		complete: function()
 		{
 			if (!window.jQuery)
 			{
@@ -23,7 +23,7 @@ Modernizr.load([
 			'/assets/global/js/global.js',
 			'/assets/js/script.js'
 		],
-		nope: function ()
+		nope: function()
 		{
 			alert('Failed to load required system components (jQuery).');
 		}
