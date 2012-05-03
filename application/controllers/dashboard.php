@@ -31,9 +31,6 @@ class Dashboard extends CI_Controller
 
 	function inbox_action($uniqueid, $action)
 	{
-		$this->load->library('Gmail');
-		$this->gmail->connect('ryan@glabstudios.com');
-
 		switch ($action) {
 			case 'archive':
 				$this->gmail->move_message($uniqueid, 'All Mail');
