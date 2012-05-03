@@ -39,7 +39,6 @@
 
 $autoload['packages'] = array(
 	APPPATH.'third_party/curl',
-	APPPATH.'third_party/restclient',
 	APPPATH.'third_party/template',
 	APPPATH.'third_party/glab-api-kit',
 	APPPATH.'third_party/glab-ci-ext',
