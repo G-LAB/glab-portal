@@ -22,6 +22,22 @@
 		</div>
 	</div>
 </div>
+<!-- Chrome Application -->
+<section id="alert_chrome" style="display: none">
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="alert alert-info alert-block">
+			  <a class="close" data-dismiss="alert">&times;</a>
+			  <div class="pull-right">
+			  	<a href="<?=site_url('chrome')?>" class="btn btn-large">Learn More</a>
+			  	<button id="btn_app_install" class="btn-large btn-primary">Add to Chrome</button>
+			  </div>
+			  <h3 class="alert-heading">Install the G LAB Portal for Google Chrome</h3>
+			  Enjoy faster speeds and a better user experience.
+			</div>
+		</div>
+	</div>
+</section>
 
 <!-- Gmail Inbox -->
 <section id="inbox">

@@ -48,3 +48,6 @@
 
 <!-- Microformats -->
 <link rel="profile" href="//microformats.org/profile/hcard">
+
+<!-- Google Chrome App -->
+<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/baknjbcomjfbdoedmfolpjgjbpipegpb">

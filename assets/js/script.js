@@ -321,11 +321,29 @@ if ($('body').attr('id') == 'default') {
 			clearInterval(window.timeoutCounter);
 		});
 	}
+
+	// Chrome Application Installation Prompt
+	$('#btn_app_install').on('click', function (event) {
+		event.preventDefault();
+		window.chrome.webstore.install('',function () {},
+		function (str) {
+			// Error
+			alert(str);
+		});
+	})
 }
 
 /**
  * CONTROLLERS AND VIEWS
  */
+
+if ($('body').hasClass('chrome')) {
+
+	// Disable Install Button on Non-Chrome Browsers
+	if (window.chrome == undefined) {
+		$('#btn_app_install').addClass('disabled');
+	}
+}
 
 /* Client Profile */
 if ($('body').hasClass('client_profile')) {
@@ -427,6 +445,11 @@ else if ($('body').hasClass('dashboard')) {
 				hud.fadeIn('slow');
 			});
 		})
+	}
+
+	// Show Chrome Application Alert
+	if (window.chrome != undefined && window.chrome.app.isInstalled != true) {
+		$('#alert_chrome').show();
 	}
 
 	// Animate Refresh Icon
