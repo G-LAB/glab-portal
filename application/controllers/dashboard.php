@@ -64,7 +64,7 @@ class Dashboard extends CI_Controller
 			$m['thread_url'] = 'http://webmail.glabstudios.com/#inbox/'.dechex($m['thread_id']);
 			$m['flag_replied'] = $message->hasFlag(Zend_Mail_Storage::FLAG_ANSWERED);
 			$m['flag_starred'] = $message->hasFlag(Zend_Mail_Storage::FLAG_FLAGGED);
-			$m['flag_unread'] = $message->hasFlag(Zend_Mail_Storage::FLAG_SEEN);
+			$m['flag_unread'] = !$message->hasFlag(Zend_Mail_Storage::FLAG_SEEN);
 			$m['sender_name'] = (empty($sender_name)) ? $sender_email : $sender_name;
 			$m['sender_email'] = $sender_email;
 			$m['subject'] = $message->subject;
