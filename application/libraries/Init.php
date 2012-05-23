@@ -50,7 +50,8 @@ class Init
 
 		/* CHECK FOR PERMISSIONS */
 		// Check if permissions pass
-		if ($CI->acl->is_allowed('portal_'.$CI->router->fetch_class()) !== true)
+		$resource = ($CI->uri->segment(1)) ? $CI->uri->segment(1) : $CI->router->fetch_class();
+		if ($CI->acl->is_allowed('portal_'.$resource) !== true)
 		{
 			// Error if authenticated, redirect if not
 			if ($CI->acl->is_auth() === true)
