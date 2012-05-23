@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AJAX Request Controller for G LAB Company Portal
+ * AJAX Request Proxy for G LAB Company Portal
  *
  * @author Ryan Brodkin
  * @copyright G LAB. All rights reserved.
@@ -9,7 +9,7 @@
  */
 
 
-class Ajax extends CI_Controller
+class Proxy extends CI_Controller
 {
 	function __constructor ()
 	{
@@ -35,6 +35,7 @@ class Ajax extends CI_Controller
 	function _process_request($method, $uri, $params)
 	{
 		$result = $this->api->request(strtolower($method), $uri, $params);
+		$this->output->set_status_header($this->api->status());
 		echo json_encode($result);
 		exit; // Send Output Faster
 	}

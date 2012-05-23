@@ -102,6 +102,23 @@ glab.class.portal.prototype.loading = function(mode) {
 	}
 };
 
+/**
+ * Send API request to server
+ * @param  string method  HTTP method to use (GET, POST, PUT or DELETE).
+ * @param  string uri     Resource where API request will be sent in API.
+ * @param  array, object, string data   Parameters to be sent with AJAX request.
+ * @return jquery         jQuery AJAX request object.
+ */
+glab.class.portal.prototype.api = function(method, uri, data, callback) {
+	return $.ajax({
+		type: method,
+		url: siteURL + '/ajax/' + uri,
+		data: data,
+		dataType: 'json',
+		complete: callback
+	});
+};
+
 /* Instanciate Portal Class */
 glab.portal = new glab.class.portal();
 
@@ -416,6 +433,56 @@ if ($('body').hasClass('client_profile')) {
 		);
 	});
 
+	$(document).ready(function() {
+
+		// Fetch Email Subscriptions
+		glab.portal.api('get', '/proxy/communication/email_list/groups')
+		.success(function(interests) {
+			// Fill Existing Values
+			var profile = new Object();
+			profile.pid = $('.vcard .fn').data('pid');
+			glab.portal.api('get', '/proxy/communication/email_list/subscriber', profile)
+			.success(function (subscriber) {
+				// Set Values
+				var checked = new Object;
+				jQuery.each(subscriber.merges.GROUPINGS, function(index, interest) {
+					checked[interest.id] = interest.groups.split(', ');
+				});
+				var rows = $('#email_subscriptions table tbody');
+				rows.empty();
+				// Append Interests to Table
+				jQuery.each(interests, function(index, interest) {
+					jQuery.each(interest.groups, function(index, group) {
+						if (checked[interest.id].indexOf(group.name) > -1) {
+							group.checked = true;
+						} else {
+							group.checked = false;
+						}
+					});
+					var row = ich.email_subscriptions_row(interest);
+					rows.append(row);
+				});
+				// Add Change Event
+				$('#email_subscriptions form').change(function (event) {
+					var form = $(this);
+					// Get Field Data
+					var data = form.serialize();
+					// Disable checkboxes while request is processed
+					form.find('input').attr('disabled', 'disabled');
+					// Send request
+					glab.portal.api('post', '/proxy/communication/email_list/subscriber', data, function () {
+						// Enable checkboxes after request is complete
+						form.find('input').removeAttr('disabled');
+					});
+				});
+			});
+		})
+		.error(function() {
+			alert('Error retrieving interest groups from MailChimp.');
+		});
+
+	}); // ready
+
 }
 
 /* Dashboard */
@@ -561,7 +628,7 @@ else if ($('body').hasClass('preferences')) {
 		$('#device_loading').fadeIn();
 
 		// Request Auth Code via AJAX
-		$.getJSON(siteURL + '/ajax/brand/identities').success(function(data) {
+		$.getJSON(siteURL + '/failure').success(function(data) {
 			button.fadeOut().hide();
 			$('#device_loading').fadeOut().hide();
 			$('#device_response').slideDown();

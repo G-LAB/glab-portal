@@ -1,6 +1,6 @@
 <!-- BEGIN Contact Info -->
 <div class="vcard">
-	<span class="fn hide"><?=$profile->name->full?></span>
+	<span class="fn hide" data-pid="<?=$profile->pid?>"><?=$profile->name->full?></span>
 	<div class="row">
 		<div class="span2 offset6">
 			<a class="thumbnail" id="profile_picture">
@@ -145,3 +145,41 @@
 	</section>
 </div>
 <!-- END Managers -->
+
+<!-- BEGIN Email Subscriptions -->
+<section id="email_subscriptions">
+	<h2>Email Subscriptions</h2>
+	<form>
+		<input type="hidden" name="pid" value="<?=$profile->pid?>">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Interest Category</th>
+					<th>Message Types</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="2">Loading subscriptions...</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+	<script type="text/html" id="email_subscriptions_row">
+		<tr id="email_subscriptions_interest_{{id}}">
+			<td>
+				<strong>{{name}}</strong>
+				<input type="hidden" name="interests[{{id}}][]" value="">
+			</td>
+			<td>
+				{{#groups}}
+				<label class="checkbox">
+					<input type="checkbox" name="interests[{{id}}][]" value="{{name}}" {{#checked}}checked{{/checked}}>
+					{{name}}
+				</label>
+				{{/groups}}
+			</td>
+		</tr>
+	</script>
+</section>
+<!-- END Email Subscriptions -->
