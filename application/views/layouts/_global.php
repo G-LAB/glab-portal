@@ -1,5 +1,33 @@
 <!-- GLOBALLY SHARED CONTENT -->
 <div id="global">
+
+	<!-- Loading Overlay (JS Loader) -->
+	<div id="overlay_loading">
+		<div class="modal-backdrop in"></div>
+		<div class="modal hide fade in">
+			<div class="modal-header">
+				<h3>Please Wait, Loading...</h3>
+			</div>
+			<div class="modal-body">
+				<div class="progress progress-striped active">
+					<div id="overlay_loading_progress" class="bar" style="width: 100%;"></div>
+				</div>
+				<p id="overlay_loading_text">Downloading Files...</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Loading Bar (AJAX Loader) -->
+	<div id="loading_bar" class="navbar navbar-fixed-bottom" style="display: none;">
+		<div class="container">
+			<div class="row">
+				<div class="progress progress-striped progress-success active span4">
+					<div class="bar" style="width: 100%;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Session Timout Modal -->
 	<div id="modal_timeout" class="modal hide fade">
 		<div class="modal-header">
@@ -12,22 +40,6 @@
 		<div class="modal-footer">
 			<a class="btn btn-primary" data-dismiss="modal">Stay Signed In</a>
 			<a href="<?=site_url('login/destroy')?>" class="btn">Logout</a>
-		</div>
-	</div>
-
-	<!-- Loading Overlay -->
-	<div id="overlay_loading">
-		<div class="modal-backdrop in"></div>
-		<div class="modal hide fade in">
-			<div class="modal-header">
-				<h3>Please Wait, Loading...</h3>
-			</div>
-			<div class="modal-body">
-				<div class="progress progress-striped active">
-					<div id="loading_bar" class="bar" style="width: 100%;"></div>
-				</div>
-				<p id="loading_file">Downloading Files...</p>
-			</div>
 		</div>
 	</div>
 
@@ -78,4 +90,5 @@
 			</div>
 		</div>
 	</div>
+
 </div>

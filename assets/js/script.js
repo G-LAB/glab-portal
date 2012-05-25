@@ -1,5 +1,7 @@
 /* Global Variables */
 siteURL = unescape(glab.cookie.get('ci_siteurl')) + '/';
+// Number of AJAX requests loading data
+loadingCount = 0;
 
 /* Google Analytics Tracking */
 var _gaq = _gaq || [];
@@ -85,20 +87,48 @@ glab.class.portal.prototype.gmapInit = function() {
 /**
  * Hide or Show Loading Overlay
  * @param  string|bool mode
- * @return null.
+ * @return null
  */
-glab.class.portal.prototype.loading = function(mode) {
-	var overlayLoading = $('#overlay_loading');
+glab.class.portal.prototype.overlay = function(mode) {
+	var overlay = $('#overlay_loading');
 
 	if (mode == 'show' || mode == true)
 	{
-		$('#loading_bar').css({width: '100%'});
-		$('#loading_file').text('  ');
-		overlayLoading.fadeIn('slow');
+		$('#overlay_loading_progress').css({width: '100%'});
+		$('#overlay_loading_text').text('  ');
+		overlay.fadeIn('slow');
 	}
 	else if (mode == 'hide' || mode == false)
 	{
-		overlayLoading.fadeOut('fast');
+		overlay.fadeOut('fast');
+	}
+};
+
+/**
+ * Hide or Show Loading Bar
+ * @param  bool|string mode
+ * @return null
+ */
+glab.class.portal.prototype.loading = function(mode) {
+	var loading = $('#loading_bar');
+
+	if (mode == 'show' || mode == true)
+	{
+		loadingCount++;
+	}
+	else if (mode == 'hide' || mode == false)
+	{
+		loadingCount--;
+	}
+
+	// Take action
+	if (loadingCount > 0)
+	{
+		loading.fadeIn('slow');
+	}
+	else if (loadingCount <= 0)
+	{
+		loading.fadeOut('slow');
 	}
 };
 
@@ -129,10 +159,10 @@ $('.input-prepend input').on('focus', function() {
 
 /* Trigger Overlay on Unload */
 $(window).unload(function() {
-	glab.portal.loading('show');
+	glab.portal.overlay('show');
 });
 window.onbeforeunload = function() {
-	glab.portal.loading('show');
+	glab.portal.overlay('show');
 };
 
 /* Load Assets */
@@ -154,15 +184,15 @@ Modernizr.load([
 	{
 		load: assets,
 		callback: function(url, result, key) {
-			$('#loading_bar').css({width: (key / assets.length * 100) + '%'});
-			$('#loading_file').text('Initialized ' + url);
+			$('#overlay_loading_progress').css({width: (key / assets.length * 100) + '%'});
+			$('#overlay_loading_text').text('Initialized ' + url);
 		},
 		complete: function() {
 			/* Release Hold */
 			$.holdReady(false);
 
 			/* Hide Page Loading Overlay */
-			glab.portal.loading('hide');
+			glab.portal.overlay('hide');
 
 			/* Dropdown Menus */
 			$('.dropdown-toggle').dropdown();
@@ -288,6 +318,17 @@ Modernizr.load([
 		}
 	}
 ]);
+
+
+$(document).ready(function() {
+	$(document).ajaxStart(function(){
+		glab.portal.loading(true);
+	});
+
+	$(document).ajaxStop(function(){
+		glab.portal.loading(false);
+	});
+});
 
 /* LAYOUT: Default */
 if ($('body').attr('id') == 'default') {
