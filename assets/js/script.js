@@ -154,7 +154,7 @@ glab.class.portal.prototype.loading = function(mode) {
   messages.push('Ensuring Everything Works Perfectly');
   messages.push('Spawning Zombie Processes');
   messages.push('Loading Cute Cat Photos');
-  messages.push('Can Haz Bucket???');
+  messages.push('Can Haz JSON???');
   messages.push('Alright, Which Jokester Stored the Data on a Floppy?');
 
   var key = Math.floor(Math.random() * messages.length);
