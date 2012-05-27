@@ -120,25 +120,6 @@ glab.class.portal.prototype.overlay = function(mode) {
 glab.class.portal.prototype.loading = function(mode) {
   var loading = $('#loading_bar');
 
-  if (mode == 'show' || mode == true)
-  {
-    loadingCount++;
-  }
-  else if (mode == 'hide' || mode == false)
-  {
-    loadingCount--;
-  }
-
-  // Hide/Show as Necessary
-  if (loadingCount == 1)
-  {
-    loading.fadeIn('slow');
-  }
-  else if (loadingCount < 1)
-  {
-    loading.fadeOut('slow');
-  }
-
   // Set Loading Message
   var messages = new Array;
   messages.push('Reticulating Splines');
@@ -157,8 +138,26 @@ glab.class.portal.prototype.loading = function(mode) {
   messages.push('Can Haz JSON???');
   messages.push('Alright, Which Jokester Stored the Data on a Floppy?');
 
-  var key = Math.floor(Math.random() * messages.length);
-  $('#loading_bar_text').text(messages[key]);
+  if (mode == 'show' || mode == true)
+  {
+    loadingCount++;
+  }
+  else if (mode == 'hide' || mode == false)
+  {
+    loadingCount--;
+  }
+
+  // Hide/Show as Necessary
+  if (loadingCount > 0)
+  {
+    var key = Math.floor(Math.random() * messages.length);
+    $('#loading_bar_text').text(messages[key]);
+    loading.fadeIn('fast');
+  }
+  else
+  {
+    loading.fadeOut(1000);
+  }
 };
 
 /**
