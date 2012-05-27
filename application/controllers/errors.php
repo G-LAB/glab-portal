@@ -12,18 +12,18 @@
 class Errors extends CI_Controller
 {
 
-	function __construct () {
-		parent::__construct();
+  function __construct () {
+    parent::__construct();
 
-		$this->template->set_layout('masthead');
-	}
+    $this->template->set_layout('masthead');
+  }
 
-	/**
-	 * Displays welcome page
-	 */
-	function error_404()
-	{
-		$this->template->title('Page Not Found')->build('errors/404');
-	}
+  /**
+   * Displays welcome page
+   */
+  function error_404()
+  {
+    $this->template->title('Page Not Found')->build('errors/404');
+  }
 
 }

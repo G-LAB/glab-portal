@@ -38,11 +38,11 @@
 */
 
 $autoload['packages'] = array(
-	APPPATH.'third_party/curl',
-	APPPATH.'third_party/template',
-	APPPATH.'third_party/glab-api-kit',
-	APPPATH.'third_party/glab-ci-ext',
-	APPPATH.'third_party/g-lib'
+  APPPATH.'third_party/curl',
+  APPPATH.'third_party/template',
+  APPPATH.'third_party/glab-api-kit',
+  APPPATH.'third_party/glab-ci-ext',
+  APPPATH.'third_party/g-lib'
 );
 
 
@@ -55,15 +55,15 @@ $autoload['packages'] = array(
 |
 | Prototype:
 |
-|	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
+|  $autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
 $autoload['libraries'] = array(
-	'Init',
-	'Session',
-	'ACL',
-	'User_Notice',
-	'form_validation'
+  'Init',
+  'Session',
+  'ACL',
+  'User_Notice',
+  'form_validation'
 );
 
 
@@ -73,18 +73,18 @@ $autoload['libraries'] = array(
 | -------------------------------------------------------------------
 | Prototype:
 |
-|	$autoload['helper'] = array('url', 'file');
+|  $autoload['helper'] = array('url', 'file');
 */
 
 $autoload['helper'] = array(
-	'profile',
-	'language',
-	'url', 'glab_url', 'glib_url',
-	'typography', 'glab_typography',
-	'date', 'glab_date', 'glib_date',
-	'number', 'glab_number', 'glib_number',
-	'glab_snippet',
-	'array', 'glib_array'
+  'profile',
+  'language',
+  'url', 'glab_url', 'glib_url',
+  'typography', 'glab_typography',
+  'date', 'glab_date', 'glib_date',
+  'number', 'glab_number', 'glib_number',
+  'glab_snippet',
+  'array', 'glib_array'
 );
 
 /*
@@ -93,7 +93,7 @@ $autoload['helper'] = array(
 | -------------------------------------------------------------------
 | Prototype:
 |
-|	$autoload['config'] = array('config1', 'config2');
+|  $autoload['config'] = array('config1', 'config2');
 |
 | NOTE: This item is intended for use ONLY if you have created custom
 | config files.  Otherwise, leave it blank.
@@ -109,7 +109,7 @@ $autoload['config'] = array();
 | -------------------------------------------------------------------
 | Prototype:
 |
-|	$autoload['language'] = array('lang1', 'lang2');
+|  $autoload['language'] = array('lang1', 'lang2');
 |
 | NOTE: Do not include the "_lang" part of your file.  For example
 | "codeigniter_lang.php" would be referenced as array('codeigniter');
@@ -125,7 +125,7 @@ $autoload['language'] = array();
 | -------------------------------------------------------------------
 | Prototype:
 |
-|	$autoload['model'] = array('model1', 'model2');
+|  $autoload['model'] = array('model1', 'model2');
 |
 */
 

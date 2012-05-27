@@ -11,14 +11,14 @@
 
 class Preferences extends CI_Controller
 {
-	/**
-	 * Display Preferences
-	 */
-	function index()
-	{
-		$this->template
-			->set('profile',$this->profile->current())
-			->build('preferences/main');
-	}
+  /**
+   * Display Preferences
+   */
+  function index()
+  {
+    $this->template
+      ->set('profile',$this->profile->current())
+      ->build('preferences/main');
+  }
 
 }

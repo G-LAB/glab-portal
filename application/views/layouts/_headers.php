@@ -1,18 +1,18 @@
 <meta charset="utf-8">
 
 <title>
-	G LAB Portal :: 
-	<?=htmlspecialchars(controller_name())?>
-	<?php
-		if ($template['title'] !== ' ')
-		{
-			echo ' : '.htmlspecialchars($template['title']);
-		}
-		elseif (strtolower(method_name()) !== 'index')
-		{
-			echo ' : '.htmlspecialchars(method_name());
-		}
-	?>
+  G LAB Portal :: 
+  <?=htmlspecialchars(controller_name())?>
+  <?php
+    if ($template['title'] !== ' ')
+    {
+      echo ' : '.htmlspecialchars($template['title']);
+    }
+    elseif (strtolower(method_name()) !== 'index')
+    {
+      echo ' : '.htmlspecialchars(method_name());
+    }
+  ?>
 </title>
 
 <meta name="author" content="glabstudios.com">
