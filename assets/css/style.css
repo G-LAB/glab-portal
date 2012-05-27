@@ -125,13 +125,26 @@ table tr + tr.message-empty {
 
 #global #loading_bar {
 	background-color: #f2f2f2;
-	height: 30px;
+	height: 25px;
 	border-top: 1px solid #d5d5d5;
 	opacity: 0.9;
+	color: #5e5e5e;
+	font-size: 18px;
+	font-weight: 200;
+}
+
+#global #loading_bar div.row > div {
+	margin-top: 3px;
 }
 
 #global #loading_bar .progress {
-	margin-top: 7px;
+	height: 15px;
+}
+
+#global #loading_bar #loading_bar_text {
+	font-size: 14px;
+	margin-top: 2px;
+	margin-left: 5px;
 }
 
 /* @group Layouts */

@@ -18,11 +18,15 @@
 	</div>
 
 	<!-- Loading Bar (AJAX Loader) -->
-	<div id="loading_bar" class="navbar navbar-fixed-bottom" style="display: none;">
+	<div id="loading_bar" class="navbar navbar-fixed-bottom" style="display: none">
 		<div class="container">
 			<div class="row">
 				<div class="progress progress-striped progress-success active span4">
 					<div class="bar" style="width: 100%;"></div>
+				</div>
+				<div class="span8">
+					<div class="pull-left">LOADING...</div>
+					<div id="loading_bar_text" class="pull-left"></div>
 				</div>
 			</div>
 		</div>

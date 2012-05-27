@@ -129,15 +129,36 @@ glab.class.portal.prototype.loading = function(mode) {
     loadingCount--;
   }
 
-  // Take action
-  if (loadingCount > 0)
+  // Hide/Show as Necessary
+  if (loadingCount == 1)
   {
     loading.fadeIn('slow');
   }
-  else if (loadingCount <= 0)
+  else if (loadingCount < 1)
   {
     loading.fadeOut('slow');
   }
+
+  // Set Loading Message
+  var messages = new Array;
+  messages.push('Reticulating Splines');
+  messages.push('Go ahead, hold your breath!');
+  messages.push('Hampsters Processing');
+  messages.push('Inverting Multipliers');
+  messages.push('Please Don\'t Feed the Programmers');
+  messages.push('Pretending To Do Something Useful');
+  messages.push('Foraging For Objects');
+  messages.push('Sarcasm Approaching Critical Levels');
+  messages.push('Does anyone read these things?');
+  messages.push('Hitting Your Keyboard Won\'t Make This Faster');
+  messages.push('Ensuring Everything Works Perfectly');
+  messages.push('Spawning Zombie Processes');
+  messages.push('Loading Cute Cat Photos');
+  messages.push('Can Haz Bucket???');
+  messages.push('Alright, Which Jokester Stored the Data on a Floppy?');
+
+  var key = Math.floor(Math.random() * messages.length);
+  $('#loading_bar_text').text(messages[key]);
 };
 
 /**
