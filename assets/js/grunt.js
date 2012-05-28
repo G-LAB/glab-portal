@@ -27,6 +27,10 @@ module.exports = function(grunt) {
         src: ['<banner:meta.banner>', 'src/init.js'],
         dest: 'dist/init.min.js'
       },
+      plugins: {
+        src: ['../bootbox/bootbox.js', '../icanhaz/ICanHaz.js'],
+        dest: 'dist/plugins.min.js'
+      },
       portal: {
         src: ['<banner:meta.banner>', 'src/analytics.js', 'global/js/global.js', 'src/script.js'],
         dest: 'dist/script.min.js'

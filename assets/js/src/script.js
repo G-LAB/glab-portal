@@ -200,10 +200,9 @@ window.onbeforeunload = function() {
 
 /* Load Assets */
 var assets = [
-  '/assets/js/dist/bootstrap.min.js',
   '//maps.googleapis.com/maps/api/js?key=AIzaSyAgsnPACf66og7cXNk48Toh6ijmogR3H7E&callback=Portal.gmapInit&sensor=false&v=3.7',
-  '/assets/bootbox/bootbox.js',
-  '/assets/icanhaz/ICanHaz.min.js'
+  '/assets/js/dist/plugins.min.js',
+  '/assets/js/dist/bootstrap.min.js'
 ];
 
 /* Load Bootstrap */
