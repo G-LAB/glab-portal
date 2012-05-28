@@ -26,7 +26,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="apple-touch-icon-precomposed" href="/assets/theme/img/icon.png">
-<link rel="apple-touch-startup-image" href="/assets/theme/img/startup.png')?>">
+<link rel="apple-touch-startup-image" href="/assets/theme/img/startup.png">
 
 <!-- Google Fonts -->
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400">
@@ -43,8 +43,10 @@
 <link rel="shortcut icon" href="/assets/img/favicon.ico')?>">
 
 <!-- Async Loading -->
-<script src="/assets/js/modernizr.custom.js"></script>
-<script src="/assets/js/init.js"></script>
+<script src="/assets/modernizr/modernizr.custom.js"></script>
+<?php if (ENVIRONMENT === 'development') : ?><script src="/assets/js/src/init.js"></script>
+<?php else : ?><script src="/assets/js/dist/init.min.js"></script>
+<?php endif; ?>
 
 <!-- Microformats -->
 <link rel="profile" href="//microformats.org/profile/hcard">

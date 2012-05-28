@@ -1,36 +1,32 @@
-/* Global Variables */
-siteURL = unescape(glab.cookie.get('ci_siteurl')) + '/';
+/*global bootbox: false, google: false, Helper:false, ich: false, Modernizr: false */
+
+var GLAB = {};
+GLAB.cookie = new Helper.cookie();
+
+// Base URL of Installation
+var siteURL = decodeURIComponent(GLAB.cookie.get('ci_siteurl')) + '/';
+// CodeIgniter Session Expiration
+var ciSessionexpire;
 // Number of AJAX requests loading data
-loadingCount = 0;
-
-/* Google Analytics Tracking */
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-18252433-3']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script');
-  ga.type = 'text/javascript'; ga.async = true;
-  ga.src = (
-    'https:' == document.location.protocol ?
-    'https://ssl' : 'http://www'
-  ) + '.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(ga, s);
-})();
+var loadingCount = 0;
+// Google Maps for Modals
+var mapModalMap;
+var mapDirectionsService;
+var mapDirectionsRenderer;
+var mapDirectionsMap;
 
 /**
  * Class for G LAB Portal
  */
-glab.class.portal = function() {};
+var Portal = function() {};
 
 /**
  * Convert map classes to Google Maps
  */
-glab.class.portal.prototype.gmapBind = function() {
-  $('.map').each(function() {
+Portal.prototype.gmapBind = function() {
+  jQuery('.map').each(function() {
     var lat, lng;
-    var element = $(this);
+    var element = jQuery(this);
     var geocoder = new google.maps.Geocoder();
 
     // Draw Map
@@ -40,7 +36,7 @@ glab.class.portal.prototype.gmapBind = function() {
     });
 
     // Declared Latitude and Longitude
-    if (element.data('latlng') != undefined) {
+    if (element.data('latlng') !== undefined) {
       var latlng = element.data('latlng').split(',', 2);
       lat = latlng[0];
       lng = latlng[1];
@@ -48,11 +44,11 @@ glab.class.portal.prototype.gmapBind = function() {
     }
 
     // Declared Address
-    else if (element.data('address') != undefined)
+    else if (element.data('address') !== undefined)
     {
       geocoder.geocode({ 'address': element.data('address')},
       function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
+        if (status === google.maps.GeocoderStatus.OK) {
           map.setCenter(results[0].geometry.location);
           var marker = new google.maps.Marker({
               map: map,
@@ -67,7 +63,7 @@ glab.class.portal.prototype.gmapBind = function() {
 /**
  * Google Maps API Callback
  */
-glab.class.portal.prototype.gmapInit = function() {
+Portal.prototype.gmapInit = function() {
   /* Basic Map in Modal */
   mapModalMap = new google.maps.Map(document.getElementById('modal_map_gmap'), {
     zoom: 14,
@@ -98,16 +94,16 @@ glab.class.portal.prototype.gmapInit = function() {
  * Hide or Show Loading Overlay
  * @param  {string|bool} mode Two modes, true/'show' and false/'hide'.
  */
-glab.class.portal.prototype.overlay = function(mode) {
-  var overlay = $('#overlay_loading');
+Portal.prototype.overlay = function(mode) {
+  var overlay = jQuery('#overlay_loading');
 
-  if (mode == 'show' || mode == true)
+  if (mode === 'show' || mode === true)
   {
-    $('#overlay_loading_progress').css({width: '100%'});
-    $('#overlay_loading_text').text('  ');
+    jQuery('#overlay_loading_progress').css({width: '100%'});
+    jQuery('#overlay_loading_text').text('  ');
     overlay.fadeIn('slow');
   }
-  else if (mode == 'hide' || mode == false)
+  else if (mode === 'hide' || mode === false)
   {
     overlay.fadeOut('fast');
   }
@@ -117,11 +113,11 @@ glab.class.portal.prototype.overlay = function(mode) {
  * Hide or Show Loading Bar
  * @param  {bool|string} mode Two modes, true/'show' and false/'hide'.
  */
-glab.class.portal.prototype.loading = function(mode) {
-  var loading = $('#loading_bar');
+Portal.prototype.loading = function(mode) {
+  var loading = jQuery('#loading_bar');
 
   // Set Loading Message
-  var messages = new Array;
+  var messages = [];
   messages.push('Reticulating Splines');
   messages.push('Go ahead, hold your breath!');
   messages.push('Hampsters Processing');
@@ -138,11 +134,11 @@ glab.class.portal.prototype.loading = function(mode) {
   messages.push('Can Haz JSON???');
   messages.push('Alright, Which Jokester Stored the Data on a Floppy?');
 
-  if (mode == 'show' || mode == true)
+  if (mode === 'show' || mode === true)
   {
     loadingCount++;
   }
-  else if (mode == 'hide' || mode == false)
+  else if (mode === 'hide' || mode === false)
   {
     loadingCount--;
   }
@@ -151,7 +147,7 @@ glab.class.portal.prototype.loading = function(mode) {
   if (loadingCount > 0)
   {
     var key = Math.floor(Math.random() * messages.length);
-    $('#loading_bar_text').text(messages[key]);
+    jQuery('#loading_bar_text').text(messages[key]);
     loading.fadeIn('fast');
   }
   else
@@ -168,8 +164,8 @@ glab.class.portal.prototype.loading = function(mode) {
  * @param {function(object)} callback Function to execute when complete.
  * @return {jQuery}         jQuery AJAX request object.
  */
-glab.class.portal.prototype.api = function(method, uri, data, callback) {
-  return $.ajax({
+Portal.prototype.api = function(method, uri, data, callback) {
+  return jQuery.ajax({
     type: method,
     url: siteURL + '/ajax/' + uri,
     data: data,
@@ -182,36 +178,30 @@ glab.class.portal.prototype.api = function(method, uri, data, callback) {
  * Instanciate Portal Class
  * @type {glab}
  */
-glab.portal = new glab.class.portal();
+Portal = new Portal();
 
 /* Trigger Prepended Radio Buttons */
-$('.input-prepend input').on('focus', function() {
-  $(this).parent().find('.add-on input[type="radio"]').click();
+jQuery('.input-prepend input').on('focus', function() {
+  jQuery(this).parent().find('.add-on input[type="radio"]').click();
 });
 
 /**
  * Trigger overlay on unload w/ jQuery
  */
-$(window).unload(function() {
-  glab.portal.overlay('show');
+jQuery(window).unload(function() {
+  Portal.overlay('show');
 });
 /**
  * Trigger overlay on unload for crankier browsers
  */
 window.onbeforeunload = function() {
-  glab.portal.overlay('show');
+  Portal.overlay('show');
 };
 
 /* Load Assets */
 var assets = [
-  '/assets/bootstrap/js/bootstrap-alert.js',
-  '/assets/bootstrap/js/bootstrap-collapse.js',
-  '/assets/bootstrap/js/bootstrap-dropdown.js',
-  '/assets/bootstrap/js/bootstrap-modal.js',
-  '/assets/bootstrap/js/bootstrap-tab.js',
-  '/assets/bootstrap/js/bootstrap-tooltip.js',
-  '/assets/bootstrap/js/bootstrap-transition.js',
-  '//maps.googleapis.com/maps/api/js?key=AIzaSyAgsnPACf66og7cXNk48Toh6ijmogR3H7E&callback=glab.portal.gmapInit&sensor=false&v=3.7',
+  '/assets/js/dist/bootstrap.min.js',
+  '//maps.googleapis.com/maps/api/js?key=AIzaSyAgsnPACf66og7cXNk48Toh6ijmogR3H7E&callback=Portal.gmapInit&sensor=false&v=3.7',
   '/assets/bootbox/bootbox.js',
   '/assets/icanhaz/ICanHaz.min.js'
 ];
@@ -221,64 +211,64 @@ Modernizr.load([
   {
     load: assets,
     callback: function(url, result, key) {
-      $('#overlay_loading_progress')
+      jQuery('#overlay_loading_progress')
       .css({width: (key / assets.length * 100) + '%'});
-      $('#overlay_loading_text').text('Initialized ' + url);
+      jQuery('#overlay_loading_text').text('Initialized ' + url);
     },
     complete: function() {
       /* Release Hold */
-      $.holdReady(false);
+      jQuery.holdReady(false);
 
       /* Hide Page Loading Overlay */
-      glab.portal.overlay('hide');
+      Portal.overlay('hide');
 
       /* Dropdown Menus */
-      $('.dropdown-toggle').dropdown();
+      jQuery('.dropdown-toggle').dropdown();
 
       /* Alert Message Close Buttons */
-      $('.alert-message').alert();
+      jQuery('.alert-message').alert();
 
       /* Tabs */
-      $('.tabbable').tab();
+      jQuery('.tabbable').tab();
 
       /* Enable Tooltips */
-      $('a[title], i[title], span[title]').tooltip();
+      jQuery('a[title], i[title], span[title]').tooltip();
 
       /* Replace Default System Dialogs */
       window.alert = bootbox.alert;
       window.confirm = bootbox.confirm;
 
       /* Listen for Google Map Actions */
-      $('[data-action="modal-map"]').on('click', function(event) {
+      jQuery('[data-action="modal-map"]').on('click', function(event) {
         event.preventDefault();
 
-        var trigger = $(this);
-        var modal = $('#modal_map');
+        var trigger = jQuery(this);
+        var modal = jQuery('#modal_map');
         var geocoder = new google.maps.Geocoder();
         var address;
 
         if (
-          trigger.data('address') != undefined &&
-          trigger.data('address').substring(0, 1) == '#'
+          trigger.data('address') !== undefined &&
+          trigger.data('address').substring(0, 1) === '#'
         ) {
-          if ($(trigger.data('address')).data('address') != undefined) {
-            address = $(trigger.data('address')).data('address');
+          if (jQuery(trigger.data('address')).data('address') !== undefined) {
+            address = jQuery(trigger.data('address')).data('address');
           } else {
-            address = $(trigger.data('address')).text();
+            address = jQuery(trigger.data('address')).text();
           }
         } else {
           address = trigger.data('address');
         }
 
         geocoder.geocode({ 'address': address}, function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
+          if (status === google.maps.GeocoderStatus.OK) {
             mapModalMap.setCenter(results[0].geometry.location);
             var marker = new google.maps.Marker({
                 map: mapModalMap,
                 position: results[0].geometry.location
             });
           } else {
-            alert(
+            window.alert(
               'Geocode was not successful for the following reason: ' +
               status
             );
@@ -291,20 +281,21 @@ Modernizr.load([
 
       /* Listen for Google Directions Actions */
       // Modal Show Event
-      $('[data-action="modal-directions"]').on('click', function(event) {
+      jQuery('[data-action="modal-directions"]').on('click', function(event) {
         event.preventDefault();
 
-        var trigger = $(this);
-        var modal = $('#modal_directions');
+        var trigger = jQuery(this);
+        var modal = jQuery('#modal_directions');
+        var address;
 
         if (
-          trigger.data('address') != undefined &&
-          trigger.data('address').substring(0, 1) == '#'
+          trigger.data('address') !== undefined &&
+          trigger.data('address').substring(0, 1) === '#'
         ) {
-          if ($(trigger.data('address')).data('address') != undefined) {
-            address = $(trigger.data('address')).data('address');
+          if (jQuery(trigger.data('address')).data('address') !== undefined) {
+            address = jQuery(trigger.data('address')).data('address');
           } else {
-            address = $(trigger.data('address')).text();
+            address = jQuery(trigger.data('address')).text();
           }
         } else {
           address = trigger.data('address');
@@ -322,15 +313,15 @@ Modernizr.load([
         modal.modal('show').css({
           'width': '100%',
           'max-width': '650px',
-          'margin-left': function() { return -($(this).width() / 2); }
+          'margin-left': function() { return -(jQuery(this).width() / 2); }
         });
       });
 
       // Modal Submit Event
-      $('#modal_directions_submit').on('click', function(event) {
+      jQuery('#modal_directions_submit').on('click', function(event) {
         event.preventDefault();
 
-        var modal = $('#modal_directions');
+        var modal = jQuery('#modal_directions');
 
         var origin = modal.find('#origin').val();
         var destination = modal.find('#destination').val();
@@ -341,7 +332,7 @@ Modernizr.load([
           travelMode: google.maps.TravelMode.DRIVING
         },
         function(response, status) {
-          if (status == google.maps.DirectionsStatus.OK) {
+          if (status === google.maps.DirectionsStatus.OK) {
 
             // Toggle Form
             modal.find('#modal_directions_form').fadeOut('fast', function() {
@@ -354,12 +345,12 @@ Modernizr.load([
       });
 
       // Resize Map When Shown
-      $('#modal_map').on('shown', function() {
+      jQuery('#modal_map').on('shown', function() {
         google.maps.event.trigger(mapModalMap, 'resize');
       });
 
       // Resize Map When Shown
-      $('#modal_directions').on('shown', function() {
+      jQuery('#modal_directions').on('shown', function() {
         google.maps.event.trigger(mapDirectionsMap, 'resize');
       });
     }
@@ -367,42 +358,42 @@ Modernizr.load([
 ]);
 
 
-$(document).ready(function() {
-  $(document).ajaxStart(function() {
-    glab.portal.loading(true);
+jQuery(document).ready(function() {
+  jQuery(document).ajaxStart(function() {
+    Portal.loading(true);
   });
 
-  $(document).ajaxStop(function() {
-    glab.portal.loading(false);
+  jQuery(document).ajaxStop(function() {
+    Portal.loading(false);
   });
 });
 
 /* LAYOUT: Default */
-if ($('body').attr('id') == 'default') {
+if (jQuery('body').attr('id') === 'default') {
 
   /* Timeout Inactive Sessions */
   // Determine Session Expiration in Codeigniter
-  ciSessionexpire = glab.cookie.get('ci_sessionexpire') * 1000;
-  timeoutTrigger = ciSessionexpire - 90000;
+  ciSessionexpire = GLAB.cookie.get('ci_sessionexpire') * 1000;
+  var timeoutTrigger = ciSessionexpire - 90000;
 
   // Prepare Modal if Session Expiration Enabled
   if (timeoutTrigger > 0) {
 
     // Display Modal One Minute Before Expiration
     setInterval(function() {
-      $('#modal_timeout').modal('show');
+      jQuery('#modal_timeout').modal('show');
     },timeoutTrigger);
 
     // Start 1 Minute Countdown
-    $('#modal_timeout').on('shown', function() {
+    jQuery('#modal_timeout').on('shown', function() {
 
       // Set Timeout Initial Value
       var timeoutRemainder = 60;
-      $('#modal_timeout .counter').text(timeoutRemainder);
+      jQuery('#modal_timeout .counter').text(timeoutRemainder);
 
       // Adjust Value in Countdown
       window.timeoutCounter = setInterval(function() {
-        $('#modal_timeout .counter').text(timeoutRemainder);
+        jQuery('#modal_timeout .counter').text(timeoutRemainder);
         if (timeoutRemainder > 0) {
           timeoutRemainder = (timeoutRemainder - 1);
         }
@@ -415,20 +406,20 @@ if ($('body').attr('id') == 'default') {
     });
 
     // Cancel Forced Logout
-    $('#modal_timeout').on('hide', function() {
-      $.ajax(siteURL + '/login/heartbeat');
+    jQuery('#modal_timeout').on('hide', function() {
+      jQuery.ajax(siteURL + '/login/heartbeat');
       clearTimeout(window.timeoutSession);
       clearInterval(window.timeoutCounter);
     });
   }
 
   // Chrome Application Installation Prompt
-  $('#btn_app_install').on('click', function(event) {
+  jQuery('#btn_app_install').on('click', function(event) {
     event.preventDefault();
     window.chrome.webstore.install('', function() {},
     function(str) {
       // Error
-      alert(str);
+      window.alert(str);
     });
   });
 }
@@ -437,20 +428,20 @@ if ($('body').attr('id') == 'default') {
  * CONTROLLERS AND VIEWS
  */
 
-if ($('body').hasClass('chrome')) {
+if (jQuery('body').hasClass('chrome')) {
 
   // Disable Install Button on Non-Chrome Browsers
-  if (window.chrome == undefined) {
-    $('#btn_app_install').addClass('disabled');
+  if (window.chrome === undefined) {
+    jQuery('#btn_app_install').addClass('disabled');
   }
 }
 
 /* Client Profile */
-if ($('body').hasClass('client_profile')) {
+if (jQuery('body').hasClass('client_profile')) {
 
   // Remove Email Dialog
-  $('#email [data-action="email-remove"]').on('click', function() {
-    var trigger = $(this);
+  jQuery('#email [data-action="email-remove"]').on('click', function() {
+    var trigger = jQuery(this);
     bootbox.dialog(
       'Are you sure that you want to remove this email address?',
       [{
@@ -467,8 +458,8 @@ if ($('body').hasClass('client_profile')) {
   });
 
   // Remove Telephone Number Dialog
-  $('#telephone [data-action="tel-remove"]').on('click', function() {
-    var trigger = $(this);
+  jQuery('#telephone [data-action="tel-remove"]').on('click', function() {
+    var trigger = jQuery(this);
     bootbox.dialog(
       'Are you sure that you want to remove this telephone number?',
       [{
@@ -485,8 +476,8 @@ if ($('body').hasClass('client_profile')) {
   });
 
   // Remove Address Dialog
-  $('#address [data-action="address-remove"]').on('click', function() {
-    var trigger = $(this);
+  jQuery('#address [data-action="address-remove"]').on('click', function() {
+    var trigger = jQuery(this);
     bootbox.dialog(
       'Are you sure that you want to remove this address?',
       [{
@@ -496,16 +487,16 @@ if ($('body').hasClass('client_profile')) {
         'label' : 'Remove',
         'class' : 'btn-danger',
         'callback' : function() {
-          $('#address .active').remove();
-          $('#address .help-block').addClass('active');
+          jQuery('#address .active').remove();
+          jQuery('#address .help-block').addClass('active');
         }
       }]
     );
   });
 
   // Revoke Manager Dialog
-  $('#manager button[data-action="manager-revoke"]').on('click', function() {
-    var trigger = $(this);
+  jQuery('#manager button[data-action="manager-revoke"]').on('click', function() {
+    var trigger = jQuery(this);
     bootbox.dialog(
       'Are you sure that you want to revoke access?',
       [{
@@ -521,24 +512,24 @@ if ($('body').hasClass('client_profile')) {
     );
   });
 
-  $(document).ready(function() {
+  jQuery(document).ready(function() {
 
     // Fetch Email Subscriptions
-    glab.portal.api('get', '/proxy/communication/email_list/groups')
+    Portal.api('get', '/proxy/communication/email_list/groups')
     .success(function(interests) {
       // Fill Existing Values
-      var profile = new Object();
-      profile.pid = $('.vcard .fn').data('pid');
-      glab.portal.api(
+      var profile = {};
+      profile.pid = jQuery('.vcard .fn').data('pid');
+      Portal.api(
         'get', '/proxy/communication/email_list/subscriber', profile
       )
       .success(function(subscriber) {
         // Set Values
-        var checked = new Object;
+        var checked = {};
         jQuery.each(subscriber.merges.GROUPINGS, function(index, interest) {
           checked[interest.id] = interest.groups.split(', ');
         });
-        var rows = $('#email_subscriptions table tbody');
+        var rows = jQuery('#email_subscriptions table tbody');
         rows.empty();
         // Append Interests to Table
         jQuery.each(interests, function(index, interest) {
@@ -553,14 +544,14 @@ if ($('body').hasClass('client_profile')) {
           rows.append(row);
         });
         // Add Change Event
-        $('#email_subscriptions form').change(function(event) {
-          var form = $(this);
+        jQuery('#email_subscriptions form').change(function(event) {
+          var form = jQuery(this);
           // Get Field Data
           var data = form.serialize();
           // Disable checkboxes while request is processed
           form.find('input').attr('disabled', 'disabled');
           // Send request
-          glab.portal.api(
+          Portal.api(
             'post',
             '/proxy/communication/email_list/subscriber',
             data,
@@ -573,7 +564,7 @@ if ($('body').hasClass('client_profile')) {
       });
     })
     .error(function() {
-      alert('Error retrieving interest groups from MailChimp.');
+      window.alert('Error retrieving interest groups from MailChimp.');
     });
 
   }); // ready
@@ -581,23 +572,23 @@ if ($('body').hasClass('client_profile')) {
 }
 
 /* Dashboard */
-else if ($('body').hasClass('dashboard')) {
+else if (jQuery('body').hasClass('dashboard')) {
 
   // Show Welcome Message
-  if (Boolean(glab.cookie.get('dashboard_welcome_hide')) != true) {
-    var welcome = $('#welcome');
-    var hud = $('#hud');
+  if (Boolean(GLAB.cookie.get('dashboard_welcome_hide')) !== true) {
+    var welcome = jQuery('#welcome');
+    var hud = jQuery('#hud');
     welcome.show();
     hud.hide();
 
     // Event Handlers
-    $(welcome).on('click', 'a.btn', function() {
-      if ($('#welcome_hide').is(':checked')) {
-        glab.cookie.set('dashboard_welcome_hide', '1');
+    jQuery(welcome).on('click', 'a.btn', function() {
+      if (jQuery('#welcome_hide').is(':checked')) {
+        GLAB.cookie.set('dashboard_welcome_hide', '1');
       }
     });
 
-    $('#btn_welcome_hide').on('click', function() {
+    jQuery('#btn_welcome_hide').on('click', function() {
       welcome.fadeOut('slow', function() {
         hud.fadeIn('slow');
       });
@@ -605,33 +596,33 @@ else if ($('body').hasClass('dashboard')) {
   }
 
   // Show Chrome Application Alert
-  if (window.chrome != undefined && window.chrome.app.isInstalled != true) {
-    $('#alert_chrome').show();
+  if (window.chrome !== undefined && window.chrome.app.isInstalled !== true) {
+    jQuery('#alert_chrome').show();
   }
 
   // Animate Refresh Icon
   var inboxLoadCount = 0;
   function inboxLoading(loading) {
-    if (loading == true) {
+    if (loading === true) {
       inboxLoadCount++;
-      $('#btn_inbox_refresh').addClass('active');
+      jQuery('#btn_inbox_refresh').addClass('active');
     } else if (--inboxLoadCount <= 0) {
-      $('#btn_inbox_refresh').removeClass('active');
+      jQuery('#btn_inbox_refresh').removeClass('active');
       inboxLoadCount = 0;
     }
   }
 
   // Retrieve Inbox Feed
   function inboxRefresh() {
-
     var limit = 5;
-
-    var uniqueid = $('#inbox .message').first().data('unique-id');
-    if (uniqueid == undefined) uniqueid = '';
+    var uniqueid = jQuery('#inbox .message').first().data('unique-id');
+    if (uniqueid === undefined) {
+      uniqueid = '';
+    }
 
     inboxLoading(true);
 
-    $.getJSON(
+    jQuery.getJSON(
       siteURL +
       '/dashboard/inbox_feed/' +
       limit + '/' +
@@ -640,20 +631,20 @@ else if ($('body').hasClass('dashboard')) {
 
         // Append New Messages to Table
         jQuery.each(data.messages.reverse(), function(index, message) {
-          row = ich.inbox_row(message);
-          $('#inbox tbody').prepend(row);
+          var row = ich.inbox_row(message);
+          jQuery('#inbox tbody').prepend(row);
         });
 
         // Remove Excess Messages
-        $('#inbox .message').each(function(key, value) {
+        jQuery('#inbox .message').each(function(key, value) {
           if (key + 1 > limit) {
-            $(this).remove();
+            jQuery(this).remove();
           }
         });
 
         // Update Counts
-        var count = $('#message_count');
-        count.find('.shown').text($('#inbox tbody tr input').size());
+        var count = jQuery('#message_count');
+        count.find('.shown').text(jQuery('#inbox tbody tr input').size());
         count.find('.total').text(data.count_total);
       }
     ).complete(function() {
@@ -663,7 +654,7 @@ else if ($('body').hasClass('dashboard')) {
 
   // Process Message Actions
   function inboxMessagesAction(action) {
-    var inputs = $('#inbox tbody tr input:checked');
+    var inputs = jQuery('#inbox tbody tr input:checked');
 
     if (inputs.size() > 0) {
 
@@ -671,10 +662,10 @@ else if ($('body').hasClass('dashboard')) {
 
       inputs.each(function(index, element) {
 
-        var row = $(element).closest('tr');
+        var row = jQuery(element).closest('tr');
         var uniqueid = row.data('unique-id');
 
-        $.get(
+        jQuery.get(
           siteURL +
           '/dashboard/inbox_action/' +
           uniqueid +
@@ -684,7 +675,7 @@ else if ($('body').hasClass('dashboard')) {
           row.remove();
           inboxRefresh();
         }).error(function() {
-          alert('Could not remove message' + uniqueid);
+          window.alert('Could not remove message' + uniqueid);
         }).complete(function() {
           inboxLoading(false);
         });
@@ -692,35 +683,39 @@ else if ($('body').hasClass('dashboard')) {
       });
     }
     else {
-      alert('You must select at least one message to continue.');
+      window.alert('You must select at least one message to continue.');
     }
   }
 
   // Gmail Inbox Actions
-  $('#inbox a[data-action="inbox-archive"]').on('click', function() {
+  jQuery('#inbox a[data-action="inbox-archive"]').on('click', function() {
     inboxMessagesAction('archive');
   });
-  $('#inbox a[data-action="inbox-spam"]').on('click', function() {
+  jQuery('#inbox a[data-action="inbox-spam"]').on('click', function() {
     bootbox.confirm(
       'Are you sure that these messages are spam?',
       function(confirmed) {
-        if (confirmed) inboxMessagesAction('spam');
+        if (confirmed) {
+          inboxMessagesAction('spam');
+        }
       }
     );
   });
-  $('#inbox a[data-action="inbox-trash"]').on('click', function() {
+  jQuery('#inbox a[data-action="inbox-trash"]').on('click', function() {
     bootbox.confirm(
       'Are you sure that you want to permanently remove these messages?',
       function(confirmed) {
-        if (confirmed) inboxMessagesAction('trash');
+        if (confirmed) {
+          inboxMessagesAction('trash');
+        }
       }
     );
   });
-  $('#inbox i[data-action="inbox-refresh"]').on('click', function() {
+  jQuery('#inbox i[data-action="inbox-refresh"]').on('click', function() {
     inboxRefresh();
   });
 
-  $(document).ready(function() {
+  jQuery(document).ready(function() {
     inboxRefresh();
     setInterval(function() {
       inboxRefresh();
@@ -729,28 +724,27 @@ else if ($('body').hasClass('dashboard')) {
 }
 
 /* Preferences */
-else if ($('body').hasClass('preferences')) {
+else if (jQuery('body').hasClass('preferences')) {
 
   // Request and Display Authorization Code
-  $('#device_request a.btn').on('click', function() {
-
-    button = $(this);
+  jQuery('#device_request a.btn').on('click', function() {
+    var button = jQuery(this);
 
     button.addClass('disabled');
-    $('#device_loading').fadeIn();
+    jQuery('#device_loading').fadeIn();
 
     // Request Auth Code via AJAX
-    $.getJSON(siteURL + '/failure').success(function(data) {
+    jQuery.getJSON(siteURL + '/failure').success(function(data) {
       button.fadeOut().hide();
-      $('#device_loading').fadeOut().hide();
-      $('#device_response').slideDown();
+      jQuery('#device_loading').fadeOut().hide();
+      jQuery('#device_response').slideDown();
     }).error(function() {
-      alert(
+      window.alert(
         'Could not retrieve authorization code due to an unknown error.  ' +
         'Please try again later.'
       );
       button.removeClass('disabled');
-      $('#device_loading').fadeOut();
+      jQuery('#device_loading').fadeOut();
     });
   });
 
